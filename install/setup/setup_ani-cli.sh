@@ -19,9 +19,15 @@ install_ani-cli() {
         print_msg "fzf installation completed!"
     fi
 
+    print_msg "Downloading yt-dlp binary..."
+    sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp || print_error "Failed to download yt-dlp binary."
+    sudo chmod a+rx /usr/local/bin/yt-dlp || print_error "Failed to set permissions for yt-dlp binary."
+    print_msg "yt-dlp binary downloaded!"
+
     # Install ani-cli dependencies
-    sudo apt install -y grep sed aria2 yt-dlp ffmpeg || print_error "Failed to install ani-cli dependencies."
-    print_msg "ani-cli installation completed!"
+    print_msg "Installing ani-cli and other dependencies..."
+    sudo apt install -y grep sed aria2 ffmpeg || print_error "Failed to install ani-cli dependencies."
+    print_msg "ani-cli and other dependencies installed!"
 }
 
 install_ani-cli
