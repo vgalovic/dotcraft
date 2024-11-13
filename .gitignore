@@ -3,4 +3,6 @@ config/.config/btop/btop.log
 config/.config/nvim/lazy-lock.json
 config/.config/yazi/package.toml
 config/.config/yazi/plugins/
-
+config/.config/mpv/scripts/uosc
+config/.config/mpv/fonts/
+config/.config/mpv/script-opts/
