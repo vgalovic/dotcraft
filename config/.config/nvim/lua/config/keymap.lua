@@ -24,6 +24,8 @@ wk.add({
 --
 -- [[ Enables ";" to call command ]]
 map({ "n", "v" }, ";", ":")
+map({ "n", "v" }, "č", ":")
+map({ "n", "v" }, "Č", ":")
 --
 -- [[ SaveAs() Keymaps ]]
 --
