@@ -1,0 +1,104 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# Use custom format
+format = """
+$directory$package$java$python$git_branch$battery$cmd_duration
+"""
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+palette = "catppuccin_mocha"
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"
+
+# Username settings
+[username]
+show_always = true
+style_root = "red"
+style_user = "yellow"
+format = "[$user]($style) "
+disabled = false
+
+# Hostname settings
+[hostname]
+ssh_only = false
+format =  "on [$hostname](red)"
+trim_at = ".companyname.com"
+disabled = false
+
+# Directory indicator
+[directory]
+read_only = "🔒"
+style = "bold cyan"
+read_only_style = "red"
+truncation_length = 8
+truncation_symbol = "…/"
+format = "[$read_only]($read_only_style)[$path]($style) "
+disabled = false
+
+# Package Version Config
+[package]
+format = "via [🎁 $version](208 bold) "
+
+# Java settings
+[java]
+symbol = "☕ "
+style = "red dimmed"
+format = "via [${symbol}${version}]($style) "
+
+# Python settings
+[python]
+symbol = "🐍 "
+style = "yellow bold"
+python_binary = "python3"
+pyenv_version_name = true
+
+# git settings
+[git_branch]
+symbol = "🌱 "
+truncation_length = 4
+truncation_symbol = ""
+
+# Battery information
+[battery]
+full_symbol = "🔋"
+charging_symbol = "⚡️"
+discharging_symbol = "💀"
+
+[[battery.display]]
+threshold = 10
+style = "red"
+
+# cmd_duration config
+[cmd_duration]
+show_milliseconds = true
+style = "bold yellow"
+format = "took [$duration]($style)"

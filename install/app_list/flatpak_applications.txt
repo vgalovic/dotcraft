@@ -1,0 +1,8 @@
+com.brave.Browser
+com.bitwarden.desktop
+com.discordapp.Discord
+com.notesnook.Notesnook
+io.ente.auth
+io.github.amit9838.mousam
+it.mijorus.gearlever
+org.qbittorrent.qBittorrent

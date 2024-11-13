@@ -1,0 +1,59 @@
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[manager]
+linemode    = "size"
+show_hidden = false
+sort_by     = "natural"
+
+[preview]
+tab_size   = 2
+max_width  = 1000
+max_height = 1000
+
+[opener]
+edit = [
+	{ run = 'nvim "$@"', desc = "nvim", block = true },
+]
+play = [
+	{ run = 'mpv --force-window "$@"' , desc = "mpv"},
+]
+open = [
+	{ run = 'xdg-open "$@"', desc = "Open" },
+]
+[open]
+rules = [
+	{ name = "*/", use = [ "open", "edit"] },
+
+	{ mime = "text/*",  use = [ "edit", "reveal" ] },
+	{ mime = "image/*", use = [ "open", "reveal" ] },
+	{ mime = "video/*", use = [ "play", "reveal" ] },
+	{ mime = "audio/*", use = [ "play", "reveal" ] },
+	{ mime = "inode/x-empty", use = [ "edit", "reveal" ] },
+
+	{ name = "*", use = [ "open", "reveal" ] },
+]
+
+[plugin]
+prepend_previewers = [
+	{ mime = "audio/*", run = "exifaudio" },
+	{ name = "*/", run = "eza-preview" },
+        { name = "*.csv", run = "rich-preview"}, # for csv files
+	{ name = "*.md", run = "rich-preview" }, # for markdown (.md) files
+	{ name = "*.rst", run = "rich-preview"}, # for restructured text (.rst) files
+	{ name = "*.ipynb", run = "rich-preview"}, # for jupyter notebooks (.ipynb)
+	{ name = "*.json", run = "rich-preview"}, # for json (.json) files
+]
+
+append_previewers = [
+  { name = "*", run = "hexyl" },
+]
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*"
+run  = "git"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*/"
+run  = "git"

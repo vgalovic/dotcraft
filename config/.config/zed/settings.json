@@ -1,0 +1,126 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "assistant": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-latest"
+    },
+    "version": "2"
+  },
+  "features": {
+    "inline_completion_provider": "supermaven"
+  },
+  "telemetry": {
+    "metrics": false
+  },
+  "vim_mode": false,
+  "vim": {
+    "toggle_relative_line_numbers": true,
+    "use_system_clipboard": "always",
+    "use_multiline_find": false,
+    "use_smartcase_find": false,
+    "custom_digraphs": {}
+  },
+  "ui_font_size": 14,
+  "buffer_font_size": 14,
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Mocha"
+  },
+  "journal": {
+    "path": "~/Documents/Zed",
+    "hour_format": "hour24"
+  },
+  "auto_install_extensions": {
+    "Ctppuccin Themes": true,
+    "Make": true,
+    "NeoCMake": true,
+    "Nix": true,
+    "Verilog": true
+  },
+  "languages": {
+    "C": {
+      "format_on_save": "on",
+      "use_on_type_format": true
+    },
+    "C++": {
+      "format_on_save": "on",
+      "use_on_type_format": true
+    },
+    "Dart": {
+      "tab_size": 2
+    },
+    "Elixir": {
+      "language_servers": ["elixir-ls", "!next-ls", "!lexical", "..."]
+    },
+    "Go": {
+      "code_actions_on_format": {
+        "source.organizeImports": true
+      }
+    },
+    "HEEX": {
+      "language_servers": ["elixir-ls", "!next-ls", "!lexical", "..."]
+    },
+    "Java": {
+      "prettier": {
+        "allowed": true,
+        "plugins": ["prettier-plugin-java"]
+      }
+    },
+    "JSON": {
+      "prettier": {
+        "allowed": true
+      }
+    },
+    "JSONC": {
+      "prettier": {
+        "allowed": true
+      }
+    },
+    "Markdown": {
+      "format_on_save": "on",
+      "use_on_type_format": false,
+      "prettier": {
+        "allowed": true
+      }
+    },
+    "Ruby": {
+      "language_servers": ["solargraph", "!ruby-lsp", "!rubocop", "..."]
+    },
+    "Starlark": {
+      "language_servers": ["starpls", "!buck2-lsp", "..."]
+    },
+    "Svelte": {
+      "language_servers": ["svelte-language-server", "..."],
+      "prettier": {
+        "allowed": true,
+        "plugins": ["prettier-plugin-svelte"]
+      }
+    },
+    "Verilog": {
+      "format_on_save": "on",
+      "use_on_type_format": true
+    },
+    "XML": {
+      "prettier": {
+        "allowed": true,
+        "plugins": ["@prettier/plugin-xml"]
+      }
+    },
+    "YAML": {
+      "prettier": {
+        "allowed": true
+      }
+    }
+  }
+}
