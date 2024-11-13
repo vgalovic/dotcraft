@@ -1,7 +1,7 @@
 Dotcraft
 ========================================
 
-This is my [dotfiles repository](https://github.com/vgalovic/dotcraft/config).
+This is my *dotfiles repository*, which includes all my configuration files located in the `config` folder. The repository also contains installation scripts in the `install` folder to help you configure your system, meant for *Ubuntu* (or *Linux Mint*).
 
 ## Prerequisites
 
@@ -18,12 +18,7 @@ You can clone this repository by running:
 git clone https://github.com/vgalovic/dotcraft.git ~/.dotfiles
 cd .dotfiles
 ```
-
-## Overview
-
-Inside the repository, you’ll find configuration files for the applications I use, along with a setup *bash* script to configure the PC. The scripts are written to be run on *Ubuntu* (or *Linux Mint*).
-
-## Making Scripts Executable
+# Making Scripts Executable
 
 To run the scripts, you’ll first need to make them executable. Use the following commands in your terminal:
 
