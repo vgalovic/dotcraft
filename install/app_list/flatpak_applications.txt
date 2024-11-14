@@ -1,3 +1,5 @@
+com.github.tchx84.Flatseal
+io.github.giantpinkrobots.flatsweep
 com.brave.Browser
 com.bitwarden.desktop
 com.discordapp.Discord
