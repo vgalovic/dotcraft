@@ -20,6 +20,16 @@ install_minecraft() {
     rm minecraft-launcher.deb || print_error "Failed to remove the downloaded package."
 
     print_msg "Minecraft installation completed! You can start it from your applications menu."
+
+    # Check for Flatpak and install Heroic Games Launcher if available
+    if command -v flatpak &> /dev/null; then
+        print_msg "Installing Coubiomes Viewer..."
+        flatpak install -y flathub com.github.cubitect.cubiomes-viewer || print_error "Failed to install Coubiomes Viewer."
+        print_msg "Coubiomes Viewer installed."
+    else
+        print_msg "Flatpak is not installed. Skipping Coubiomes Viewer installation."
+    fi
+
 }
 
 install_games() {
