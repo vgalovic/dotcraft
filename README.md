@@ -50,5 +50,5 @@ These commands can't be run from `run.sh` directly.
 The scripts will log their output to `script_output.log`. If something goes wrong during the setup process, you can check this log file to see what happened. This applies to both the `run.sh` script and `setup_yazi_plugin.sh`.
 
 ```shell
-cat ./dotfiles/install/script_output.log
+cat ./dotfiles/install/output.log
 ```
