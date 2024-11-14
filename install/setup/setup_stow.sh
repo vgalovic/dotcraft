@@ -37,7 +37,7 @@ backup_files() {
     backup_file "$HOME/.profile" "$HOME/.profile.old"
     backup_file "$HOME/.gitconfig" "$HOME/.gitconfig.old"    
 
-    for config in bat btop conky kitty fastfetch lazygit mpv nvim yazi zed; do
+    for config in bat btop conky kitty fastfetch lazygit mpv nvim neovide yazi zed; do
         config_dir="$HOME/.config/$config"
         if [ -d "$config_dir" ]; then
             mv "$config_dir" "$config_dir.old"
