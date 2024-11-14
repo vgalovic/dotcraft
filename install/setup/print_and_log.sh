@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_FILE="$HOME/.dotfiles/install/script_output.log"
+LOG_FILE="$HOME/.dotfiles/install/output.log"
 
 # Function to print messages in color to the terminal and log them with a timestamp
 print_msg() {
