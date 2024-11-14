@@ -1,0 +1,17 @@
+fork = false
+frame = "full"
+size = [1024, 924]
+idle = true
+maximized = false
+no-multigrid = false
+srgb = false
+tabs = true
+theme = "auto"
+mouse-cursor-icon = "arrow" # i-beam
+title-hidden = true
+vsync = false
+wsl = false
+
+[font]
+normal = ["JetBrainsMono Nerd Font"] # Will use the bundled Fira Code Nerd Font by default
+size = 11
