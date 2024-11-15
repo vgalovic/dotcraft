@@ -9,14 +9,11 @@ repository_exists() {
 
 # Function to add Papirus repository
 add_repository() {
-    # Add Papirus repository if it doesn't already exist
     if repository_exists; then
         print_msg "Papirus repository already exists."
     else
         print_msg "Adding Papirus repository..."
         sudo add-apt-repository -y ppa:papirus/papirus || { print_error "Failed to add Papirus repository."; exit 1; }
-
-        # Update package index
         print_msg "Updating package index..."
         sudo apt update || { print_error "Failed to update package index."; exit 1; }
     fi
@@ -33,7 +30,6 @@ set_kvantum_paths() {
     fi
     '
 
-    # Check if Kvantum paths are already in .profile, and add them if not
     if ! grep -q "kvantummanager" ~/.profile; then
         echo "$kvantum_paths" >> ~/.profile
         print_msg "Kvantum paths added to .profile."
@@ -42,72 +38,78 @@ set_kvantum_paths() {
     fi
 }
 
-# Function for a user prompt defaulting to 'Yes'
-prompt_yes_default() {
-    local prompt="$1"
-    local choice
-    read -p "$prompt (Y/n): " choice
-    [[ -z "$choice" || "${choice,,}" == "y" ]]
-}
-
-# Function to select options from a menu, starting numbering from 0
+# Function to select options from a menu with a default option
 select_option() {
     local prompt="$1"
-    shift
+    local default="$2" # Default option index (0-based)
+    shift 2
     local options=("$@")
-    PS3="$prompt: "
-    select opt in "${options[@]}"; do
-        if [[ -n "$opt" && $REPLY -ge 0 && $REPLY -lt ${#options[@]} ]]; then
-            echo "$opt"
-            break
+
+    # Display options with prompt and show the default option
+    echo "$prompt (default: ${options[$default]}):"
+    for i in "${!options[@]}"; do
+        echo "  $((i + 1))) ${options[$i]}"
+    done
+
+    while true; do
+        # Prompt for user input
+        read -p "Select an option [1-${#options[@]}] (press Enter for default): " choice
+
+        # If input is empty, set to default option
+        if [[ -z "$choice" ]]; then
+            REPLY=$((default + 1))  # Set the default option (1-based index)
+            return
+        elif [[ "$choice" =~ ^[1-9][0-9]*$ ]] && ((choice >= 1 && choice <= ${#options[@]})); then
+            # Valid option selected
+            REPLY=$choice
+            return
         else
-            echo "Invalid option. Please select a valid number."
+            echo "Invalid option. Please try again."
         fi
     done
 }
 
 # Install only Papirus icon theme
 install_papirus_only() {
-    if prompt_yes_default "Do you want to install Papirus icons?"; then
-        add_repository
-
-        print_msg "Installing Papirus icon theme..."
-        sudo apt install -y papirus-icon-theme || print_error "Failed to install Papirus icon theme."
-        print_msg "Papirus icon theme installation completed!"
-    else
-        echo "Skipping installation."
-        return 0
-    fi
+    print_msg "Installing Papirus icon theme..."
+    add_repository
+    sudo apt install -y papirus-icon-theme || print_error "Failed to install Papirus icon theme."
+    print_msg "Papirus icon theme installation completed!"
 }
 
 # Function to install Papirus icon theme and Kvantum styles
 install_papirus_kvantum() {
-    select_option "Choose an option to install" "Skip" "Papirus icon theme" "Kvantum style manager (Qt)" "Install both Papirus icon theme and Kvantum"
+    local default_option=3 # Default to "Both"
+    select_option "Choose an option to install" "$default_option" \
+        "Skip" "Papirus icon theme" "Kvantum style manager (Qt)" "Both"
 
-    case $REPLY in
-        0)
-            print_msg "Skipping installation."
-            return 0
-        ;;
+    case "$REPLY" in
         1)
+            print_msg "Skipping installation."
+        ;;
+        2)
             print_msg "Installing Papirus icon theme..."
+            add_repository
             sudo apt install -y papirus-icon-theme || print_error "Failed to install Papirus icon theme."
             print_msg "Papirus icon theme installation completed!"
         ;;
-        2)
+        3)
             print_msg "Installing Kvantum..."
+            add_repository
             sudo apt install -y qt5-style-kvantum qt6-style-kvantum qt5-style-kvantum-themes || print_error "Failed to install Kvantum."
             print_msg "Kvantum installation completed!"
             set_kvantum_paths
         ;;
-        3)
+        4)
             print_msg "Installing both Papirus icon theme and Kvantum..."
+            add_repository
             sudo apt install -y papirus-icon-theme qt5-style-kvantum qt6-style-kvantum qt5-style-kvantum-themes || print_error "Failed to install both Papirus icon theme and Kvantum."
             print_msg "Papirus icon theme and Kvantum installation completed!"
             set_kvantum_paths
         ;;
         *)
-            print_error "Invalid option. Skipping installation."
+            print_error "Unexpected error. Exiting."
+            exit 1
         ;;
     esac
 }
@@ -118,3 +120,4 @@ if [[ "$XDG_CURRENT_DESKTOP" =~ "KDE" ]]; then
 else
     install_papirus_kvantum
 fi
+
