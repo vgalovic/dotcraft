@@ -1,4 +1,4 @@
-install/script_output.log
+install/output.log
 config/.config/btop/btop.log
 config/.config/nvim/lazy-lock.json
 config/.config/yazi/package.toml
