@@ -42,6 +42,7 @@ install_clipboard() {
 # Function to install APT applications
 install_basic_apt() {
     local apt_applications=(
+        "git"
         "curl"
         "wget"
    )
