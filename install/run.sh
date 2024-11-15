@@ -74,7 +74,7 @@ print_msg "Downloading bash-preexec script..."
 download_file "https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh" "$HOME/.bash-preexec.sh"
 
 if command -v mpv >/dev/null; then
-    if prompt_yes_default "Do you want to install uosc (mpv skin)?" then
+    if prompt_yes_default "Do you want to install uosc (mpv skin)?"; then
         print_msg "Downloading uosc..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/tomasklaen/uosc/HEAD/installers/unix.sh)" || print_error "Failed to download uosc"
         print_msg "uisc installed successfully."
