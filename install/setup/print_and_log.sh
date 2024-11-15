@@ -33,3 +33,11 @@ print_error() {
     timestamp=$(date "+%d.%m.%Y. %H:%M:%S")  # Current timestamp
     echo "[$timestamp] Error: $msg" >> "$LOG_FILE"
 }
+
+# Function for a user prompt defaulting to 'Yes'
+prompt_yes_default() {
+    local prompt="$1"
+    local choice
+    read -p "$prompt (Y/n): " choice
+    [[ -z "$choice" || "${choice,,}" == "y" ]]
+}

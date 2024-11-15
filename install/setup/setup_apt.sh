@@ -143,44 +143,31 @@ install_clipboard
 install_basic_apt
 
 # Install developer applications
-install_developer_apps
+if prompt_yes_default "Do you want to install developer applications?"; then
+    install_developer_apps
+fi
 
 # Install avr tools
-read -p "Do you want to install avr tools? (Y/n): " install_avr_choice
-
-# If input is 'y'/'Y', proceed with installation
-if [[ -z "$install_avr_choice" || "$install_avr_choice" =~ ^[Yy]$ ]]; then
+if prompt_yes_default "Do you want to install avr tools?"; then
     install_avr
 fi
 
 # Install Github CLI
-read -p "Do you want to install GitHub CLI? (Y/n): " install_gh_choice
-
-# If input is empty or 'y'/'Y', proceed with installation
-if [[ -z "$install_gh_choice" || "$install_gh_choice" =~ ^[Yy]$ ]]; then
+if prompt_yes_default "Do you want to install GitHub CLI?"; then
     install_github_cli
 fi
 
 # Install CopyQ
-read -p "Do you want to install CopyQ? (Y/n): " install_copyq_choice
-
-# If input is 'y'/'Y', proceed with installation
-if [[ -z "$install_copyq_choice" || "$install_copyq_choice" =~ ^[Yy]$ ]]; then
+if prompt_yes_default "Do you want to install CopyQ?"; then
     install_copyq
 fi
 
 # Install Conky
-read -p "Do you want to install conky? (Y/n): " install_conky_choice
-
-# If input is 'y'/'Y', proceed with installation
-if [[ -z "$install_conky_choice" || "$install_conky_choice" =~ ^[Yy]$ ]]; then
+if prompt_yes_default "Do you want to install conky?"; then
     install_conky
 fi
 
 # Install MPV
-read -p "Do you want to install mpv? (Y/n): " install_mpv_choice
-
-# If input is 'y'/'Y', proceed with installation
-if [[ -z "$install_mpv_choice" || "$install_mpv_choice" =~ ^[Yy]$ ]]; then
+if prompt_yes_default "Do you want to install mpv?"; then
     install_mpv
 fi

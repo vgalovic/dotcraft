@@ -116,7 +116,11 @@ install_papirus_kvantum() {
 
 # Main script logic
 if [[ "$XDG_CURRENT_DESKTOP" =~ "KDE" ]]; then
-    install_papirus_only
+    if prompt_yes_default "Do you want to install Papirus icon theme?"; then
+        install_papirus_only
+    else
+        print_msg "Skipping installation."
+    fi
 else
     install_papirus_kvantum
 fi

@@ -14,14 +14,6 @@ if [ ! -d "$SETUP_DIR" ]; then
     exit 1
 fi
 
-# Function for a user prompt defaulting to 'Yes'
-prompt_yes_default() {
-    local prompt="$1"
-    local choice
-    read -p "$prompt (Y/n): " choice
-    [[ -z "$choice" || "${choice,,}" == "y" ]]
-}
-
 # Function to run a setup script without prompting
 must_execute_script() {
     local script_name="$1"
