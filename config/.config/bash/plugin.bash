@@ -1,6 +1,7 @@
-#Bear
-if [[ -d $HOME/.Bear ]]; then
-    export PATH="$HOME/.Bear/bin:$PATH"
+# systemc
+if [ -d "/usr/local/systemc" ]; then
+    export SYSTEMC=/usr/local/systemc
+    export LD_LIBRARY_PATH=/usr/local/systemc/lib:$LD_LIBRARY_PATH
 fi
 
 #Starship
