@@ -1,6 +1,14 @@
 bat
 btop
 conky
+fastanime
+fastfetch
+glow
 kitty
 lazygit
+mpv
+neovide
 nvim
+shell
+yazi
+zed
