@@ -41,8 +41,8 @@ return {
 			default_integrations = true,
 			integrations = {
 				cmp = true,
+				fzf = true,
 				gitsigns = true,
-				nvimtree = true,
 				treesitter = true,
 				render_markdown = true,
 				mason = true,
@@ -51,7 +51,7 @@ return {
 				telescope = {
 					enabled = true,
 				},
-				rainbow_delimiters = true,
+				snacks = true,
 				mini = {
 					enabled = true,
 					indentscope_color = "",
