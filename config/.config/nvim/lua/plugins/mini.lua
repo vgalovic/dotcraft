@@ -1,6 +1,8 @@
 return { -- Collection of various small independent plugins/modules
 	"echasnovski/mini.nvim",
 	config = function()
+		require("mini.icons").setup()
+		--
 		-- Better Around/Inside textobjects
 		--
 		-- Examples:
@@ -8,7 +10,8 @@ return { -- Collection of various small independent plugins/modules
 		--  - yinq - [Y]ank [I]nside [N]ext [Q]uote
 		--  - ci'  - [C]hange [I]nside [']quote
 		require("mini.ai").setup({ n_lines = 500 })
-
+		require("mini.indentscope").setup()
+		--
 		-- Add/delete/replace surroundings (brackets, quotes, etc.)
 		--
 		-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
@@ -23,22 +26,7 @@ return { -- Collection of various small independent plugins/modules
 				end,
 			},
 		})
-
-		-- Simple and easy statusline.
-		--  You could remove this setup call if you don't like it,
-		--  and try some other statusline plugin
-		--		local statusline = require("mini.statusline")
-		--		-- set use_icons to true if you have a Nerd Font
-		--		statusline.setup({ use_icons = vim.g.have_nerd_font })
 		--
-		--		-- You can configure sections in the statusline by overriding their
-		--		-- default behavior. For example, here we set the section for
-		--		-- cursor location to LINE:COLUMN
-		--		---@diagnostic disable-next-line: duplicate-set-field
-		--		statusline.section_location = function()
-		--			return "%2l:%-2v"
-		--		end
-		vim.opt.sessionoptions:append("globals")
 		require("mini.sessions").setup({
 			hooks = {
 				pre = {
@@ -48,8 +36,12 @@ return { -- Collection of various small independent plugins/modules
 				},
 			},
 		})
-		require("mini.icons").setup()
-		-- ... and there is more!
-		--  Check out: https://github.com/echasnovski/mini.nvim
+		--
+		require("mini.files").setup({
+			windows = {
+				preview = true,
+				width_preview = 75,
+			},
+		})
 	end,
 }
