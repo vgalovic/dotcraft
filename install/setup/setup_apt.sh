@@ -43,6 +43,7 @@ install_clipboard() {
 install_basic_apt() {
     local apt_applications=(
         "git"
+        "hub"
         "curl"
         "wget"
    )
@@ -95,6 +96,17 @@ install_github_cli() {
     print_msg "GitHub CLI installed"
 }
 
+install_zsh() {
+    print_msg "Installing ZSH..."
+    sudo apt install -y zsh || { print_error "Failed to install ZSH."; }
+    print_msg "ZSH installed"
+
+    if prompt_yes_default "Do you want to make ZSH your default shell?"; then
+        sudo chsh -s /usr/bin/zsh || print_error "Failed to set ZSH as default shell."
+        print_msg "ZSH set as default shell."
+    fi
+}
+
 set_kvantum_paths() {
     # Define Kvantum paths configuration
     kvantum_paths='
@@ -112,8 +124,6 @@ set_kvantum_paths() {
         print_msg "Kvantum paths are already present in .profile."
     fi
 }
-
-
 
 install_copyq () {
      print_msg "Installing CopyQ..."
@@ -155,6 +165,11 @@ fi
 # Install Github CLI
 if prompt_yes_default "Do you want to install GitHub CLI?"; then
     install_github_cli
+fi
+
+# Install ZSH
+if prompt_yes_default "Do you want to install ZSH?"; then
+    install_zsh
 fi
 
 # Install CopyQ
