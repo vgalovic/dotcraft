@@ -59,6 +59,7 @@ install_yazi_plugins() {
         "ahkohd/eza-preview" # [[ eza-preview.yazi ]]
         "yazi-rs/plugins:full-border" # [[ full-border.yazi ]]
         "yazi-rs/plugins:git" # [[ git.yazi ]]
+        "Reledia/glow" # [[ glow.yazi ]]
         "Reledia/hexyl" # [[ hexyl.yazi ]]
         "Lil-Dank/lazygit" # [[ lazygit.yazi ]]
         "AnirudhG07/rich-preview" # [[ rich-preview.yazi ]]
