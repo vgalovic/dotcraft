@@ -4,6 +4,30 @@ source "$HOME/.dotfiles/install/setup/print_and_log.sh"
 
 # Define your dotfiles directory
 STOW_DIR="$HOME/.dotfiles/config"
+STOW_LIST="$HOME/.dotfiles/install/stow_list"
+CONFIG="$HOME/.config"
+
+# Load file lists from external text files
+HOME_FILES_TXT="$STOW_LIST/home_files.txt"
+CONFIG_DIRS_TXT="$STOW_LIST/config_dirs.txt"
+CONFIG_FILES_TXT="$STOW_LIST/config_files.txt"
+
+# Check if file exists and load it into an array
+load_list() {
+    local file=$1
+    local -n array=$2
+    if [ -f "$file" ]; then
+        readarray -t array < "$file"
+    else
+        print_error "File $file not found. Exiting."
+        exit 1
+    fi
+}
+
+# Load arrays from text files
+load_list "$HOME_FILES_TXT" home_files || { print_error "Failed to load home files."; exit 1; }
+load_list "$CONFIG_DIRS_TXT" config_dirs || { print_error "Failed to load config dirs."; exit 1; }
+load_list "$CONFIG_FILES_TXT" config_files || { print_error "Failed to load config files."; exit 1; }
 
 # Check if GNU Stow is installed
 if ! command -v stow &> /dev/null; then
@@ -22,32 +46,32 @@ fi
 backup_files() {
     print_msg "Backing up existing config files..."
 
-    backup_file() {
-        local file=$1
-        local backup=$2
-        if [ -f "$file" ]; then
-            mv "$file" "$backup"
+    backup() {
+        local check=$1
+        local file=$2
+        local backup=$3
+        if [ "$check" "$file" ]; then
+            mv "$file" "$backup.old"
             print_msg "$file backup completed."
         else
             print_msg "$file not found, skipping backup."
         fi
     }
 
-    backup_file "$HOME/.bashrc" "$HOME/.bashrc.old"
-    backup_file "$HOME/.profile" "$HOME/.profile.old"
-    backup_file "$HOME/.gitconfig" "$HOME/.gitconfig.old"    
-
-    for config in bat btop conky kitty fastfetch lazygit mpv nvim neovide yazi zed; do
-        config_dir="$HOME/.config/$config"
-        if [ -d "$config_dir" ]; then
-            mv "$config_dir" "$config_dir.old"
-            print_msg "$config config backup completed."
-        else
-            print_msg "$config config directory not found, skipping backup."
-        fi
+    # Backup home config files
+    for file in "${home_files[@]}"; do
+        backup "-f" "$HOME/$file" "$HOME/$file"
     done
 
-    backup_file "$HOME/.config/starship.toml" "$HOME/.config/starship.toml.old"
+    # Backup .config directory files 
+    for dir in "${config_dirs[@]}"; do
+        backup "-d" "$CONFIG/$dir" "$CONFIG/$dir"
+    done
+
+    # Backup standalone config files
+    for file in "${config_files[@]}"; do
+        backup "-f" "$CONFIG/$file" "$CONFIG/$file"
+    done
 }
 
 # Stow files from dotfiles directory
@@ -64,25 +88,37 @@ stow_files() {
 }
 
 source_files() {
-    cd ~
+    for src in .profile .bashrc; do
+        if [ -f "$HOME/$src" ]; then
+            print_msg "Sourcing $src..."
+            source "$src" || print_error "Failed to source $src."
+        fi
+    done
+}
 
-    # Check if .profile exists before sourcing
-    if [ -f .profile ]; then
-        print_msg "Sourcing profile..."
-        source .profile
-    else
-        print_error ".profile not found, skipping sourcing."
-    fi
+remove_old_config() {
+    print_msg "Removing old config files..."
+    for file in "${home_files[@]}"; do
+        rm -f "$HOME/$file.old" || print_error "Failed to remove $file.old."
+    done
 
-    # Check if .bashrc exists before sourcing
-    if [ -f .bashrc ]; then
-        print_msg "Sourcing bash..."
-        source .bashrc
-    else
-        print_error ".bashrc not found, skipping sourcing."
-    fi
+    for dir in "${config_dirs[@]}"; do
+        rm -rf "$CONFIG/$dir.old" || print_error "Failed to remove $dir.old."
+    done
+
+    for file in "${config_files[@]}"; do
+        rm -f "$CONFIG/$file.old" || print_error "Failed to remove $file.old."
+    done
+
+    print_msg "Old config files removed."
 }
 
 backup_files
 stow_files
+
+if prompt_yes_default "Do you want to remove old config files?[Y/n]"; then
+    remove_old_config
+fi
+
 source_files
+
