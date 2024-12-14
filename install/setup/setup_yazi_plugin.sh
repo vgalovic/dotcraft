@@ -50,13 +50,13 @@ install_yazi_plugins() {
 
     # List of Yazi plugins to install
     declare -a plugins=(
-        "https://github.com/sharklasers996/eza-preview.yazi.git" # [[ eza-preview.yazi ]]
     )
 
     # List of Ya plugins to install
     declare -a ya_plugins=(
         "yazi-rs/plugins:chmod" # [[ chmod.yazi ]]
         "Sonico98/exifaudio" # [[ exifaudio.yazi ]]
+        "ahkohd/eza-preview" # [[ eza-preview.yazi ]]
         "yazi-rs/plugins:full-border" # [[ full-border.yazi ]]
         "yazi-rs/plugins:git" # [[ git.yazi ]]
         "Reledia/hexyl" # [[ hexyl.yazi ]]
