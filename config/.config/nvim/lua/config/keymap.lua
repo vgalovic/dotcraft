@@ -78,6 +78,7 @@ map({ "n", "v" }, "<leader>xa", ":lua FindAndDeleteAll()<CR>", { desc = "Find an
 --
 -- [[ Mini.nvim Keymaps ]]
 map({ "n", "v" }, "-", ":lua MiniFiles.open()<CR>", { desc = "Open Files" })
+map({ "n", "v" }, "<leader>z", ":mksession<CR>", { desc = "Save Session" })
 --
 -- [[ Kitty-nvim navigation Keymaps ]]
 --
