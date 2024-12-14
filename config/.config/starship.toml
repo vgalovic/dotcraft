@@ -1,15 +1,20 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
 # Don't print a new line at the start of the prompt
 add_newline = false
 
+# Color pallet for the prompt
+palette = "catppuccin_mocha"
+
 # Use custom format
 format = """
-[╭─](white)$username$hostname in $directory$package$java$python$git_branch$battery$cmd_duration
-[╰─](white)$character """
+[╭─](text)$username$hostname in $directory$package$java$python$c$lua$git_branch$battery$cmd_duration
+[╰─](text)$character 
+"""
 
 # Wait 10 milliseconds for starship to check files under the current directory.
 scan_timeout = 10
-
-palette = "catppuccin_mocha"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
@@ -57,7 +62,7 @@ disabled = false
 # Directory indicator
 [directory]
 read_only = "🔒"
-style = "bold cyan"
+style = "bold teal"
 read_only_style = "red"
 truncation_length = 8
 truncation_symbol = "…/"
@@ -78,8 +83,21 @@ format = "via [${symbol}${version}]($style) "
 [python]
 symbol = "🐍 "
 style = "yellow bold"
+format = "via [${symbol}${version}]($style) "
 python_binary = "python3"
-pyenv_version_name = true
+# pyenv_version_name = true
+
+# C language settings
+[c]
+symbol = " "
+style = "blue bold"
+format = "via [${symbol}${version}]($style) " 
+
+# Lua language settings
+[lua]
+symbol = "🌙 " 
+style = "peach bold"
+format = "via [${symbol}Lua ${version}]($style) "
 
 # git settings
 [git_branch]
