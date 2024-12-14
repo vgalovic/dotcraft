@@ -37,10 +37,11 @@ After making the scripts executable, you can run the main setup script with:
 
 ## Post-Setup
 
-After restarting, you may want to run `post_run.sh` to complete the setup and install some none essential packages:
+After restarting, you may want to run `post_run.sh` to complete the setup and install some none essential packages. To do so open a terminal and run:
 
 ```shell
-./install/post_run.sh
+cd .dotfiles
+./install/post_run.sh 
 ```
 These commands can't be run from `run.sh` directly.
 
@@ -49,5 +50,5 @@ These commands can't be run from `run.sh` directly.
 The scripts will log their output to `script_output.log`. If something goes wrong during the setup process, you can check this log file to see what happened. This applies to both the `run.sh` script and `post_run.sh`.
 
 ```shell
-cat ./dotfiles/install/output.log
+cat ~/.dotfiles/install/output.log
 ```
