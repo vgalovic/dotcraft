@@ -86,12 +86,13 @@ download_and_install_mega_sync() {
         print_msg "MEGA Sync is already installed. Skipping installation."
         return 0
     fi
-    
-    megasync_path="$download_path/megasync-xUbuntu_${ubuntu_version}_amd64.deb"
+
+    megasync_deb = "megasync-xUbuntu_${ubuntu_version}_amd64.deb"
+    megasync_path = "$download_path/$megasync_deb"
 
     # Download MEGA Sync's deb file as the regular user
     print_msg "Downloading MEGA Sync's deb file..."
-    wget -q "https://mega.nz/linux/repo/xUbuntu_${ubuntu_version}/amd64/megasync-xUbuntu_${ubuntu_version}_amd64.deb" -O "$megasync_path" || {
+    wget -q "https://mega.nz/linux/repo/xUbuntu_${ubuntu_version}/amd64/$megasync_deb" -O "$megasync_path" || {
         print_error "Failed to download MEGA Sync's deb file."
         return 1
     }
@@ -126,11 +127,12 @@ download_and_install_file_manager_integration() {
         return 0
     fi
 
-    file_manager_integration_path="$download_path/${file_manager}-megasync-xUbuntu_${ubuntu_version}_amd64.deb"
+    file_manager_integration_deb = "${file_manager}-megasync-xUbuntu_${ubuntu_version}_amd64.deb"
+    file_manager_integration_path = "$download_path/$file_manager_integration_deb"
 
     # Download MEGA file manager integration deb file
     print_msg "Downloading MEGA file manager integration deb file for $file_manager..."
-    wget -q "https://mega.nz/linux/repo/xUbuntu_${ubuntu_version}/amd64/${file_manager}-megasync-xUbuntu_${ubuntu_version}_amd64.deb" -O "$file_manager_integration_path" || {
+    wget -q "https://mega.nz/linux/repo/xUbuntu_${ubuntu_version}/amd64/$file_manager_integration_deb" -O "$file_manager_integration_path" || {
         print_error "Failed to download MEGA file manager integration deb file for $file_manager."
         return 1
     }
