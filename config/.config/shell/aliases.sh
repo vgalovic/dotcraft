@@ -1,4 +1,15 @@
+
 alias q='exit'
+alias :q='exit'
+
+#--------------------------------------------------------------------------------------
+
+alias c='clear'
+
+#--------------------------------------------------------------------------------------
+
+alias refresh='source ~/.profile && source ~/.zshrc'
+alias update="~/.config/shell/scripts/update.sh"
 
 #--------------------------------------------------------------------------------------
 
@@ -11,30 +22,8 @@ alias apt-autoremove='sudo apt autoremove -y'
 
 #--------------------------------------------------------------------------------------
 
-alias flatpak-install='flatpak install -y'
-alias flatpak-update='flatpak update -y'
-alias flatpak-remove='flatpak remove -y'
-alias flatpak-search='flatpak search'
-alias flatpak-list='flatpak list'
-alias flatpak-info='flatpak info'
-alias flatpak-run='flatpak run'
-
-#--------------------------------------------------------------------------------------
-
-alias brew-install='brew install'
-alias brew-update='brew update'
-alias brew-upgrade='brew upgrade'
-alias brew-remove='brew uninstall'
-alias brew-cleanup='brew cleanup'
-alias brew-search='brew search'
-alias brew-list='brew list'
-alias brew-info='brew info'
-alias brew-leaves='brew leaves'
-
-alias brew-cask-install='brew install --cask'
-alias brew-cask-remove='brew uninstall --cask'
-alias brew-cask-list='brew list --cask'
-alias brew-cask-info='brew info --cask'
+alias weather_vs="curl -s 'wttr.in/Vrbas'"
+alias weather_ns="curl -s 'wttr.in/Novi_Sad'"
 
 #--------------------------------------------------------------------------------------
 
@@ -74,9 +63,10 @@ alias top="btop"
 
 #--------------------------------------------------------------------------------------
 
-alias linutil="curl -fsSL https://christitus.com/linux | sh"
+alias stow_dotfiles="~/.dotfiles/install/setup/setup_stow.sh"
 
 #--------------------------------------------------------------------------------------
 
-alias ani="ani-cli"
+alias linutil="curl -fsSL https://christitus.com/linux | sh"
 
+#--------------------------------------------------------------------------------------

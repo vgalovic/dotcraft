@@ -9,20 +9,7 @@ if command -v starship &>/dev/null; then
     eval "$(starship init bash)"
 fi
 
-#Yazi
-if command -v yazi &>/dev/null; then
-
-    function y() {
-    	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-    	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-            builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-    }
-fi
 #bash-preexec.sh
-
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 
 #atuin
@@ -30,6 +17,13 @@ if command -v atuin &>/dev/null; then
     eval "$(atuin init bash)"
 fi
 
+#nvim
+if command -v nvim &>/dev/null; then
+   export EDITOR=nvim
+   export MANPAGER="nvim +Man!"
+fi
+
+#fzf
 if command -v fzf &>/dev/null; then
 
     # Set up fzf key bindings and fuzzy completion
@@ -49,15 +43,14 @@ fi
 if command -v bat &>/dev/null; then
     alias cat="bat"
 
-    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-    export MANROFFOPT="-c"
-    export MANPAGER="must"
-    export MANPAGER="less -R --use-color -Dd+r -Du+b"
-
-    # in your .bashrc/.zshrc/*rc
     help() {
         "$@" --help 2>&1 | bat --plain --language=help
     }
+
+    # export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    # export MANROFFOPT="-c"
+    # export MANPAGER="must"
+    # export MANPAGER="less -R --use-color -Dd+r -Du+b"
 fi
 
 # ---- Zoxide (better cd) ----
@@ -106,7 +99,7 @@ fi
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-if command -v eza &>/dev/null && command -v fzf &>/dev/null && command -v zoxide &>/dev/null; then
+if command -v eza &>/dev/null && command -v fzf &>/dev/null; then
     show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
 
     export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
