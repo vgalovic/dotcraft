@@ -1,8 +1,15 @@
 install/output.log
+config/.config/bat/themes/
+config/.config/bat/syntaxes/
 config/.config/btop/btop.log
+config/.config/fastanime/user_data.json
+config/.config/fastanime/watch_history.json
 config/.config/nvim/lazy-lock.json
 config/.config/yazi/package.toml
+config/.config/yazi/theme.toml
 config/.config/yazi/plugins/
-config/.config/mpv/scripts/uosc
+config/.config/mpv/scripts/uosc/
+config/.config/mpv/scripts/thumbfast.lua
 config/.config/mpv/fonts/
 config/.config/mpv/script-opts/
+config/.config/mpv/subtitles/
