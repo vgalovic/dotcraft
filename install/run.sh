@@ -14,45 +14,17 @@ if [ ! -d "$SETUP_DIR" ]; then
     exit 1
 fi
 
-# Function to run a setup script without prompting
-must_execute_script() {
-    local script_name="$1"
-    print_msg "Running $script_name..."
-    if [ -x "$SETUP_DIR/$script_name" ]; then
-        if "$SETUP_DIR/$script_name"; then
-            print_msg "Successfully ran $script_name."
-        else
-            print_error "Failed to run $script_name."
-        fi
-    else
-        print_error "$script_name is not executable or not found."
-    fi
-}
-
-# Function to execute a script with a user prompt
-execute_script() {
-    local script="$1"
-    if prompt_yes_default "Do you want to install $script?"; then
-        if "$SETUP_DIR/$script"; then
-            print_msg "Successfully ran $script."
-        else
-            print_error "Failed to run $script."
-        fi
-    else
-        print_msg "Skipping installation of $script."
-    fi
-}
 
 # Run essential setup scripts without prompting
-must_execute_script "setup_apt.sh"
-must_execute_script "setup_kvantum_papirus.sh"
+must_execute_script "setup_apt"
+must_execute_script "setup_kvantum_papirus"
 
 # Execute other setup scripts with user prompts
-for script in setup_flatpack.sh setup_brew.sh setup_terminal_and_prompt.sh setup_mega_sync.sh setup_rust.sh setup_games.sh setup_ani-cli.sh; do
+for script in setup_flatpack setup_brew setup_terminal_and_prompt setup_mega_sync setup_rust; do
     execute_script "$script"
 done
 
-must_execute_script "setup_stow.sh"
+must_execute_script "setup_stow"
 
 # Helper function for downloading files
 download_file() {
@@ -61,16 +33,10 @@ download_file() {
     curl -fsSL "$url" -o "$dest" || print_error "Failed to download from $url"
 }
 
-# Download and install bash-preexec script
-print_msg "Downloading bash-preexec script..."
-download_file "https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh" "$HOME/.bash-preexec.sh"
-
-if command -v mpv >/dev/null; then
-    if prompt_yes_default "Do you want to install uosc (mpv skin)?"; then
-        print_msg "Downloading uosc..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/tomasklaen/uosc/HEAD/installers/unix.sh)" || print_error "Failed to download uosc"
-        print_msg "uisc installed successfully."
-    fi
+if command -v bash >/dev/null; then
+    # Download and install bash-preexec script
+    print_msg "Downloading bash-preexec script..."
+    download_file "https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh" "$HOME/.bash-preexec.sh"
 fi
 
 # Install Zen Browser

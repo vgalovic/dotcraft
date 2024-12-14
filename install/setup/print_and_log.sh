@@ -41,3 +41,32 @@ prompt_yes_default() {
     read -p "$prompt (Y/n): " choice
     [[ -z "$choice" || "${choice,,}" == "y" ]]
 }
+
+# Function to run a setup script without prompting
+must_execute_script() {
+    local script="$1"
+    print_msg "Running $script..."
+    if [ -x "$SETUP_DIR/$script.sh" ]; then
+        if "$SETUP_DIR/$script.sh"; then
+            print_msg "Successfully ran $script_name."
+        else
+            print_error "Failed to run $script_name."
+        fi
+    else
+        print_error "$script is not executable or not found."
+    fi
+}
+
+# Function to execute a script with a user prompt
+execute_script() {
+    local script="$1"
+    if prompt_yes_default "Do you want to run $script?"; then
+        if "$SETUP_DIR/$script.sh"; then
+            print_msg "Successfully ran $script."
+        else
+            print_error "Failed to run $script."
+        fi
+    else
+        print_msg "Skipping execution of $script."
+    fi
+}
