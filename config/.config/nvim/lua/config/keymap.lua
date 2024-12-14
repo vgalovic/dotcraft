@@ -13,7 +13,6 @@ map({ "n", "v", "i" }, "<Right>", "<cmd>echo 'Use L key!'<CR>", { noremap = true
 local wk = require("which-key")
 
 wk.add({
-	{ "<leader>m", group = "Markdown", mode = { "n", "v" }, icon = " " },
 	{ "<leader>r", group = "Find and Replace", mode = { "n", "v" }, icon = "󰛔" },
 	{ "<leader>x", group = "Find and Delete", mode = { "n", "v" }, icon = "󰆴" },
 	{ "<leader>l", group = "LSP", mode = { "n", "v" }, icon = "" },
@@ -76,6 +75,10 @@ map(
 -- Find and Delete without confirmation
 map({ "n", "v" }, "<leader>xa", ":lua FindAndDeleteAll()<CR>", { desc = "Find and delete all occurrences" })
 --
+--
+-- [[ Mini.nvim Keymaps ]]
+map({ "n", "v" }, "-", ":lua MiniFiles.open()<CR>", { desc = "Open Files" })
+--
 -- [[ Kitty-nvim navigation Keymaps ]]
 --
 if os.getenv("TERM") == "xterm-kitty" then
@@ -87,9 +90,49 @@ if os.getenv("TERM") == "xterm-kitty" then
 	map("n", "<C-K>", "<cmd>KittyNavigateUp<cr>", { desc = "(Kitty) Move focus to the upper window" })
 end
 --
---[[ Dashboard Keymap ]]
+--[[ Snacks Keymap ]]
 --
-wk.add({ "<leader>d", "<cmd>Dashboard<cr>", mode = "n", desc = "Open Dashboard", icon = "" })
+Snacks = require("snacks")
+wk.add({
+	{
+		"<leader>sn",
+		":lua Snacks.notifier.show_history()<CR>",
+		desc = "Notification History",
+	},
+	{
+		"<leader>gf",
+		":lua Snacks.lazygit.log_file()<CR>",
+		desc = "Lazygit Current File History",
+	},
+	{
+		"<leader>gg",
+		":lua Snacks.lazygit()<CR>",
+		desc = "Lazygit",
+	},
+	{
+		"<leader>gl",
+		":lua Snacks.lazygit.log()<CR>",
+		desc = "Lazygit Log (cwd)",
+	},
+	{
+		"<c-/>",
+		":lua Snacks.terminal()<CR>",
+		desc = "Toggle Terminal",
+	},
+	{
+		"]]",
+		":lua Snacks.words.jump(vim.v.count1)<CR>",
+		desc = "Next Reference",
+		mode = { "n", "t" },
+	},
+	{
+		"[[",
+		":lua Snacks.words.jump(-vim.v.count1)<CR>",
+		desc = "Prev Reference",
+		mode = { "n", "t" },
+	},
+})
+
 --
 -- [[ navigation Keymaps ]]
 --
@@ -107,27 +150,16 @@ nvim_map("n", "<A-q>", "<Cmd>bd<CR>", { desc = "Quit curetn buffer" })
 --
 -- [[ Split Keymaps ]]
 --
-wk.add({ "<leader>v", "<C-w>v", desc = "Vertical split", mode = { "n", "v" }, icon = "" }) -- Icon for vertical split
-wk.add({ "<leader>h", "<C-w>s", desc = "Horizontal split", mode = { "n", "v" }, icon = "" }) -- Icon for horizontal split
+wk.add({
+	{ "<leader>v", "<C-w>v", desc = "Vertical split", mode = { "n", "v" }, icon = "" }, -- Icon for vertical split
+	{ "<leader>h", "<C-w>s", desc = "Horizontal split", mode = { "n", "v" }, icon = "" }, -- Icon for horizontal split
+})
 --
 -- [[ Gitsigns keymaps ]]
 --
 map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Preview git hunk" })
 map("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "Toggle curetn line blame" })
 map("n", "<leader>gd", "<cmd>Gitsigns toggle_deleted<CR>", { desc = "Toggle deleted lines from git" })
---
---[[ Neogit keymaps ]]
-map("n", "<leader>gn", "<cmd>Neogit cwd=%:p:h<CR>", { desc = "Oepen Neogit for directory of curetn file" })
---
--- [[ Markdown Preview Keymaps ]]
---
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "markdown",
-	callback = function()
-		wk.add({ "<leader>mr", ":MarkdownPreview<CR>", desc = "Start Preview", icon = "" }) -- Play button for 'start'
-		wk.add({ "<leader>ms", ":MarkdownPreviewStop<CR>", desc = "Stop Preview", icon = "" }) -- Stop button for 'stop'
-	end,
-})
 --
 --
 -- [[ Telescope Keymaps ]]
@@ -206,47 +238,6 @@ wk.add({
 	icon = "🖌️",
 })
 --
--- [[ Oil keymaps ]]
---
-wk.add({ "-", require("oil").toggle_float, opts, desc = "Oil File Manager", icon = "󱏒" })
-
-local function setup_oil_keys()
-	require("oil").setup({
-		keymaps = {
-			["g?"] = "actions.show_help",
-			["<CR>"] = "actions.select",
-			["<C-s>"] = {
-				"actions.select",
-				opts = { vertical = true },
-				desc = "Open the entry in a vertical split",
-			},
-			["<C-h>"] = {
-				"actions.select",
-				opts = { horizontal = true },
-				desc = "Open the entry in a horizontal split",
-			},
-			["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
-			["<c-p>"] = "actions.preview",
-			["<Esc>"] = "actions.close",
-			["<C-r>"] = "actions.refresh",
-			["<backspace>"] = "actions.parent",
-			["_"] = "actions.open_cwd",
-			["`"] = "actions.cd",
-			["~"] = {
-				"actions.cd",
-				opts = { scope = "tab" },
-				desc = ":tcd to the current oil directory",
-				mode = "n",
-			},
-			["gs"] = "actions.change_sort",
-			["gx"] = "actions.open_external",
-			["g."] = "actions.toggle_hidden",
-			["g\\"] = "actions.toggle_trash",
-		},
-	})
-end
---
-setup_oil_keys()
 --
 -- [[ LSP Keymaps ]]
 --
