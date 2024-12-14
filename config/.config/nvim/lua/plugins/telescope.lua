@@ -166,6 +166,5 @@ return { -- Fuzzy Finder (files, lsp, etc)
 				cwd = vim.fn.stdpath("config"),
 			})
 		end
-		require("telescope").load_extension("notify")
 	end,
 }
