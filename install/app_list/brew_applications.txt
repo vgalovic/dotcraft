@@ -1,12 +1,14 @@
 arduino-cli
 atuin
 bat
+bear
 btop
 eza
 fastfetch
 fd
 ffmpegthumbnailer
 fzf
+git-delta
 imagemagick
 jq
 lazygit
@@ -22,5 +24,4 @@ sevenzip
 thefuck
 tlrc
 yazi
-yarn
 zoxide

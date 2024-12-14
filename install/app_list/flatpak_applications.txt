@@ -1,10 +1,11 @@
-com.github.tchx84.Flatseal
-io.github.giantpinkrobots.flatsweep
 com.brave.Browser
 com.bitwarden.desktop
 com.discordapp.Discord
+com.github.tchx84.Flatseal
 com.notesnook.Notesnook
 io.ente.auth
 io.github.amit9838.mousam
+io.github.fsobolev.TimeSwitch
+io.github.giantpinkrobots.flatsweep
 it.mijorus.gearlever
 org.qbittorrent.qBittorrent
