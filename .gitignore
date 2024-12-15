@@ -14,3 +14,4 @@ config/.config/mpv/fonts/
 config/.config/mpv/script-opts/
 config/.config/mpv/subtitles/
 config/.config/yazi/theme.toml
+config/.config/glow/themes
