@@ -17,12 +17,14 @@ if command -v mpv >/dev/null; then
 fi
 
 if command -v bat >/dev/null; then
-    print_msg "Installing bat-extras..."
     execute_script "setup_bat"
 fi
 
 if command -v yazi >/dev/null; then
-    print_msg "Installing yazi-extras..."
     execute_script "setup_yazi_plugin"
+fi
+
+if command -v glow >/dev/null; then
+    execute_script "setup_glow"
 fi
 
