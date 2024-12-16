@@ -77,8 +77,26 @@ map({ "n", "v" }, "<leader>xa", ":lua FindAndDeleteAll()<CR>", { desc = "Find an
 --
 --
 -- [[ Mini.nvim Keymaps ]]
-map({ "n", "v" }, "-", ":lua MiniFiles.open()<CR>", { desc = "Open Files" })
-map({ "n", "v" }, "<leader>z", ":mksession<CR>", { desc = "Save Session" })
+--
+MiniFiles = require("mini.files")
+wk.add({
+	{
+		"-",
+		function()
+			MiniFiles.open()
+		end,
+		mode = { "n", "v" },
+		desc = "Open Files",
+	},
+	{ "<leader>z", "<cmd>mksession<CR>", mode = { "n", "v" }, desc = "Save Session" },
+})
+--
+-- [[ navigation Keymaps ]]
+--
+map("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
 --
 -- [[ Kitty-nvim navigation Keymaps ]]
 --
@@ -97,50 +115,56 @@ Snacks = require("snacks")
 wk.add({
 	{
 		"<leader>sn",
-		":lua Snacks.notifier.show_history()<CR>",
+		function()
+			Snacks.notifier.show_history()
+		end,
 		desc = "Notification History",
 	},
 	{
 		"<leader>gf",
-		":lua Snacks.lazygit.log_file()<CR>",
+		function()
+			Snacks.lazygit.log_file()
+		end,
 		desc = "Lazygit Current File History",
 	},
 	{
 		"<leader>gg",
-		":lua Snacks.lazygit()<CR>",
+		function()
+			Snacks.lazygit()
+		end,
 		desc = "Lazygit",
 	},
 	{
 		"<leader>gl",
-		":lua Snacks.lazygit.log()<CR>",
+		function()
+			Snacks.lazygit.log()
+		end,
 		desc = "Lazygit Log (cwd)",
 	},
 	{
 		"<c-/>",
-		":lua Snacks.terminal()<CR>",
+		function()
+			Snacks.terminal()
+		end,
 		desc = "Toggle Terminal",
 	},
 	{
 		"]]",
-		":lua Snacks.words.jump(vim.v.count1)<CR>",
+		function()
+			Snacks.words.jump(vim.v.count1)
+		end,
 		desc = "Next Reference",
 		mode = { "n", "t" },
 	},
 	{
 		"[[",
-		":lua Snacks.words.jump(-vim.v.count1)<CR>",
+		function()
+			Snacks.words.jump(-vim.v.count1)
+		end,
 		desc = "Prev Reference",
 		mode = { "n", "t" },
 	},
 })
-
---
--- [[ navigation Keymaps ]]
---
-map("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
-map("n", "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
-map("n", "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
 --
 --[[ Buffer Keymaps ]]
 --
