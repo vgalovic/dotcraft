@@ -62,6 +62,7 @@ install_yazi_plugins() {
         "Reledia/glow" # [[ glow.yazi ]]
         "Reledia/hexyl" # [[ hexyl.yazi ]]
         "Lil-Dank/lazygit" # [[ lazygit.yazi ]]
+        "yazi-rs/plugins:max-preview" # [[ max-preview.yazi ]]
         "AnirudhG07/rich-preview" # [[ rich-preview.yazi ]]
         "Rolv-Apneseth/starship" # [[ starship.yazi ]]
     )
