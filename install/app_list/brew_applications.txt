@@ -9,7 +9,6 @@ fd
 ffmpegthumbnailer
 fzf
 git-delta
-glow
 imagemagick
 jq
 lazygit

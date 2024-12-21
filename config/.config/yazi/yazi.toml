@@ -37,7 +37,7 @@ rules = [
 prepend_previewers = [
 	{ mime = "audio/*", run = "exifaudio" },
 	{ name = "*/", run = "eza-preview" },
-	{ name = "*.md", run = "glow" }, # for markdown files
+	{ name = "*.md", run = "rich-preview"}, # for markdown files
         { name = "*.csv", run = "rich-preview"}, # for csv files
 	{ name = "*.rst", run = "rich-preview"}, # for restructured text (.rst) files
 	{ name = "*.ipynb", run = "rich-preview"}, # for jupyter notebooks (.ipynb)
