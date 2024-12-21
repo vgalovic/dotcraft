@@ -3,6 +3,9 @@ prepend_keymap = [
   # Go to dotfiles
   { on = [ "g", "." ], run = "cd ~/.dotfiles", desc = "Go to dotfiles" },
 
+  # Go to media
+  { on = [ "g", "m" ], run = "cd /media/$USER", desc = "Go to media" },
+
   # eza-preview
   { on = ["E"], run = "plugin eza-preview", desc = "Toggle tree/list dir preview" },
   { on = ["-"], run = "plugin eza-preview --args='inc-level'", desc = "Increment tree level" },
