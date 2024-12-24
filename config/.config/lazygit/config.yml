@@ -24,3 +24,6 @@ theme:
 
 authorColors:
   '*': '#b4befe'
+
+gui:
+  nerdFontsVersion: "3"
