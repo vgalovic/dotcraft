@@ -20,6 +20,9 @@ return {
 
 				lsp_utils = require("config/autocommand").setup_lsp_progress(),
 			},
+			lazygit = {
+				configure = false,
+			},
 			quickfile = { enabled = true },
 			statuscolumn = { enabled = true },
 			words = {
