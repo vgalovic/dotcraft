@@ -24,7 +24,3 @@ if command -v yazi >/dev/null; then
     execute_script "setup_yazi_plugin"
 fi
 
-if command -v glow >/dev/null; then
-    execute_script "setup_glow"
-fi
-
