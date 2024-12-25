@@ -1,0 +1,151 @@
+! Font Settings
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: true
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcddefault
+
+! Enable clipboard support
+*selectToClipboard: true
+
+! Keybindings for copy and paste
+*VT100.translations: #override \
+    Ctrl Shift <KeyPress>C: copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <KeyPress>V: insert-selection(CLIPBOARD)
+
+! Enable locale settings
+*locale: true
+
+! Use UTF-8
+*utf8: 2
+
+! Maximum scrollback lines
+*savelines: 16384
+
+! Enable login shell
+*loginshell: true
+
+! Use xdg-open for URLs
+*url-launcher: xdg-open
+
+! Open URLs with left-click
+*matcher.button: 1
+
+! Open URLs in URL-select mode
+*url-select.launcher: xdg-open
+
+! Define URL character set
+*charClass: 33-47:96,58-59:96,61:96,63-64:96,95:96,126:96
+
+! Internal border width
+*vt100.internalBorder: 6
+
+! Ensure proper rendering of box characters
+*forceBoxChars: false
+
+! Scale height for text
+*vt100.scaleHeight: 1.0
+
+! Enable mouse operations
+*allowMouseOps: true
+
+! Enable title operations
+*allowTitleOps: true
+
+! Disable scrollbar
+*scrollBar: false
+
+! Enable scrolling with keyboard
+*scrollTtyOutput: true
+
+! Enable scrolling with keypress
+*scrollKey: true
+
+! Highlight selected text
+*highlightSelection: true
+
+! Set cursor shape to a line
+*cursorShape: line
+
+! Enable cursor blinking
+*cursorBlink: true
+
+! Very bold colors
+*veryBoldColors: 4
+
+! Enable bold mode
+*colorBDMode: true
+
+! Font face
+*faceName: JetBrainsMono Nerd Font
+
+! Font size
+*faceSize: 11
+
+! Font style
+*faceStyle: Regular
+
+! Enable font rendering
+*renderFont: true
+
+! Allow bold fonts
+*allowBoldFonts: true
+
+! Use Xft for rendering
+*useXft: true
+
+! Enable wide character support
+*wideChars: true
+
+! Adjust character spacing (horizontal spacing)
+*letterSpacing: 2
+
+! Default terminal size
+*vt100.geometry: 180x40
+
+!! Catppuccin Mocha Theme
+
+! Background color
+*background: #24273a
+
+! Foreground color
+*foreground: #cdd6f4
+
+! Cursor color
+*cursorColor: #f5e0dc
+
+! Terminal colors (Catppuccin Mocha Theme)
+*color0: #45475a
+*color1: #f38ba8
+*color2: #a6e3a1
+*color3: #f9e2af
+*color4: #89b4fa
+*color5: #f5c2e7
+*color6: #94e2d5
+*color7: #bac2de
+*color8: #585b70
+*color9: #f38ba8
+*color10: #a6e3a1
+*color11: #f9e2af
+*color12: #89b4fa
+*color13: #f5c2e7
+*color14: #94e2d5
+*color15: #a6adc8
+
+! Selection background color
+*selectionBackground: #585b70
+
+! Selection foreground color
+*selectionForeground: #cdd6f4
+
+! Tab activity color
+*tabActivityColor: #fab387
+
+! Bold color
+*colorBD: #f5e0dc
+
+! Reverse video color
+*colorRV: #f5c2e7
+
