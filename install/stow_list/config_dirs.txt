@@ -3,7 +3,6 @@ btop
 conky
 fastanime
 fastfetch
-glow
 kitty
 lazygit
 mpv
