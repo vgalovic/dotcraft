@@ -1,2 +1,7 @@
-[ -f ~/.config/shell/bash/plugins.bash ] && source ~/.config/shell/bash/plugins.bash
-[ -f ~/.config/shell/aliases.sh ] && source ~/.config/shell/aliases.sh
+for file in ~/.config/shell/*.sh; do
+    source "$file"
+done
+
+for file in ~/.config/shell/bash/*.bash; do
+    source "$file"
+done

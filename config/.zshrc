@@ -1,6 +1,7 @@
-for file in ~/.config/shell/zsh/*.zsh; do
+for file in ~/.config/shell/*.sh; do
     source "$file"
 done
 
-source ~/.config/shell/aliases.sh
-
+for file in ~/.config/shell/zsh/*.zsh; do
+    source "$file"
+done
