@@ -10,7 +10,13 @@ return { -- Collection of various small independent plugins/modules
 		--  - yinq - [Y]ank [I]nside [N]ext [Q]uote
 		--  - ci'  - [C]hange [I]nside [']quote
 		require("mini.ai").setup({ n_lines = 500 })
-
+		--
+		-- Better indentation
+		--
+		-- vii Object scope
+		-- vai Object scope with border
+		-- [i Go to top of scope
+		-- ]i Go to bottom of scope
 		require("mini.indentscope").setup({
 			symbol = "│",
 		})
@@ -41,10 +47,13 @@ return { -- Collection of various small independent plugins/modules
 		})
 		--
 		require("mini.files").setup({
+			mappings = {
+				go_in_plus = "<CR>",
+			},
 			windows = {
 				preview = true,
-				width_nofocus = 30,
-				width_focus = 30,
+				width_nofocus = 40,
+				width_focus = 40,
 				width_preview = 50,
 			},
 		})
