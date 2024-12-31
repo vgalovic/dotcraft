@@ -13,12 +13,13 @@ return {
 			bigfile = { enabled = true },
 			indent = { enabled = true },
 			scroll = { enabled = true },
+			input = { enabled = true },
 			notifier = {
 				enabled = true,
 				style = "fancy", -- "compact" "fancy" "minimal"
 				top_down = true,
 
-				lsp_utils = require("config/autocommand").setup_lsp_progress(),
+				lsp_utils = require("config/autocommands").setup_lsp_progress(),
 			},
 			lazygit = {
 				configure = false,
