@@ -13,13 +13,13 @@ return { -- Autoformat
 			}
 		end,
 		formatters_by_ft = {
-			ino = { "arduino_language_server" },
 			sh = { "beautysh" },
-			lua = { "stylua" },
-			c = { "arduino_language_server", "ast-grep", "clang-format", "clanged" },
-			cpp = { "arduino_language_server", "ast-grep", "clang-format", "clanged" },
+			bash = { "beautysh" },
+			zsh = { "beautysh" },
+			lua = { "stylua", "ast-grep" },
+			c = { "ast-grep" },
+			cpp = { "ast-grep" },
 			python = { "ruff", "ast-grep" },
-			-- assembly = { "asmfmt" },
 			latex = { "latexindent" },
 			SystemVerilog = { "verible" },
 		},
