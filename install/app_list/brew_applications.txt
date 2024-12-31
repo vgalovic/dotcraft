@@ -1,5 +1,4 @@
 arduino-cli
-ast-grep
 atuin
 bat
 bear
