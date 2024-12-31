@@ -9,9 +9,11 @@ map({ "n", "v", "i" }, "<Up>", "<cmd>echo 'Use K key!'<CR>", { noremap = true })
 map({ "n", "v", "i" }, "<Down>", "<cmd>echo 'Use J key!'<CR>", { noremap = true })
 map({ "n", "v", "i" }, "<Left>", "<cmd>echo 'Use H key!'<CR>", { noremap = true })
 map({ "n", "v", "i" }, "<Right>", "<cmd>echo 'Use L key!'<CR>", { noremap = true })
-
+--
+-- [[ Which-Key Groups ]]
+--
 local wk = require("which-key")
-
+--
 wk.add({
 	{ "<leader>r", group = "Find and Replace", mode = { "n", "v" }, icon = "󰛔" },
 	{ "<leader>x", group = "Find and Delete", mode = { "n", "v" }, icon = "󰆴" },
@@ -22,6 +24,7 @@ wk.add({
 --
 --
 -- [[ Enables ";" to call command ]]
+--
 map({ "n", "v" }, ";", ":")
 map({ "n", "v" }, "č", ":")
 map({ "n", "v" }, "Č", ":")
@@ -39,6 +42,7 @@ map("v", "<A-w>", "<Esc>:lua SaveAs()<CR>", opts) -- Visual mode
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Stop the highlighting for the 'hlsearch' option." })
+--
 -- Diagnostic keymaps
 map("n", "<leader>q", "<Cmd>lua vim.diagnostic.setloclist()<CR>", { desc = "Open diagnostic Quickfix list" })
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
@@ -48,6 +52,8 @@ map("n", "<leader>q", "<Cmd>lua vim.diagnostic.setloclist()<CR>", { desc = "Open
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+--
+-- [[ New File keymap ]]
 --
 map("n", "<leader>+", ":enew<cr>:lua SaveAs()<CR>", { desc = "new file" })
 --
@@ -83,12 +89,19 @@ wk.add({
 	{
 		"-",
 		function()
-			MiniFiles.open()
+			MiniFiles.open(vim.api.nvim_buf_get_name(0))
 		end,
 		mode = { "n", "v" },
 		desc = "Open Files",
 	},
 	{ "<leader>z", "<cmd>mksession<CR>", mode = { "n", "v" }, desc = "Save Session" },
+})
+--
+-- [[ Dropbar Keymaps ]]
+--
+local dropbar_api = require("dropbar.api")
+wk.add({
+	{ ".", dropbar_api.pick, mode = { "n" }, desc = "Pick symbols in winbar", icon = "" },
 })
 --
 -- [[ navigation Keymaps ]]
@@ -97,17 +110,6 @@ map("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
---
--- [[ Kitty-nvim navigation Keymaps ]]
---
-if os.getenv("TERM") == "xterm-kitty" then
-	vim.g.kitty_navigator_no_mappings = true
-
-	map("n", "<C-H>", "<cmd>KittyNavigateLeft<cr>", { desc = "(Kitty) Move focus to the left window" })
-	map("n", "<C-L>", "<cmd>KittyNavigateRight<cr>", { desc = "(Kitty) Move focus to the right window" })
-	map("n", "<C-J>", "<cmd>KittyNavigateDown<cr>", { desc = "(Kitty) Move focus to the lower window" })
-	map("n", "<C-K>", "<cmd>KittyNavigateUp<cr>", { desc = "(Kitty) Move focus to the upper window" })
-end
 --
 --[[ Snacks Keymap ]]
 --
@@ -144,7 +146,7 @@ wk.add({
 	{
 		"<c-/>",
 		function()
-			Snacks.terminal()
+			Snacks.terminal.toggle()
 		end,
 		desc = "Toggle Terminal",
 	},
@@ -219,37 +221,6 @@ wk.add({
 	desc = "Fuzzily search in current buffer",
 	icon = "📋",
 })
---
--- [[ Autocmplete Keymaps ]]
---
-local cmp = require("cmp")
-local luasnip = require("luasnip")
-
-local function setup_cmp_mappings()
-	cmp.setup({
-		mapping = {
-			["<C-n>"] = cmp.mapping.select_next_item(),
-			["<C-p>"] = cmp.mapping.select_prev_item(),
-			["<C-b>"] = cmp.mapping.scroll_docs(-4),
-			["<C-f>"] = cmp.mapping.scroll_docs(4),
-			["<C-y>"] = cmp.mapping.confirm({ select = true }),
-			["<C-.>"] = cmp.mapping.complete({}),
-			["<C-l>"] = cmp.mapping(function()
-				if luasnip.expand_or_locally_jumpable() then
-					luasnip.expand_or_jump()
-				end
-			end, { "i", "s" }),
-			["<C-h>"] = cmp.mapping(function()
-				if luasnip.locally_jumpable(0) then
-					luasnip.jump(0)
-				end
-			end, { "i", "s" }),
-		},
-	})
-end
---
--- Call the function to set up mappings
-setup_cmp_mappings()
 --
 -- [[ Autoformat Keymaps ]]
 --
