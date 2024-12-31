@@ -10,6 +10,11 @@
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
+    # include .bashenv if it exists
+    if [ -f "$HOME/.bashenv" ]; then
+	. "$HOME/.bashenv"
+    fi
+
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
 	. "$HOME/.bashrc"
