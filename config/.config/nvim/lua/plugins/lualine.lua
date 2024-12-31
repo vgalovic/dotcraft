@@ -24,11 +24,11 @@ return {
 				lualine_y = {},
 				lualine_z = {},
 			},
-			tabline = {
-				lualine_b = { { "filename", file_status = false, newfile_status = true, path = 4 } },
-				lualine_y = { { "datetime", style = "%H:%M" } },
-				lualine_z = { { "datetime", style = "%d.%m.%Y." } },
-			},
+			-- tabline = {
+			-- 	lualine_c = { { "filename", file_status = false, newfile_status = true, path = 4 } },
+			-- 	lualine_y = { { "datetime", style = "%H:%M" } },
+			-- 	lualine_z = { { "datetime", style = "%d.%m.%Y." } },
+			-- },
 			extensions = { "fugitive" },
 		})
 	end,
