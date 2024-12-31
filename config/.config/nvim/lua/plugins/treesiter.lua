@@ -28,7 +28,6 @@ return {
 				"vimdoc",
 				"vhdl",
 				"verilog",
-				-- "systemverilog",
 			},
 
 			highlight = {
