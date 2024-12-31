@@ -26,8 +26,9 @@ async_job plugin_load() {
     alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 
     # Eza - Enhanced `ls` replacement
-    alias ls="eza --color=always --long --git --icons=always"
-    alias la="eza --color=always --long --git --icons=always -a"
+    alias ls="eza --color=always --icons=always --hyperlink"
+    alias la="eza --color=always --icons=always --hyperlink --all"
+    alias ll="eza --color=always --long --git --icons=always --hyperlink --all"
 
     # FZF - Command-line fuzzy finder
     eval "$(fzf --zsh)"
