@@ -9,5 +9,6 @@ mpv
 neovide
 nvim
 shell
+television
 yazi
 zed
