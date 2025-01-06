@@ -16,6 +16,10 @@ return {
 				end,
 			},
 
+			trigger = {
+				show_on_insert_on_trigger_character = false,
+			},
+
 			menu = {
 				auto_show = function(ctx)
 					return ctx.mode ~= "cmdline" or not vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
@@ -29,6 +33,7 @@ return {
 						{ "label", "label_description", gap = 2 },
 						{ "kind_icon", "kind" },
 					},
+
 					components = {
 						item_idx = {
 							text = function(ctx)
