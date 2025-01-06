@@ -1,7 +1,20 @@
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
+
 	init = function()
+		-- Define the custom macro recording function directly within the setup
+		local function macro_recording()
+			local recording_register = vim.fn.reg_recording()
+
+			if recording_register == "" then
+				return ""
+			else
+				return "Recording @" .. recording_register
+			end
+		end
+
+		-- Set up lualine
 		require("lualine").setup({
 			options = {
 				theme = "catppuccin",
@@ -12,7 +25,13 @@ return {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = { "buffers" },
-				lualine_x = { "filetype", "encoding", "fileformat" },
+				lualine_x = {
+					-- Use the macro recording function directly
+					{ macro_recording, color = { fg = "#cdd6f4" } },
+					"filetype",
+					"encoding",
+					"fileformat",
+				},
 				lualine_y = { "progress" },
 				lualine_z = { "location" },
 			},
@@ -24,11 +43,6 @@ return {
 				lualine_y = {},
 				lualine_z = {},
 			},
-			-- tabline = {
-			-- 	lualine_c = { { "filename", file_status = false, newfile_status = true, path = 4 } },
-			-- 	lualine_y = { { "datetime", style = "%H:%M" } },
-			-- 	lualine_z = { { "datetime", style = "%d.%m.%Y." } },
-			-- },
 			extensions = { "fugitive" },
 		})
 	end,

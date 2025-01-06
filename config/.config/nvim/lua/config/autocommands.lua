@@ -1,6 +1,6 @@
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
-
+--
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
@@ -13,13 +13,40 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 --
 --
+local M = {}
+--
+-- [[ Lualine Autocommands ]]
+--
+-- Autocommands to refresh lualine when macro starts/stops
+function M.lualine_recorde_macro()
+	vim.api.nvim_create_autocmd("RecordingEnter", {
+		callback = function()
+			require("lualine").refresh({
+				place = { "statusline" },
+			})
+		end,
+	})
+	--
+	vim.api.nvim_create_autocmd("RecordingLeave", {
+		callback = function()
+			local timer = vim.loop.new_timer()
+			timer:start(
+				50,
+				0,
+				vim.schedule_wrap(function()
+					require("lualine").refresh({
+						place = { "statusline" },
+					})
+				end)
+			)
+		end,
+	})
+end
+--
 --[[ LSP Autocommands]]
 --
 -- Utility functions shared between progress reports for LSP and DAP
-
 --
-local M = {}
-
 function M.setup_lsp_autocommands()
 	local augroup_lsp_attach = vim.api.nvim_create_augroup("lsp-attach", { clear = true })
 
@@ -58,7 +85,7 @@ function M.setup_lsp_autocommands()
 		end,
 	})
 end
-
+--
 function M.setup_lsp_progress()
 	---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
 	local progress = vim.defaulttable()
@@ -104,5 +131,5 @@ function M.setup_lsp_progress()
 		end,
 	})
 end
-
+--
 return M
