@@ -1,7 +1,6 @@
--- To reduce the time it takes to invoke a function, set locals from the mapping keymapskekeke
+-- To reduce the time it takes to invoke a function, set locals from the mapping keymaps
 local map = vim.keymap.set
-local nvim_map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = true }
+-- local nvim_map = vim.api.nvim_set_keymap
 --
 -- [[ Disable arow keys ]]
 --
@@ -15,13 +14,12 @@ map({ "n", "v", "i" }, "<Right>", "<cmd>echo 'Use L key!'<CR>", { noremap = true
 local wk = require("which-key")
 --
 wk.add({
-	{ "<leader>r", group = "Find and Replace", mode = { "n", "v" }, icon = "󰛔" },
-	{ "<leader>x", group = "Find and Delete", mode = { "n", "v" }, icon = "󰆴" },
-	{ "<leader>l", group = "LSP", mode = { "n", "v" }, icon = "" },
-	{ "<leader>g", group = "Git", mode = { "n" } },
-	{ "<leader>s", group = "Search", mode = { "n", "v" }, icon = "🔍" },
+	{ "<leader>r", group = "Find and Replace", mode = { "n", "v" }, icon = "󰛔 " },
+	{ "<leader>x", group = "Find and Delete", mode = { "n", "v" }, icon = "󰆴 " },
+	{ "<leader>l", group = "LSP", mode = { "n", "v" }, icon = " " },
+	{ "<leader>g", group = "Git", mode = { "n" }, icon = " " },
+	{ "<leader>s", group = "Search", mode = { "n", "v" }, icon = " " },
 })
---
 --
 -- [[ Enables ";" to call command ]]
 --
@@ -29,22 +27,52 @@ map({ "n", "v" }, ";", ":")
 map({ "n", "v" }, "č", ":")
 map({ "n", "v" }, "Č", ":")
 --
--- [[ SaveAs() Keymaps ]]
+-- [[ navigation Keymaps ]]
 --
-map("n", "<A-w>", ":lua SaveAs()<CR>", opts) -- Normal mode
-map("i", "<A-w>", "<Esc>:lua SaveAs()<CR>a", opts) -- Insert mode
-map("v", "<A-w>", "<Esc>:lua SaveAs()<CR>", opts) -- Visual mode
+map("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
+map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
+map("n", "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
+map("n", "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
 --
--- Other configurations can go here...
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
+-- [[ Split Keymaps ]]
+--
+wk.add({
+	{ "<leader>v", "<C-w>v", desc = "Vertical split", mode = { "n", "v" }, icon = "" }, -- Icon for vertical split
+	{ "<leader>h", "<C-w>s", desc = "Horizontal split", mode = { "n", "v" }, icon = "" }, -- Icon for horizontal split
+})
+--
+--[[ Buffer Keymaps ]]
+--
+map({ "n", "v" }, "<A-j>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer" })
+map({ "n", "v" }, "<A-k>", "<CMD>bnext<CR>", { desc = "Go to next buffer" })
+map({ "n", "v" }, "<A-s>", "<cmd>b#<cr>", { desc = "Go to last active buffer" })
+map({ "n", "v" }, "<A-q>", "<Cmd>bd<CR>", { desc = "Quit curetn buffer" })
+--
+-- [[ highlights keymap ]]
 --
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Stop the highlighting for the 'hlsearch' option." })
 --
--- Diagnostic keymaps
-map("n", "<leader>q", "<Cmd>lua vim.diagnostic.setloclist()<CR>", { desc = "Open diagnostic Quickfix list" })
+-- [[ Visual keymaps ]]
+--
+map("v", "<C-s>", ":sort<CR>") -- Sort highlighted text in visual mode with Control+S
+map("v", "K", ":m '>-2<CR>gv=gv") -- Move current line up
+map("v", "J", ":m '>+1<CR>gv=gv") -- Move current line down
+--
+-- [[ Diagnostic keymap ]]
+--
+wk.add({
+	"<leader>q",
+	function()
+		vim.diagnostic.setloclist()
+	end,
+	desc = "Open diagnostic Quickfix list",
+	icon = "󱖫 ",
+})
+--
+-- [[ Terminal keymap ]]
+--
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -55,32 +83,62 @@ map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 --
 -- [[ New File keymap ]]
 --
-map("n", "<leader>+", ":enew<cr>:lua SaveAs()<CR>", { desc = "new file" })
+wk.add({ "<leader>+", ":enew<CR>:lua SaveAs()<CR>", mode = { "n" }, desc = "new file", icon = " " })
+--
+-- [[ SaveAs() Keymaps ]]
+--
+local opts = { desc = "Save as", noremap = true, silent = true }
+--
+map("n", "<A-w>", ":lua SaveAs()<CR>", opts) -- normal mode
+map("i", "<A-w>", "<Esc>:lua SaveAs()<CR>a", opts) -- Insert mode
+map("v", "<A-w>", "<Esc>:lua SaveAs()<CR>", opts) -- Visual mode
 --
 -- [[ Find and .. ]]
 --
--- Find and Replace with confirmation
-map(
-	{ "n", "v" },
-	"<leader>rc",
-	":lua FindAndReplaceConfirm()<CR>",
-	{ desc = "Find and rename occurrences with confirmation" }
-)
---
--- Find and Replace without confirmation
-map({ "n", "v" }, "<leader>ra", ":lua FindAndReplaceAll()<CR>", { desc = "Find and replace all occurrences" })
---
--- Find and Delete  with confirmation
-map(
-	{ "n", "v" },
-	"<leader>xc",
-	":lua FindAndDeleteConfirm()<CR>",
-	{ desc = "Find and delete occurrences with confirmation" }
-)
---
--- Find and Delete without confirmation
-map({ "n", "v" }, "<leader>xa", ":lua FindAndDeleteAll()<CR>", { desc = "Find and delete all occurrences" })
---
+wk.add({
+	-- Find and Replace with confirmation
+	{
+		"<leader>rc",
+		function()
+			FindAndReplaceConfirm()
+		end,
+		mode = { "n", "v" },
+		desc = "Find and rename occurrences with confirmation",
+		icon = " ",
+	},
+	-- Find and Replace without confirmation
+	{
+		"<leader>ra",
+		function()
+			FindAndReplaceAll()
+		end,
+		mode = { "n", "v" },
+		desc = "Find and replace all occurrences",
+		icon = " ",
+	},
+})
+wk.add({
+	-- Find and Delete  with confirmation
+	{
+		"<leader>xc",
+		function()
+			FindAndDeleteConfirm()
+		end,
+		mode = { "n", "v" },
+		desc = "Find and delete occurrences with confirmation",
+		icon = "󰱢 ",
+	},
+	-- Find and Delete without confirmation
+	{
+		"<leader>xa",
+		function()
+			FindAndDeleteAll()
+		end,
+		mode = { "n", "v" },
+		desc = "Find and delete all occurrences",
+		icon = "󱂥 ",
+	},
+})
 --
 -- [[ Mini.nvim Keymaps ]]
 --
@@ -94,7 +152,7 @@ wk.add({
 		mode = { "n", "v" },
 		desc = "Open Files",
 	},
-	{ "<leader>z", "<cmd>mksession<CR>", mode = { "n", "v" }, desc = "Save Session" },
+	{ "<leader>z", "<cmd>mksession<CR>", mode = { "n", "v" }, desc = "Save Session", icon = " " },
 })
 --
 -- [[ Dropbar Keymaps ]]
@@ -103,13 +161,6 @@ local dropbar_api = require("dropbar.api")
 wk.add({
 	{ ".", dropbar_api.pick, mode = { "n" }, desc = "Pick symbols in winbar", icon = "" },
 })
---
--- [[ navigation Keymaps ]]
---
-map("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
-map("n", "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
-map("n", "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
 --
 --[[ Snacks Keymap ]]
 --
@@ -121,6 +172,7 @@ wk.add({
 			Snacks.notifier.show_history()
 		end,
 		desc = "Notification History",
+		icon = "󰂚",
 	},
 	{
 		"<leader>gf",
@@ -128,6 +180,7 @@ wk.add({
 			Snacks.lazygit.log_file()
 		end,
 		desc = "Lazygit Current File History",
+		icon = "",
 	},
 	{
 		"<leader>gg",
@@ -135,6 +188,7 @@ wk.add({
 			Snacks.lazygit()
 		end,
 		desc = "Lazygit",
+		icon = "",
 	},
 	{
 		"<leader>gl",
@@ -142,6 +196,7 @@ wk.add({
 			Snacks.lazygit.log()
 		end,
 		desc = "Lazygit Log (cwd)",
+		icon = "",
 	},
 	{
 		"<c-/>",
@@ -149,6 +204,7 @@ wk.add({
 			Snacks.terminal.toggle()
 		end,
 		desc = "Toggle Terminal",
+		icon = "",
 	},
 	{
 		"]]",
@@ -157,6 +213,7 @@ wk.add({
 		end,
 		desc = "Next Reference",
 		mode = { "n", "t" },
+		icon = "󰼧",
 	},
 	{
 		"[[",
@@ -165,61 +222,85 @@ wk.add({
 		end,
 		desc = "Prev Reference",
 		mode = { "n", "t" },
+		icon = "󰒮",
 	},
-})
---
---[[ Buffer Keymaps ]]
---
-map({ "n", "v" }, "<A-j>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer" })
-map({ "n", "v" }, "<A-k>", "<CMD>bnext<CR>", { desc = "Go to next buffer" })
-map({ "n", "v" }, "<A-c>", "<cmd>b#<cr>", { desc = "Go to last active buffer" })
-nvim_map("n", "<A-q>", "<Cmd>bd<CR>", { desc = "Quit curetn buffer" })
---
--- [[ Split Keymaps ]]
---
-wk.add({
-	{ "<leader>v", "<C-w>v", desc = "Vertical split", mode = { "n", "v" }, icon = "" }, -- Icon for vertical split
-	{ "<leader>h", "<C-w>s", desc = "Horizontal split", mode = { "n", "v" }, icon = "" }, -- Icon for horizontal split
 })
 --
 -- [[ Gitsigns keymaps ]]
 --
-map("n", "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Preview git hunk" })
-map("n", "<leader>gb", "<cmd>Gitsigns toggle_current_line_blame<CR>", { desc = "Toggle curetn line blame" })
-map("n", "<leader>gd", "<cmd>Gitsigns toggle_deleted<CR>", { desc = "Toggle deleted lines from git" })
---
+wk.add({
+	{ "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", mode = { "n", "v" }, desc = "Preview git hunk", icon = "" },
+	{
+		"<leader>gb",
+		"<cmd>Gitsigns toggle_current_line_blame<CR>",
+		mode = { "n", "v" },
+		desc = "Toggle curetn line blame",
+		icon = "",
+	},
+	{
+		"<leader>gd",
+		"<cmd>Gitsigns toggle_deleted<CR>",
+		mode = { "n", "v" },
+		desc = "Toggle deleted lines from git",
+		icon = "",
+	},
+})
 --
 -- [[ Telescope Keymaps ]]
 --
 -- See `:help telescope.builtin`
-map("n", "<leader>sh", "<cmd>Telescope help_tags<cr>", { desc = "Search Help" })
-map("n", "<leader>sk", "<cmd>Telescope keymaps<cr>", { desc = "Search Keymaps" })
-map("n", "<leader>sf", "<cmd>Telescope find_files<cr>", { desc = "Search Files" })
-map("n", "<leader>ss", "<cmd>Telescope builtin<cr>", { desc = "Search Select Telescope" })
-map("n", "<leader>sw", "<cmd>Telescope grep_string<cr>", { desc = "Search current Word" })
-map("n", "<leader>sg", "<cmd>Telescope live_grep<cr>", { desc = "Search by Grep" })
-map("n", "<leader>sd", "<cmd>Telescope diagnostics<cr>", { desc = "Search Diagnostics" })
-map("n", "<leader>sr", "<cmd>Telescope resume<cr>", { desc = "Search Resume" })
-map("n", "<leader>sn", "<Cmd>Telescope notify<CR>", { silent = true, desc = "Search Notifications" })
-map("n", "<leader>s/", TelescopeKeymapFunctions.live_grep_open_files, { desc = "Search in Open Files" })
-map("n", "<leader>sv", TelescopeKeymapFunctions.find_neovim_files, { desc = "Search Neovim files" })
---
-wk.add({ "<leader>.", "<cmd>Telescope oldfiles<cr>", mode = "n", opts, desc = "Search Recent Files", icon = "🕘" })
 wk.add({
-	"<leader><leader>",
-	"<cmd>Telescope buffers<cr>",
-	mode = "n",
-	opts,
-	desc = "Find existing buffers",
-	icon = "",
-})
-wk.add({
-	"<leader>/",
-	TelescopeKeymapFunctions.fuzzy_search_current_buffer,
-	mode = "n",
-	opts,
-	desc = "Fuzzily search in current buffer",
-	icon = "📋",
+	{ "<leader>sh", "<cmd>Telescope help_tags<cr>", mode = { "n", "v" }, desc = "Search Help", icon = "󰋗 " },
+	{ "<leader>sk", "<cmd>Telescope keymaps<cr>", mode = { "n", "v" }, desc = "Search Keymaps", icon = "󰌌 " },
+	{ "<leader>sf", "<cmd>Telescope find_files<cr>", mode = { "n", "v" }, desc = "Search Files", icon = " " },
+	{
+		"<leader>ss",
+		"<cmd>Telescope builtin<cr>",
+		mode = { "n", "v" },
+		desc = "Search Select Telescope",
+		icon = "󰒅 ",
+	},
+	{
+		"<leader>sw",
+		"<cmd>Telescope grep_string<cr>",
+		mode = { "n", "v" },
+		desc = "Search current Word",
+		icon = " ",
+	},
+	{ "<leader>sg", "<cmd>Telescope live_grep<cr>", mode = { "n", "v" }, desc = "Search by Grep", icon = "󰺄 " },
+	{ "<leader>sd", "<cmd>Telescope diagnostics<cr>", mode = { "n", "v" }, desc = "Search Diagnostics", icon = " " },
+	{ "<leader>sr", "<cmd>Telescope resume<cr>", mode = { "n", "v" }, desc = "Search Resume", icon = " " },
+	{
+		"<leader>s/",
+		TelescopeKeymapFunctions.live_grep_open_files,
+		mode = { "n", "v" },
+		desc = "Search in Open Files",
+		icon = "󰱼 ",
+	},
+	{
+		"<leader>sv",
+		TelescopeKeymapFunctions.find_neovim_files,
+		mode = { "n", "v" },
+		desc = "Search Neovim files",
+		icon = " ",
+	},
+	{ "<leader>.", "<cmd>Telescope oldfiles<cr>", mode = "n", opts, desc = "Search Recent Files", icon = "󰥔 " },
+	{
+		"<leader><leader>",
+		"<cmd>Telescope buffers<cr>",
+		mode = "n",
+		opts,
+		desc = "Find existing buffers",
+		icon = "󱦞 ",
+	},
+	{
+		"<leader>/",
+		TelescopeKeymapFunctions.fuzzy_search_current_buffer,
+		mode = "n",
+		opts,
+		desc = "Fuzzily search in current buffer",
+		icon = "󰺯 ",
+	},
 })
 --
 -- [[ Autoformat Keymaps ]]
@@ -231,7 +312,7 @@ wk.add({
 	end,
 	mode = "n",
 	desc = "Format buffer",
-	icon = "🖌️",
+	icon = " ",
 })
 --
 --
