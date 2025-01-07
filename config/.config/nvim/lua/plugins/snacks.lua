@@ -13,11 +13,12 @@ return {
 			bigfile = { enabled = true },
 			indent = { enabled = true },
 			scroll = { enabled = true },
-			input = { enabled = true },
+			scope = { enabled = false },
+			input = { enabled = false },
 			notifier = {
 				enabled = true,
-				style = "fancy", -- "compact" "fancy" "minimal"
-				top_down = true,
+				style = "compact", -- "compact" "fancy" "minimal"
+				top_down = false,
 
 				lsp_utils = require("config/autocommands").setup_lsp_progress(),
 			},
