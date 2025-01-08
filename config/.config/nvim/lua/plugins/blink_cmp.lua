@@ -67,6 +67,10 @@ return {
 		keymap = {
 			preset = "default",
 
+			cmdline = {
+				preset = "enter",
+			},
+
 			["<A-1>"] = {
 				function(cmp)
 					cmp.accept({ index = 1 })
