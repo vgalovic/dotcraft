@@ -65,11 +65,11 @@ return {
 		},
 
 		keymap = {
-			preset = "default",
+			preset = "default", -- default | super-tab | enter
 
-			cmdline = {
-				preset = "enter",
-			},
+			-- cmdline = {
+			-- 	preset = "super-tab",
+			-- },
 
 			["<A-1>"] = {
 				function(cmp)
@@ -132,10 +132,17 @@ return {
 			default = { "lsp", "path", "snippets", "buffer" },
 
 			providers = {
+				-- Recipes: Hide snippets after trigger character
 				snippets = {
 					should_show_items = function(ctx)
 						return ctx.trigger.initial_kind ~= "trigger_character"
 					end,
+				},
+
+				markdown = {
+					name = "RenderMarkdown",
+					module = "render-markdown.integ.blink",
+					fallbacks = { "lsp" },
 				},
 			},
 		},
