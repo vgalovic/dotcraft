@@ -29,10 +29,10 @@ map({ "n", "v" }, "Č", ":")
 --
 -- [[ navigation Keymaps ]]
 --
-map("n", "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
-map("n", "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
-map("n", "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
+map({ "n", "t" }, "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
+map({ "n", "t" }, "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
+map({ "n", "t" }, "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
+map({ "n", "t" }, "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
 --
 -- [[ Split Keymaps ]]
 --
@@ -95,8 +95,9 @@ map("v", "<A-w>", "<Esc>:lua SaveAs()<CR>", opts) -- Visual mode
 --
 -- [[ Find and .. ]]
 --
+-- Replace ..
 wk.add({
-	-- Find and Replace with confirmation
+	-- with confirmation
 	{
 		"<leader>rc",
 		function()
@@ -106,7 +107,7 @@ wk.add({
 		desc = "Find and rename occurrences with confirmation",
 		icon = " ",
 	},
-	-- Find and Replace without confirmation
+	--  without confirmation
 	{
 		"<leader>ra",
 		function()
@@ -117,8 +118,10 @@ wk.add({
 		icon = " ",
 	},
 })
+--
+-- Delete ..
 wk.add({
-	-- Find and Delete  with confirmation
+	-- with confirmation
 	{
 		"<leader>xc",
 		function()
@@ -128,7 +131,7 @@ wk.add({
 		desc = "Find and delete occurrences with confirmation",
 		icon = "󰱢 ",
 	},
-	-- Find and Delete without confirmation
+	-- without confirmation
 	{
 		"<leader>xa",
 		function()
@@ -144,6 +147,8 @@ wk.add({
 --
 MiniFiles = require("mini.files")
 wk.add({
+	--
+	-- files
 	{
 		"-",
 		function()
@@ -152,7 +157,20 @@ wk.add({
 		mode = { "n", "v" },
 		desc = "Open Files",
 	},
+	--
+	-- session
 	{ "<leader>z", "<cmd>mksession<CR>", mode = { "n", "v" }, desc = "Save Session", icon = " " },
+	--
+	-- diff
+	{
+		"<leader>gd",
+		function()
+			MiniDiff.toggle_overlay(vim.api.nvim_get_current_buf())
+		end,
+		mode = { "n", "v" },
+		desc = "Toggle Diff Overlay",
+		icon = "󰈚 ",
+	},
 })
 --
 -- [[ Dropbar Keymaps ]]
@@ -166,6 +184,7 @@ wk.add({
 --
 Snacks = require("snacks")
 wk.add({
+	--  notifier
 	{
 		"<leader>sn",
 		function()
@@ -174,6 +193,8 @@ wk.add({
 		desc = "Notification History",
 		icon = "󰂚",
 	},
+	--
+	--  lazygit
 	{
 		"<leader>gf",
 		function()
@@ -198,6 +219,30 @@ wk.add({
 		desc = "Lazygit Log (cwd)",
 		icon = "",
 	},
+	--
+	--  git_blame
+	{
+		"<leader>gb",
+		function()
+			Snacks.git.blame_line()
+		end,
+		mode = { "n", "v" },
+		desc = "Git Blame Line",
+		icon = "",
+	},
+	--
+	--  gitbrowse
+	{
+		"<leader>gB",
+		function()
+			Snacks.gitbrowse()
+		end,
+		desc = "Git Browse",
+		mode = { "n", "v" },
+		icon = " ",
+	},
+	--
+	--  terminal
 	{
 		"<c-/>",
 		function()
@@ -206,6 +251,8 @@ wk.add({
 		desc = "Toggle Terminal",
 		icon = "",
 	},
+	--
+	--  words
 	{
 		"]]",
 		function()
@@ -223,26 +270,6 @@ wk.add({
 		desc = "Prev Reference",
 		mode = { "n", "t" },
 		icon = "󰒮",
-	},
-})
---
--- [[ Gitsigns keymaps ]]
---
-wk.add({
-	{ "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", mode = { "n", "v" }, desc = "Preview git hunk", icon = "" },
-	{
-		"<leader>gb",
-		"<cmd>Gitsigns toggle_current_line_blame<CR>",
-		mode = { "n", "v" },
-		desc = "Toggle curetn line blame",
-		icon = "",
-	},
-	{
-		"<leader>gd",
-		"<cmd>Gitsigns toggle_deleted<CR>",
-		mode = { "n", "v" },
-		desc = "Toggle deleted lines from git",
-		icon = "",
 	},
 })
 --
