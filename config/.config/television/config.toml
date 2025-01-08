@@ -182,12 +182,5 @@ toggle_preview = "ctrl-o"
 "nvim" = "files"
 "bat" = "files"
 
-# git-branch channel
-"git checkout" = "git-branch"
-"git branch -d" = "git-branch"
-
-# docker-images channel
-"docker run" = "docker-images"
-
-# gitrepos channel
-# "nvim" = "git-repos"
+# man pages channel
+"man" = "manpages"
