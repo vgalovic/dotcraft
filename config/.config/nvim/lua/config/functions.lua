@@ -1,3 +1,11 @@
+function ToggleTheme()
+	if vim.opt.background:get() == "dark" then
+		vim.opt.background = "light"
+	else
+		vim.opt.background = "dark"
+	end
+end
+
 function SaveAs()
 	local current_file = vim.fn.expand("%:p")
 	if current_file ~= "" then
@@ -81,6 +89,7 @@ function FindAndDeleteAll()
 	end)
 end
 
+vim.api.nvim_create_user_command("ToggleTheme", ToggleTheme, {})
 vim.api.nvim_create_user_command("SaveAs", SaveAs, {})
 vim.api.nvim_create_user_command("FindAndReplaceConfirm", FindAndReplaceConfirm, {})
 vim.api.nvim_create_user_command("FindAndReplaceAll", FindAndReplaceAll, {})

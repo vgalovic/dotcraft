@@ -93,6 +93,20 @@ map("n", "<A-w>", ":lua SaveAs()<CR>", opts) -- normal mode
 map("i", "<A-w>", "<Esc>:lua SaveAs()<CR>a", opts) -- Insert mode
 map("v", "<A-w>", "<Esc>:lua SaveAs()<CR>", opts) -- Visual mode
 --
+-- [[ Toggle Theme Keymaps ]]
+--
+wk.add({
+	{
+		"<leader>c",
+		function()
+			ToggleTheme()
+		end,
+		mode = { "n" },
+		desc = "Toggle Theme",
+		icon = " ",
+	},
+})
+--
 -- [[ Find and .. ]]
 --
 -- Replace ..
