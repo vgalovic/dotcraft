@@ -74,3 +74,7 @@ alias linutil="curl -fsSL https://christitus.com/linux | sh"
 alias kittyupdate="curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin"
 
 #--------------------------------------------------------------------------------------
+
+alias vi="nvim"
+
+#--------------------------------------------------------------------------------------
