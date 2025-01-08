@@ -2,6 +2,7 @@ return {
 	"folke/which-key.nvim",
 	event = "VimEnter",
 	opts = {
+		preset = "modern", -- classic | modern | helix
 		icons = {
 			breadcrumb = "»", -- Symbol in the command chain
 			separator = "➜", -- Separator between key and command
