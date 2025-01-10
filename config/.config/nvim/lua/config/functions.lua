@@ -11,10 +11,10 @@ function SaveAs()
 	if current_file ~= "" then
 		vim.cmd("write")
 	else
-		vim.ui.input({ prompt = "Save As: " }, function(new_file)
+		vim.ui.input({ prompt = " Save As: " }, function(new_file)
 			if new_file and new_file ~= "" then
 				if vim.fn.filereadable(new_file) == 1 then
-					vim.ui.input({ prompt = "File exists. Overwrite? (y/N): " }, function(confirm)
+					vim.ui.input({ prompt = "󰽂 File exists. Overwrite? (y/N): " }, function(confirm)
 						if confirm and confirm:lower() == "y" then
 							vim.cmd("write! " .. new_file)
 						else
@@ -32,9 +32,9 @@ function SaveAs()
 end
 
 function FindAndReplaceConfirm()
-	vim.ui.input({ prompt = "Find: " }, function(old_text)
+	vim.ui.input({ prompt = "  Find: " }, function(old_text)
 		if old_text and old_text ~= "" then
-			vim.ui.input({ prompt = "Replace with: " }, function(new_text)
+			vim.ui.input({ prompt = " Replace with: " }, function(new_text)
 				if new_text and new_text ~= "" then
 					local escaped_old_text = vim.fn.escape(old_text, "/")
 					local escaped_new_text = vim.fn.escape(new_text, "/")
@@ -50,9 +50,9 @@ function FindAndReplaceConfirm()
 end
 
 function FindAndReplaceAll()
-	vim.ui.input({ prompt = "Find: " }, function(old_text)
+	vim.ui.input({ prompt = "  Find: " }, function(old_text)
 		if old_text and old_text ~= "" then
-			vim.ui.input({ prompt = "Replace with: " }, function(new_text)
+			vim.ui.input({ prompt = " Replace with: " }, function(new_text)
 				if new_text and new_text ~= "" then
 					local escaped_old_text = vim.fn.escape(old_text, "/")
 					local escaped_new_text = vim.fn.escape(new_text, "/")
@@ -68,7 +68,7 @@ function FindAndReplaceAll()
 end
 
 function FindAndDeleteConfirm()
-	vim.ui.input({ prompt = "Find and delete: " }, function(old_text)
+	vim.ui.input({ prompt = "󰆴 Find and delete: " }, function(old_text)
 		if old_text and old_text ~= "" then
 			local escaped_old_text = vim.fn.escape(old_text, "/")
 			vim.cmd(":%s/" .. escaped_old_text .. "//gc")
@@ -79,7 +79,7 @@ function FindAndDeleteConfirm()
 end
 
 function FindAndDeleteAll()
-	vim.ui.input({ prompt = "Find and delete: " }, function(old_text)
+	vim.ui.input({ prompt = "󰆴 Find and delete: " }, function(old_text)
 		if old_text and old_text ~= "" then
 			local escaped_old_text = vim.fn.escape(old_text, "/")
 			vim.cmd(":%s/" .. escaped_old_text .. "//g")
