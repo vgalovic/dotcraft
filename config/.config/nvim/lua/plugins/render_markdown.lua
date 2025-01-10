@@ -1,7 +1,11 @@
 return {
 	"MeanderingProgrammer/render-markdown.nvim",
-	dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
+	ft = { "markdown", "latex" }, -- Restrict loading to markdown and latex filetypes
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter", -- Syntax highlighting and parsing
+		"echasnovski/mini.nvim", -- Lightweight utilities
+	},
 	---@module 'render-markdown'
 	---@type render.md.UserConfig
-	opts = {},
+	opts = {}, -- Customize plugin options as needed
 }
