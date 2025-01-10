@@ -5,17 +5,64 @@ return {
 	version = "*",
 
 	opts = {
+		appearance = {
+			use_nvim_cmp_as_default = false,
+			nerd_font_variant = "mono",
+
+			kind_icons = {
+				Text = "󰉿 ",
+				Method = "󰊕 ",
+				Function = "󰊕 ",
+				Constructor = "󰒓 ",
+
+				Field = "󰜢 ",
+				Variable = "󰆦 ",
+				Property = "󰖷 ",
+
+				Class = "󱡠 ",
+				Interface = "󱡠 ",
+				Struct = "󱡠 ",
+				Module = "󰅩 ",
+
+				Unit = "󰪚 ",
+				Value = "󰦨 ",
+				Enum = "󰦨 ",
+				EnumMember = "󰦨 ",
+
+				Keyword = "󰻾 ",
+				Constant = "󰏿 ",
+
+				Snippet = "󱄽 ",
+				Color = "󰏘 ",
+				File = "󰈔 ",
+				Reference = "󰬲 ",
+				Folder = "󰉋 ",
+				Event = "󱐋 ",
+				Operator = "󰪚 ",
+				TypeParameter = "󰬛 ",
+			},
+		},
+
 		completion = {
+			ghost_text = { enabled = false },
+
 			keyword = { range = "full" },
 
 			accept = { auto_brackets = { enabled = true } },
 
 			list = {
-				selection = { preselect = true, auto_insert = true },
+				selection = {
+					preselect = function(ctx)
+						return ctx.mode ~= "cmdline"
+					end,
+					auto_insert = function(ctx)
+						return ctx.mode ~= "cmdline"
+					end,
+				},
 			},
 
 			trigger = {
-				show_on_insert_on_trigger_character = false,
+				show_in_snippet = false,
 			},
 
 			menu = {
@@ -38,6 +85,18 @@ return {
 								return ctx.idx == 10 and "0" or ctx.idx >= 10 and " " or tostring(ctx.idx)
 							end,
 						},
+
+						-- no icons for cmdline
+						kind_icon = {
+							text = function(ctx)
+								return ctx.item.source_id == "cmdline" and "" or ctx.kind_icon
+							end,
+						},
+						kind = {
+							text = function(ctx)
+								return ctx.item.source_id == "cmdline" and "" or ctx.kind
+							end,
+						},
 					},
 					gap = 2,
 					treesitter = { "lsp" },
@@ -47,8 +106,8 @@ return {
 			},
 
 			documentation = {
-				-- auto_show = true,
-				-- auto_show_delay_ms = 200,
+				auto_show = true,
+				auto_show_delay_ms = 200,
 
 				window = {
 					border = "rounded",
@@ -123,13 +182,38 @@ return {
 			},
 		},
 
-		appearance = {
-			use_nvim_cmp_as_default = false,
-			nerd_font_variant = "normal",
-		},
-
 		sources = {
-			default = { "lsp", "path", "snippets", "buffer" },
+			-- default = {"lazydev", "markdown", "lsp", "path", "snippets", "buffer" },
+
+			default = function()
+				local success, node = pcall(vim.treesitter.get_node)
+				if vim.bo.filetype == "lua" then
+					return { "lazydev", "lsp", "path" }
+				elseif vim.bo.filetype == "markdown" then
+					return { "markdown", "lsp", "path", "snippets" }
+				elseif
+					success
+					and node
+					and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type())
+				then
+					return { "buffer" }
+				else
+					return { "lsp", "path", "snippets" } --, 'buffer' }
+				end
+			end,
+
+			cmdline = function()
+				local type = vim.fn.getcmdtype()
+				-- Search forward and backward
+				if type == "/" or type == "?" then
+					return { "buffer" }
+				end
+				-- Commands
+				if type == ":" or type == "@" then
+					return { "cmdline" }
+				end
+				return {}
+			end,
 
 			providers = {
 				-- Recipes: Hide snippets after trigger character
@@ -138,6 +222,9 @@ return {
 						return ctx.trigger.initial_kind ~= "trigger_character"
 					end,
 				},
+
+				lsp = { fallbacks = { "lazydev" } },
+				lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
 
 				markdown = {
 					name = "RenderMarkdown",
