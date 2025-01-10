@@ -20,6 +20,10 @@ return {
 				theme = "catppuccin",
 				component_separators = "",
 				section_separators = { left = "", right = "" },
+				disabled_filetypes = {
+					statusline = { "snacks_dashboard" },
+					winbar = {},
+				},
 			},
 			sections = {
 				lualine_a = { "mode" },
@@ -27,7 +31,7 @@ return {
 				lualine_c = { "buffers" },
 				lualine_x = {
 					-- Use the macro recording function directly
-					{ macro_recording, color = { fg = "#cdd6f4" } },
+					{ macro_recording },
 					"filetype",
 					"encoding",
 					"fileformat",
