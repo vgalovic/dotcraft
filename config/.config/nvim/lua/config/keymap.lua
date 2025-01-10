@@ -64,9 +64,8 @@ map("v", "J", ":m '>+1<CR>gv=gv") -- Move current line down
 --
 wk.add({
 	"<leader>q",
-	function()
-		vim.diagnostic.setloclist()
-	end,
+	-- 	function() vim.diagnostic.setloclist() end,
+	"<cmd>Telescope diagnostics theme=get_ivy<cr>",
 	desc = "Open diagnostic Quickfix list",
 	icon = "󱖫 ",
 })
@@ -80,6 +79,10 @@ wk.add({
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+--
+-- [[ Delete marks keymap ]]
+--
+map("n", "<C-m>", "<cmd>delmarks!<CR>", { desc = "Delete marks for current buffer" })
 --
 -- [[ New File keymap ]]
 --
@@ -309,7 +312,6 @@ wk.add({
 		icon = " ",
 	},
 	{ "<leader>sg", "<cmd>Telescope live_grep<cr>", mode = { "n", "v" }, desc = "Search by Grep", icon = "󰺄 " },
-	{ "<leader>sd", "<cmd>Telescope diagnostics<cr>", mode = { "n", "v" }, desc = "Search Diagnostics", icon = " " },
 	{ "<leader>sr", "<cmd>Telescope resume<cr>", mode = { "n", "v" }, desc = "Search Resume", icon = " " },
 	{
 		"<leader>s/",
@@ -328,7 +330,7 @@ wk.add({
 	{ "<leader>.", "<cmd>Telescope oldfiles<cr>", mode = "n", opts, desc = "Search Recent Files", icon = "󰥔 " },
 	{
 		"<leader><leader>",
-		"<cmd>Telescope buffers<cr>",
+		"<cmd>Telescope buffers theme=get_ivy<cr>",
 		mode = "n",
 		opts,
 		desc = "Find existing buffers",
