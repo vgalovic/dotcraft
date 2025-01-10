@@ -11,7 +11,7 @@ return {
 		indent = { enabled = true },
 		scroll = { enabled = true },
 		scope = { enabled = true },
-		input = { enabled = false },
+		input = { enabled = true },
 		notifier = {
 			enabled = true,
 			style = "compact", -- "compact" "fancy" "minimal"
