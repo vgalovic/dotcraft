@@ -39,9 +39,7 @@ require("lazy").setup({
 	-- See `:help gitsigns` to understand what the configuration keys do
 
 	spec = {
-		-- import your plugins
-		{ import = "plugins" },
-
+		-- { "Bilal2453/luvit-meta", lazy = true },
 		{
 			-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
 			-- used for completion, annotations and signatures of Neovim apis
@@ -54,6 +52,8 @@ require("lazy").setup({
 				},
 			},
 		},
+		-- import your plugins
+		{ import = "plugins" },
 	},
 
 	-- Configure any other settings here. See the documentation for more details.
