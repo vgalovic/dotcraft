@@ -34,8 +34,10 @@ vim.opt.relativenumber = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
 
--- Don't show the mode, since it's already in the status line
+-- Don't show the mode, cursorline and cmdline, since it's already in the status line
 vim.opt.showmode = false
+vim.opt.cursorline = false
+vim.opt.cmdheight = 0
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
