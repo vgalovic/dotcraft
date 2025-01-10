@@ -9,7 +9,7 @@ return {
 		require("noice").setup({
 			cmdline = {
 				enabled = true,
-				view = "cmdline_popup", -- cmdline or cmdline_popup
+				view = "cmdline", -- cmdline or cmdline_popup
 			},
 			notify = {
 				enabled = false,
