@@ -3,18 +3,6 @@ return {
 	dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
 
 	init = function()
-		-- Define the custom macro recording function directly within the setup
-		local function macro_recording()
-			local recording_register = vim.fn.reg_recording()
-
-			if recording_register == "" then
-				return ""
-			else
-				return "Recording @" .. recording_register
-			end
-		end
-
-		-- Set up lualine
 		require("lualine").setup({
 			options = {
 				theme = "catppuccin",
@@ -30,8 +18,10 @@ return {
 				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = { "buffers" },
 				lualine_x = {
-					-- Use the macro recording function directly
-					{ macro_recording },
+					{
+						require("noice").api.statusline.mode.get,
+						cond = require("noice").api.statusline.mode.has,
+					},
 					"filetype",
 					"encoding",
 					"fileformat",
