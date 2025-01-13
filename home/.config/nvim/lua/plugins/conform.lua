@@ -8,7 +8,7 @@ return { -- Autoformat
 			local disable_filetypes = {} -- c = true, cpp = true }
 			local lsp_format_opt = disable_filetypes[vim.bo[bufnr].filetype] and "never" or "fallback"
 			return {
-				timeout_ms = 500,
+				timeout_ms = 1000,
 				lsp_format = lsp_format_opt,
 			}
 		end,
@@ -16,11 +16,12 @@ return { -- Autoformat
 			sh = { "beautysh" },
 			bash = { "beautysh" },
 			zsh = { "beautysh" },
-			lua = { "stylua", "ast-grep" },
-			c = { "ast-grep" },
-			cpp = { "ast-grep" },
-			python = { "ruff", "ast-grep" },
+			lua = { "stylua" },
+			c = { "clang-format" },
+			cpp = { "clang-format" },
+			python = { "ruff" },
 			latex = { "latexindent" },
+			vhdl = { "vsg" },
 			SystemVerilog = { "verible" },
 		},
 	},

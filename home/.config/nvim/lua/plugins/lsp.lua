@@ -6,13 +6,12 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"saghen/blink.cmp",
 	},
+
 	opts = {
-		lsp_servers = {
+		lsp = {
 			arduino_language_server = {},
-			ast_grep = {},
 			bashls = {},
 			clangd = {
-				-- Default init_options will try to auto-detect compile_commands.json
 				init_options = {
 					compilationDatabaseDirectory = vim.fn.getcwd(), -- Automatically use the current working directory (project root)
 				},
@@ -43,13 +42,21 @@ return {
 			pyright = {},
 			ruff = {},
 			svlangserver = {},
-			svls = {},
 			verible = {},
 			vhdl_ls = {},
 		},
 
-		formatters = {
+		mason_extras = {
+			--
+			-- [[ Linters ]]
+			--
+			trivy = {},
+			vsg = {},
+			--
+			-- [[ Formaters ]]
+			--
 			beautysh = {},
+			["clang-format"] = {},
 			latexindent = {},
 			stylua = {},
 		},
@@ -60,11 +67,14 @@ return {
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-		local ensure_installed = vim.tbl_keys(opts.lsp_servers)
-		vim.list_extend(ensure_installed, opts.formatters)
+		local ensure_installed = vim.tbl_keys(opts.lsp)
+		for extra_key, _ in pairs(opts.mason_extras) do
+			table.insert(ensure_installed, extra_key)
+		end
+		print("Ensure installed: " .. vim.inspect(ensure_installed))
 
 		local lspconfig = require("lspconfig")
-		for server, config in pairs(opts.lsp_servers) do
+		for server, config in pairs(opts.lsp) do
 			-- passing config.capabilities to blink.cmp merges with the capabilities in your
 			-- `opts[server].capabilities, if you've defined it
 			config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
@@ -80,7 +90,7 @@ return {
 
 			handlers = {
 				function(server_name)
-					local server = opts.lsp_servers[server_name] or {}
+					local server = opts.lsp[server_name] or {}
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 					require("lspconfig")[server_name].setup(server)
 				end,
