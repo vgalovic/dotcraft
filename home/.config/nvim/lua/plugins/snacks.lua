@@ -6,7 +6,7 @@ return {
 		{ "nvim-tree/nvim-web-devicons" },
 	},
 	opts = {
-		dashboard = { example = "advanced" },
+		dashboard = { example = "compact_files" },
 		bigfile = { enabled = true },
 		indent = { enabled = true },
 		scroll = { enabled = true },
