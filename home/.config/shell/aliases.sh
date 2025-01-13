@@ -63,7 +63,7 @@ alias top="btop"
 
 #--------------------------------------------------------------------------------------
 
-alias stow_dotfiles="~/.dotfiles/install/setup/setup_stow.sh"
+alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
 
 #--------------------------------------------------------------------------------------
 
