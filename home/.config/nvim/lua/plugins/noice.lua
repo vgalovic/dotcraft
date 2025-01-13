@@ -9,7 +9,7 @@ return {
 		require("noice").setup({
 			cmdline = {
 				enabled = true,
-				view = "cmdline", -- cmdline or cmdline_popup
+				view = "cmdline_popup", -- cmdline | cmdline_popup
 			},
 			notify = {
 				enabled = false,
@@ -22,7 +22,6 @@ return {
 				hover = {
 					enabled = true,
 					silent = true,
-					border = "rounded",
 				},
 				progress = {
 					enabled = false, -- Disable LSP progress notifications
@@ -33,23 +32,15 @@ return {
 				},
 			},
 			presets = {
-				bottom_search = true, -- Use a classic bottom cmdline for search
+				bottom_search = false, -- Use a classic bottom cmdline for search
 				command_palette = true, -- Position the cmdline and popupmenu together
-				long_message_to_split = true, -- Long messages will be sent to a split
 				lsp_doc_border = true, -- Add a border to hover docs and signature help
+				-- long_message_to_split = true, -- long messages will be sent to a split
 			},
 			command = {
 				enable = true,
 			},
-			routes = {
-				{
-					filter = {
-						event = "lsp",
-						kind = "progress",
-					},
-					opts = { skip = true }, -- Filter out LSP progress events
-				},
-			},
+			routes = {},
 		})
 	end,
 }
