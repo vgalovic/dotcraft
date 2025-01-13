@@ -18,6 +18,7 @@ return {
 				"doxygen",
 				"lua",
 				"luadoc",
+				"latex",
 				"make",
 				"markdown",
 				"markdown_inline",
