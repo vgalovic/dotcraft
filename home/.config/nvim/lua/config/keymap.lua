@@ -64,8 +64,9 @@ map("v", "J", ":m '>+1<CR>gv=gv") -- Move current line down
 --
 wk.add({
 	"<leader>q",
-	-- 	function() vim.diagnostic.setloclist() end,
-	"<cmd>Telescope diagnostics theme=get_ivy<cr>",
+	function()
+		vim.diagnostic.setloclist()
+	end,
 	desc = "Open diagnostic Quickfix list",
 	icon = "󱖫 ",
 })
@@ -197,6 +198,41 @@ wk.add({
 	{ ".", dropbar_api.pick, mode = { "n" }, desc = "Pick symbols in winbar", icon = "" },
 })
 --
+-- [[ Todo-comments Keymap ]]
+--
+wk.add({
+	{
+		"]t",
+		function()
+			require("todo-comments").jump_next({ keywords = { "TODO", "FIX", "HACK", "WARNING" } })
+		end,
+		mode = "n",
+		desc = "Next todo comment",
+		icon = "󰧣 ",
+	},
+
+	{
+		"[t",
+		function()
+			require("todo-comments").jump_prev({ keywords = { "TODO", "FIX", "HACK", "WARNING" } })
+		end,
+		mode = "n",
+		desc = "Previous todo comment",
+		icon = "󰧡 ",
+	},
+	{
+		"<leader>st",
+		function()
+			local cwd = vim.fn.expand("%:p:h")
+			vim.cmd(string.format("TodoTelescope cwd=%s keywords=TODO,FIX,HACK,WARNING", cwd))
+		end,
+		mode = "n",
+		desc = "Search Todos",
+		icon = " ",
+	},
+})
+
+--
 --[[ Snacks Keymap ]]
 --
 Snacks = require("snacks")
@@ -297,6 +333,16 @@ wk.add({
 	{ "<leader>sh", "<cmd>Telescope help_tags<cr>", mode = { "n", "v" }, desc = "Search Help", icon = "󰋗 " },
 	{ "<leader>sk", "<cmd>Telescope keymaps<cr>", mode = { "n", "v" }, desc = "Search Keymaps", icon = "󰌌 " },
 	{ "<leader>sf", "<cmd>Telescope find_files<cr>", mode = { "n", "v" }, desc = "Search Files", icon = " " },
+	{ "<leader>sg", "<cmd>Telescope live_grep<cr>", mode = { "n", "v" }, desc = "Search by Grep", icon = "󰺄 " },
+	{ "<leader>sr", "<cmd>Telescope resume<cr>", mode = { "n", "v" }, desc = "Search Resume", icon = " " },
+	{ "<leader>.", "<cmd>Telescope oldfiles<cr>", mode = "n", opts, desc = "Search Recent Files", icon = "󰥔 " },
+	{
+		"<leader>sd",
+		"<cmd>Telescope diagnostics theme=get_ivy<cr>",
+		mode = { "n", "v" },
+		desc = "Workspace Diagnostics",
+		icon = " ",
+	},
 	{
 		"<leader>ss",
 		"<cmd>Telescope builtin<cr>",
@@ -311,8 +357,6 @@ wk.add({
 		desc = "Search current Word",
 		icon = " ",
 	},
-	{ "<leader>sg", "<cmd>Telescope live_grep<cr>", mode = { "n", "v" }, desc = "Search by Grep", icon = "󰺄 " },
-	{ "<leader>sr", "<cmd>Telescope resume<cr>", mode = { "n", "v" }, desc = "Search Resume", icon = " " },
 	{
 		"<leader>s/",
 		TelescopeKeymapFunctions.live_grep_open_files,
@@ -327,7 +371,6 @@ wk.add({
 		desc = "Search Neovim files",
 		icon = " ",
 	},
-	{ "<leader>.", "<cmd>Telescope oldfiles<cr>", mode = "n", opts, desc = "Search Recent Files", icon = "󰥔 " },
 	{
 		"<leader><leader>",
 		"<cmd>Telescope buffers theme=get_ivy<cr>",
