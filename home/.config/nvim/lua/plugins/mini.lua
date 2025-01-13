@@ -19,6 +19,8 @@ return { -- Collection of various small independent plugins/modules
 		-- - sr)'  - [S]urround [R]eplace [)] [']
 		require("mini.surround").setup()
 		--
+		require("mini.pairs").setup()
+		--
 		require("mini.jump2d").setup({
 			hooks = {
 				pre = function()
@@ -46,15 +48,23 @@ return { -- Collection of various small independent plugins/modules
 			},
 		})
 		--
+		require("mini.hipatterns").setup({
+			highlighters = {
+				-- Highlight hex color strings (`#rrggbb`) using that color
+				hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
+			},
+		})
+		--
 		require("mini.files").setup({
 			mappings = {
 				go_in_plus = "<CR>",
 			},
 			windows = {
-				preview = true,
-				width_nofocus = 40,
-				width_focus = 40,
-				width_preview = 50,
+				-- preview = true,
+				-- width_preview = 50,
+
+				width_nofocus = 30,
+				width_focus = 30,
 			},
 		})
 	end,
