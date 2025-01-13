@@ -3,7 +3,7 @@
 source "$HOME/.dotfiles/install/setup/print_and_log.sh"
 
 # Define your dotfiles directory
-STOW_DIR="$HOME/.dotfiles/config"
+STOW_DIR="$HOME/.dotfiles/home"
 STOW_LIST="$HOME/.dotfiles/install/stow_list"
 CONFIG="$HOME/.config"
 
@@ -87,15 +87,6 @@ stow_files() {
     fi
 }
 
-source_files() {
-    for src in .profile .bashrc; do
-        if [ -f "$HOME/$src" ]; then
-            print_msg "Sourcing $src..."
-            source "$src" || print_error "Failed to source $src."
-        fi
-    done
-}
-
 remove_old_config() {
     print_msg "Removing old config files..."
     for file in "${home_files[@]}"; do
@@ -120,5 +111,5 @@ if prompt_yes_default "Do you want to remove old config files?[Y/n]"; then
     remove_old_config
 fi
 
-source_files
+print_msg "Stowing dotfiles completed. Please restart your terminal for changes to take effect."
 
