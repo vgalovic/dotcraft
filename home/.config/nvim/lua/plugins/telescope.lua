@@ -63,6 +63,12 @@ return { -- Fuzzy Finder (files, lsp, etc)
 					"memorycache/",
 					".data/",
 					"Git/",
+					"Games/",
+					"Music/",
+					"Pictures/",
+					"Videos/",
+					"Tamplates/",
+					"Public/",
 					-- Ignore common audio files
 					".*%.mp3$",
 					".*%.wav$",
