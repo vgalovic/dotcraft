@@ -1,7 +1,10 @@
 return {
 	"mfussenegger/nvim-lint",
 	enabled = true,
-	event = "VeryLazy",
+	event = {
+		"BufReadPre",
+		"BufNewFile",
+	},
 	config = function()
 		local lint = require("lint")
 
@@ -13,7 +16,10 @@ return {
 			vhdl = { "vsg" },
 		}
 
-		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+
+		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+			group = lint_augroup,
 			callback = function()
 				lint.try_lint()
 			end,
