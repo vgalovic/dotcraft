@@ -63,7 +63,7 @@ backup_files() {
         backup "-f" "$HOME/$file" "$HOME/$file"
     done
 
-    # Backup .config directory files 
+    # Backup .config directory files
     for dir in "${config_dirs[@]}"; do
         backup "-d" "$CONFIG/$dir" "$CONFIG/$dir"
     done
