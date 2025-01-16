@@ -1,13 +1,15 @@
-BasedOnStyle: LLVM
+BasedOnStyle: Google
 
-# Indentation settings 
+# Indentation settings
 IndentWidth: 4
 TabWidth: 4
 UseTab: Never
 IndentCaseLabels: true
-BreakBeforeBraces: Attach # Use K&R style for brace placement
+BreakBeforeBraces: Attach
+AlignAfterOpenBracket: Align
 AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
 ColumnLimit: 80
 
 # Function declaration settings
@@ -22,3 +24,12 @@ AlignConsecutiveDeclarations: false
 CommentPragmas: '^.*$'
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
+
+# Specific brace wrapping for function-like structures
+BraceWrapping:
+  AfterClass: true
+  AfterFunction: true
+  AfterControlStatement: true
+  BeforeElse: true
+  BeforeCatch: true
+  BeforeWhile: true
