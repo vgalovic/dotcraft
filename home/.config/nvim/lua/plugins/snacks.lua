@@ -12,9 +12,23 @@ return {
 		scroll = { enabled = true },
 		scope = { enabled = true },
 		input = { enabled = true },
+		picker = {
+			enabled = true,
+			prompt = " ",
+			sources = {},
+			layout = {
+				cycle = true,
+				--- Use the default layout or vertical if the window is too narrow
+				--- @default "default"
+				---@options "dropdown" | "ivy" | "select" | "telescope" | "vertical" | "vscode"
+				preset = function()
+					return vim.o.columns >= 120 and "default" or "dropdown"
+				end,
+			},
+		},
 		notifier = {
 			enabled = true,
-			style = "compact", -- "compact" "fancy" "minimal"
+			style = "compact", -- "compact" | "fancy" | "minimal"
 			top_down = false,
 
 			lsp_utils = require("config/autocommands").setup_lsp_progress(),

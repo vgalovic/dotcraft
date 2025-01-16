@@ -2,6 +2,14 @@
 local map = vim.keymap.set
 -- local nvim_map = vim.api.nvim_set_keymap
 --
+-- variables used to reference plugins
+--
+local minifiles = require("mini.files")
+local minidiff = require("mini.diff")
+--
+local wk = require("which-key")
+local snacks = require("snacks")
+--
 -- [[ Disable arow keys ]]
 --
 map({ "n", "v", "i" }, "<Up>", "<cmd>echo 'Use K key!'<CR>", { noremap = true })
@@ -10,8 +18,6 @@ map({ "n", "v", "i" }, "<Left>", "<cmd>echo 'Use H key!'<CR>", { noremap = true 
 map({ "n", "v", "i" }, "<Right>", "<cmd>echo 'Use L key!'<CR>", { noremap = true })
 --
 -- [[ Which-Key Groups ]]
---
-local wk = require("which-key")
 --
 wk.add({
 	{ "<leader>r", group = "Find and Replace", mode = { "n", "v" }, icon = "󰛔 " },
@@ -37,8 +43,8 @@ map({ "n", "t" }, "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" }
 -- [[ Split Keymaps ]]
 --
 wk.add({
-	{ "<leader>v", "<C-w>v", desc = "Vertical split", mode = { "n", "v" }, icon = "" }, -- Icon for vertical split
-	{ "<leader>h", "<C-w>s", desc = "Horizontal split", mode = { "n", "v" }, icon = "" }, -- Icon for horizontal split
+	{ "<leader>v", "<C-w>v", desc = "Vertical split", mode = { "n", "v" }, icon = "" },
+	{ "<leader>h", "<C-w>s", desc = "Horizontal split", mode = { "n", "v" }, icon = "" },
 })
 --
 --[[ Buffer Keymaps ]]
@@ -161,34 +167,16 @@ wk.add({
 	},
 })
 --
--- [[ Mini.nvim Keymaps ]]
+-- [[ Autoformat Keymaps ]]
 --
-MiniFiles = require("mini.files")
 wk.add({
-	--
-	-- files
-	{
-		"-",
-		function()
-			MiniFiles.open(vim.api.nvim_buf_get_name(0))
-		end,
-		mode = { "n", "v" },
-		desc = "Open Files",
-	},
-	--
-	-- session
-	{ "<leader>z", "<cmd>mksession<CR>", mode = { "n", "v" }, desc = "Save Session", icon = " " },
-	--
-	-- diff
-	{
-		"<leader>gd",
-		function()
-			MiniDiff.toggle_overlay(vim.api.nvim_get_current_buf())
-		end,
-		mode = { "n", "v" },
-		desc = "Toggle Diff Overlay",
-		icon = "󰈚 ",
-	},
+	"<leader>f",
+	function()
+		require("conform").format({ async = true, lsp_format = "fallback" })
+	end,
+	mode = "n",
+	desc = "Format buffer",
+	icon = " ",
 })
 --
 -- [[ Dropbar Keymaps ]]
@@ -220,160 +208,173 @@ wk.add({
 		desc = "Previous todo comment",
 		icon = "󰧡 ",
 	},
+})
+--
+-- [[ Mini.files Keymaps ]]
+--
+wk.add({
 	{
-		"<leader>st",
+		"-",
 		function()
-			local cwd = vim.fn.expand("%:p:h")
-			vim.cmd(string.format("TodoTelescope cwd=%s keywords=TODO,FIX,HACK,WARNING", cwd))
+			minifiles.open(vim.api.nvim_buf_get_name(0))
 		end,
-		mode = "n",
-		desc = "Search Todos",
-		icon = " ",
+		mode = { "n", "v" },
+		desc = "Open Files",
 	},
 })
-
 --
---[[ Snacks Keymap ]]
+-- [[ Mini.session Keymaps ]]
 --
-Snacks = require("snacks")
 wk.add({
-	--  notifier
+	{ "<leader>z", "<cmd>mksession<CR>", mode = { "n", "v" }, desc = "Save Session", icon = " " },
+})
+--
+-- [[ Mini.diff Keymaps ]]
+--
+wk.add({
+	{
+		"<leader>gt",
+		function()
+			minidiff.toggle_overlay(vim.api.nvim_get_current_buf())
+		end,
+		mode = { "n", "v" },
+		desc = "Toggle Diff Overlay",
+		icon = "󰈚 ",
+	},
+})
+--
+--[[ Snacks.notifier Keymap ]]
+--
+wk.add({
 	{
 		"<leader>sn",
 		function()
-			Snacks.notifier.show_history()
+			snacks.notifier.show_history()
 		end,
 		desc = "Notification History",
 		icon = "󰂚",
 	},
-	--
-	--  lazygit
+})
+--
+-- [[ Snacks.lazygit Keymap ]]
+--
+wk.add({
 	{
 		"<leader>gf",
 		function()
-			Snacks.lazygit.log_file()
+			snacks.lazygit.log_file()
 		end,
 		desc = "Lazygit Current File History",
-		icon = "",
+		icon = " ",
 	},
 	{
 		"<leader>gg",
 		function()
-			Snacks.lazygit()
+			snacks.lazygit({ cwd = vim.fn.expand("%:p:h") })
 		end,
 		desc = "Lazygit",
-		icon = "",
+		icon = " ",
 	},
 	{
 		"<leader>gl",
 		function()
-			Snacks.lazygit.log()
+			snacks.lazygit.log({ cwd = vim.fn.expand("%:p:h") })
 		end,
 		desc = "Lazygit Log (cwd)",
-		icon = "",
+		icon = " ",
 	},
-	--
-	--  git_blame
+})
+--
+-- [[ Snacks.git.blame_line Keymap ]]
+--
+wk.add({
 	{
 		"<leader>gb",
 		function()
-			Snacks.git.blame_line()
+			snacks.git.blame_line()
 		end,
 		mode = { "n", "v" },
 		desc = "Git Blame Line",
-		icon = "",
+		icon = " ",
 	},
-	--
-	--  gitbrowse
+})
+--
+-- [[ Snacks.gitbrowse Keymap ]]
+--
+wk.add({
 	{
 		"<leader>gB",
 		function()
-			Snacks.gitbrowse()
+			snacks.gitbrowse()
 		end,
 		desc = "Git Browse",
 		mode = { "n", "v" },
 		icon = " ",
 	},
-	--
-	--  terminal
+})
+--
+-- [[ Snacks.terminal Keymap ]]
+--
+wk.add({
 	{
 		"<c-/>",
 		function()
-			Snacks.terminal.toggle()
+			snacks.terminal.toggle()
 		end,
 		desc = "Toggle Terminal",
-		icon = "",
+		icon = " ",
 	},
-	--
-	--  words
+})
+--
+-- [[ Snacks.words Keymap ]]
+--
+wk.add({
 	{
 		"]]",
 		function()
-			Snacks.words.jump(vim.v.count1)
+			snacks.words.jump(vim.v.count1)
 		end,
 		desc = "Next Reference",
 		mode = { "n", "t" },
-		icon = "󰼧",
+		icon = "󰼧 ",
 	},
 	{
 		"[[",
 		function()
-			Snacks.words.jump(-vim.v.count1)
+			snacks.words.jump(-vim.v.count1)
 		end,
 		desc = "Prev Reference",
 		mode = { "n", "t" },
-		icon = "󰒮",
+		icon = "󰒮 ",
 	},
 })
 --
--- [[ Telescope Keymaps ]]
+-- [[ Snacks.picker.commands Keymap ]]
 --
--- See `:help telescope.builtin`
 wk.add({
-	{ "<leader>sh", "<cmd>Telescope help_tags<cr>", mode = { "n", "v" }, desc = "Search Help", icon = "󰋗 " },
-	{ "<leader>sk", "<cmd>Telescope keymaps<cr>", mode = { "n", "v" }, desc = "Search Keymaps", icon = "󰌌 " },
-	{ "<leader>sf", "<cmd>Telescope find_files<cr>", mode = { "n", "v" }, desc = "Search Files", icon = " " },
-	{ "<leader>sg", "<cmd>Telescope live_grep<cr>", mode = { "n", "v" }, desc = "Search by Grep", icon = "󰺄 " },
-	{ "<leader>sr", "<cmd>Telescope resume<cr>", mode = { "n", "v" }, desc = "Search Resume", icon = " " },
-	{ "<leader>.", "<cmd>Telescope oldfiles<cr>", mode = "n", opts, desc = "Search Recent Files", icon = "󰥔 " },
 	{
-		"<leader>sd",
-		"<cmd>Telescope diagnostics theme=get_ivy<cr>",
-		mode = { "n", "v" },
-		desc = "Workspace Diagnostics",
-		icon = " ",
+		"<C-;>",
+		function()
+			snacks.picker.commands({ layout = { preset = "vscode" } })
+		end,
+		desc = "Command List",
+		icon = " ",
 	},
 	{
-		"<leader>ss",
-		"<cmd>Telescope builtin<cr>",
-		mode = { "n", "v" },
-		desc = "Search Select Telescope",
-		icon = "󰒅 ",
+		"<M-;>",
+		function()
+			snacks.picker.command_history()
+		end,
+		desc = "Command History",
+		icon = " ",
 	},
-	{
-		"<leader>sw",
-		"<cmd>Telescope grep_string<cr>",
-		mode = { "n", "v" },
-		desc = "Search current Word",
-		icon = " ",
-	},
-	{
-		"<leader>s/",
-		TelescopeKeymapFunctions.live_grep_open_files,
-		mode = { "n", "v" },
-		desc = "Search in Open Files",
-		icon = "󰱼 ",
-	},
-	{
-		"<leader>sv",
-		TelescopeKeymapFunctions.find_neovim_files,
-		mode = { "n", "v" },
-		desc = "Search Neovim files",
-		icon = " ",
-	},
+
+	-- <leader>
 	{
 		"<leader><leader>",
-		"<cmd>Telescope buffers theme=get_ivy<cr>",
+		function()
+			snacks.picker.buffers({ layout = { preset = "select" } })
+		end,
 		mode = "n",
 		opts,
 		desc = "Find existing buffers",
@@ -381,29 +382,150 @@ wk.add({
 	},
 	{
 		"<leader>/",
-		TelescopeKeymapFunctions.fuzzy_search_current_buffer,
+		function()
+			snacks.picker.lines({ layout = { preset = "select" } })
+		end,
 		mode = "n",
 		opts,
 		desc = "Fuzzily search in current buffer",
 		icon = "󰺯 ",
 	},
+	{
+		"<leader>.",
+		function()
+			snacks.picker.recent()
+		end,
+		mode = "n",
+		opts,
+		desc = "Search Recent Files",
+		icon = "󰥔 ",
+	},
+	-- <leader>s
+	{
+		"<leader>sh",
+		function()
+			snacks.picker.help()
+		end,
+		mode = { "n", "v" },
+		desc = "Search Help",
+		icon = "󰋗 ",
+	},
+	{
+		"<leader>sk",
+		function()
+			snacks.picker.keymaps({ layout = { preview = false, preset = "default" } })
+		end,
+		mode = { "n", "v" },
+		desc = "Search Keymaps",
+		icon = "󰌌 ",
+	},
+	{
+		"<leader>sf",
+		function()
+			snacks.picker.files()
+		end,
+		mode = { "n", "v" },
+		desc = "Search Files",
+		icon = " ",
+	},
+	{
+		"<leader>sg",
+		function()
+			snacks.picker.grep()
+		end,
+		mode = { "n", "v" },
+		desc = "Search by Grep",
+		icon = "󰺄 ",
+	},
+	{
+		"<leader>sr",
+		function()
+			snacks.picker.resume()
+		end,
+		mode = { "n", "v" },
+		desc = "Search Resume",
+		icon = " ",
+	},
+	{
+		"<leader>sd",
+		function()
+			snacks.picker.diagnostics({ layout = { preset = "vertical" } })
+		end,
+		mode = { "n", "v" },
+		desc = "Workspace Diagnostics",
+		icon = " ",
+	},
+	{
+		"<leader>ss",
+		function()
+			snacks.picker.pickers({ layout = { preset = "select" } })
+		end,
+		mode = { "n", "v" },
+		desc = "Search Select",
+		icon = "󰒅 ",
+	},
+	{
+		"<leader>st",
+		function()
+			---@diagnostic disable: undefined-field
+			snacks.picker.todo_comments({
+				keywords = { "TODO", "FIX", "HACK", "WARNING" },
+				layout = { preset = "ivy" },
+				cwd = vim.fn.expand("%:p:h"),
+			})
+		end,
+		mode = "n",
+		desc = "Search Todos",
+		icon = " ",
+	},
+	{
+		"<leader>sw",
+		function()
+			snacks.picker.grep_word({ cwd = vim.fn.expand("%:p:h") })
+		end,
+		mode = { "n", "x" },
+		desc = "Search current Word",
+		icon = " ",
+	},
+	{
+		"<leader>s/",
+		function()
+			snacks.picker.grep_buffers()
+		end,
+		mode = { "n", "v" },
+		desc = "Search in Open Files",
+		icon = "󰱼 ",
+	},
+	{
+		"<leader>sc",
+		function()
+			---@diagnostic disable: assign-type-mismatch
+			snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+		end,
+		mode = { "n", "v" },
+		desc = "Search Neovim Config",
+		icon = " ",
+	},
+	-- <leader>g
+	{
+		"<leader>gs",
+		function()
+			snacks.picker.git_status({ cwd = vim.fn.expand("%:p:h") })
+		end,
+		desc = "Git Status",
+		icon = "󱖫 ",
+	},
+	{
+		"<leader>gd",
+		function()
+			snacks.picker.git_diff({ cwd = vim.fn.expand("%:p:h") })
+		end,
+		desc = "Git Diff",
+		icon = " ",
+	},
 })
---
--- [[ Autoformat Keymaps ]]
---
-wk.add({
-	"<leader>f",
-	function()
-		require("conform").format({ async = true, lsp_format = "fallback" })
-	end,
-	mode = "n",
-	desc = "Format buffer",
-	icon = " ",
-})
---
 --
 -- [[ LSP Keymaps ]]
---
 --
 local M = {}
 
@@ -413,15 +535,30 @@ function M.setup_lsp_keymaps(bufnr)
 		map(mode, keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
 	end
 
-	-- Define LSP-related key mappings
-	lsp_map("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
-	lsp_map("gr", require("telescope.builtin").lsp_references, "Goto References")
-	lsp_map("gI", require("telescope.builtin").lsp_implementations, "Goto Implementation")
+	lsp_map("gd", function()
+		snacks.picker.lsp_definitions()
+	end, "Goto Definition")
+	lsp_map("gy", function()
+		snacks.picker.lsp_type_definitions()
+	end, "Type Definition")
+
+	lsp_map("gr", function()
+		snacks.picker.lsp_references()
+	end, "Goto References")
+
+	lsp_map("gI", function()
+		snacks.picker.lsp_implementations()
+	end, "Goto Implementation")
+
 	lsp_map("gD", vim.lsp.buf.declaration, "Goto Declaration")
 
-	lsp_map("<leader>lt", require("telescope.builtin").lsp_type_definitions, "Type Definition")
-	lsp_map("<leader>ld", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
-	lsp_map("<leader>lw", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+	lsp_map("<leader>ls", function()
+		snacks.picker.lsp_symbols()
+	end, "Document Symbols")
+	lsp_map("<leader>lw", function()
+		snacks.picker.lsp_symbols({ cwd = vim.fn.expand("%:p:h") })
+	end, "Workspace Symbols")
+
 	lsp_map("<leader>lc", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
 
 	lsp_map("<tab>", vim.lsp.buf.hover, "Buffer hover")

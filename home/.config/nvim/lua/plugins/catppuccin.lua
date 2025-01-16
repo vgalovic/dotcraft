@@ -48,9 +48,6 @@ return {
 				mason = true,
 				noice = true,
 				notify = true,
-				telescope = {
-					enabled = true,
-				},
 				snacks = true,
 				mini = {
 					enabled = true,
