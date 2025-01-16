@@ -16,6 +16,7 @@ return {
 				"cuda",
 				"csv",
 				"doxygen",
+				"html",
 				"lua",
 				"luadoc",
 				"latex",

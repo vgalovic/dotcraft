@@ -167,8 +167,6 @@ return {
 				local success, node = pcall(vim.treesitter.get_node)
 				if vim.bo.filetype == "lua" then
 					return { "lazydev", "lsp", "path" }
-				elseif vim.bo.filetype == "markdown" then
-					return { "markdown", "lsp", "path", "snippets" }
 				elseif
 					success
 					and node
@@ -204,13 +202,6 @@ return {
 				-- Use lazydev insted of lua_ls for completion
 				lsp = { fallbacks = { "lazydev" } },
 				lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", score_offset = 100 },
-
-				-- Use render-markdown for completion
-				markdown = {
-					name = "RenderMarkdown",
-					module = "render-markdown.integ.blink",
-					fallbacks = { "lsp" },
-				},
 			},
 		},
 	},
