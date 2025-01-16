@@ -7,7 +7,7 @@ return {
 
 		-- Combine all tools into one list to install
 		local all_tools =
-			vim.tbl_deep_extend("force", {}, ensure_installed.lsp, ensure_installed.lint, ensure_installed.formatter)
+			vim.tbl_deep_extend("force", {}, ensure_installed.lsp, ensure_installed.linter, ensure_installed.formatter)
 
 		-- Ensure all tools are installed using mason-tool-installer
 		mason_tool_installer.setup({

@@ -14,7 +14,7 @@ return {
 		verible = {},
 		vhdl_ls = {},
 	},
-	lint = {
+	linter = {
 		vsg = {},
 	},
 	formatter = {
