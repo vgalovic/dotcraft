@@ -18,9 +18,9 @@ return {
 			sources = {},
 			layout = {
 				cycle = true,
-				--- Use the default layout or vertical if the window is too narrow
+				--- Use the default layout or dropdown if the window is too narrow
 				--- @default "default"
-				---@options "dropdown" | "ivy" | "select" | "telescope" | "vertical" | "vscode"
+				--- @options ["default", "dropdown", "ivy", "select", "telescope", "vertical", "vscode"]
 				preset = function()
 					return vim.o.columns >= 120 and "default" or "dropdown"
 				end,
@@ -28,7 +28,9 @@ return {
 		},
 		notifier = {
 			enabled = true,
-			style = "compact", -- "compact" | "fancy" | "minimal"
+			--- @default "compact"
+			--- @options [ "compact", "fancy", "minimal" ]
+			style = "compact",
 			top_down = false,
 
 			lsp_utils = require("config/autocommands").setup_lsp_progress(),

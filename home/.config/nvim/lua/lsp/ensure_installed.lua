@@ -18,6 +18,7 @@ return {
 		vsg = {},
 	},
 	formatter = {
+		-- asmfmt = {},
 		beautysh = {},
 		latexindent = {},
 		prettier = {},

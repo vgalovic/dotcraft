@@ -101,7 +101,9 @@ return {
 		},
 
 		keymap = {
-			preset = "default", -- default | super-tab | enter
+			--- @default "default"
+			--- @options ["default", "super-tab", "enter"]
+			preset = "default",
 
 			-- cmdline = {
 			-- 	preset = "super-tab",
@@ -161,7 +163,7 @@ return {
 
 		sources = {
 			-- default = {"lsp", "path", "snippets", "buffer" },
-			--
+
 			-- Determine default sources based on filetype or Treesitter node
 			default = function()
 				local success, node = pcall(vim.treesitter.get_node)

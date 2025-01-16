@@ -12,7 +12,9 @@ return {
 				suggestion_color = "#626880",
 				cterm = 244,
 			},
-			log_level = "off", -- info | off
+			--- @default "off"
+			--- @options ["off", "info"]
+			log_level = "off",
 			disable_inline_completion = false, -- disables inline completion for use with cmp
 			disable_keymaps = false, -- disables built in keymaps for more manual control
 			condition = function()
