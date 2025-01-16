@@ -1,0 +1,54 @@
+return {
+	"stevearc/conform.nvim",
+
+	event = { "BufWritePre" },
+	cmd = { "ConformInfo" },
+
+	config = function()
+		local conform = require("conform")
+
+		-- Configure Conform plugin with formatter options
+		conform.setup({
+			notify_on_error = false,
+			format_on_save = function(bufnr)
+				local disable_filetypes = {}
+				local lsp_format_opt = disable_filetypes[vim.bo[bufnr].filetype] and "never" or "fallback"
+				return {
+					timeout_ms = 3000,
+					lsp_format = lsp_format_opt,
+				}
+			end,
+
+			formatters_by_ft = {
+				["bash"] = { "beautysh" },
+				["latex"] = { "latexindent" },
+				["json"] = { "prettier" },
+				["lua"] = { "stylua" },
+				["markdown"] = { "prettier", "markdown-toc" },
+				["markdown.mdx"] = { "prettier", "markdown-toc" },
+				["python"] = { "ruff" },
+				["sh"] = { "beautysh" },
+				["SystemVerilog"] = { "verible" },
+				["vhdl"] = { "vsg" },
+				["zsh"] = { "beautysh" },
+				["yaml"] = { "prettier" },
+			},
+
+			formatters = {
+				["markdown-toc"] = {
+					condition = function(_, ctx)
+						for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
+							if line:find("<!%-%-%- toc %-%->") then
+								return true
+							end
+						end
+					end,
+				},
+
+				["stylua"] = {
+					stdin = false,
+				},
+			},
+		})
+	end,
+}
