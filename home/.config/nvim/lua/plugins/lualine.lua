@@ -2,10 +2,7 @@ return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
 
-	init = function()
-		-- Require the custom winbar functions
-		local winbar = require("utils.lualine_winbar")
-
+	config = function()
 		require("lualine").setup({
 			options = {
 				theme = "catppuccin",
@@ -13,7 +10,7 @@ return {
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
 					statusline = { "snacks_dashboard" },
-					winbar = { "snacks_dashboard", "snacks_terminal" },
+					winbar = {},
 				},
 			},
 			sections = {
@@ -36,20 +33,12 @@ return {
 			inactive_sections = {
 				lualine_a = {},
 				lualine_b = {},
-				lualine_c = { winbar.get_file },
 				lualine_x = { "filetype", "encoding", "location" },
 				lualine_y = {},
 				lualine_z = {},
 			},
 			tabline = {},
-			winbar = {
-				lualine_a = {},
-				lualine_b = {},
-				lualine_c = { winbar.get_relative_path },
-				lualine_x = {},
-				lualine_y = { winbar.get_time },
-				lualine_z = { winbar.get_date },
-			},
+			winbar = {},
 			extensions = {},
 		})
 	end,
