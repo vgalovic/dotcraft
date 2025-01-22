@@ -486,7 +486,7 @@ wk.add({
 	{
 		"<leader>ss",
 		function()
-			snacks.picker.pickers()
+			snacks.picker.pickers({ layout = { preset = "select" } })
 		end,
 		mode = { "n", "v" },
 		desc = "Search Select",
