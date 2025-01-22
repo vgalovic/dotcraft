@@ -2,6 +2,8 @@
 local map = vim.keymap.set
 -- local nvim_map = vim.api.nvim_set_keymap
 --
+local opts = { noremap = true, silent = true }
+--
 -- variables used to reference plugins
 --
 local minifiles = require("mini.files")
@@ -9,6 +11,9 @@ local minidiff = require("mini.diff")
 --
 local wk = require("which-key")
 local snacks = require("snacks")
+--
+-- custom functions
+local utils = require("utils")
 --
 -- [[ Disable arow keys ]]
 --
@@ -93,15 +98,29 @@ map("n", "<C-m>", "<cmd>delmarks!<CR>", { desc = "Delete marks for current buffe
 --
 -- [[ New File keymap ]]
 --
-wk.add({ "<leader>+", ":enew<CR>:lua SaveAs()<CR>", mode = { "n" }, desc = "new file", icon = " " })
+wk.add({
+	"<leader>+",
+	function()
+		vim.cmd("enew")
+		utils.save_as.SaveAs()
+	end,
+	mode = { "n" },
+	desc = "new file",
+	icon = " ",
+})
 --
 -- [[ SaveAs() Keymaps ]]
 --
-local opts = { desc = "Save as", noremap = true, silent = true }
+local save_opts = { desc = "Save as", noremap = true, silent = true }
 --
-map("n", "<A-w>", ":lua SaveAs()<CR>", opts) -- normal mode
-map("i", "<A-w>", "<Esc>:lua SaveAs()<CR>a", opts) -- Insert mode
-map("v", "<A-w>", "<Esc>:lua SaveAs()<CR>", opts) -- Visual mode
+map({ "n", "v" }, "<A-w>", function()
+	utils.save_as.SaveAs()
+end, save_opts)
+--
+map("i", "<A-w>", function()
+	utils.save_as.SaveAs()
+	vim.cmd("startinsert")
+end, save_opts)
 --
 -- [[ Toggle Theme Keymaps ]]
 --
@@ -109,7 +128,7 @@ wk.add({
 	{
 		"<leader>c",
 		function()
-			ToggleTheme()
+			utils.theme.ToggleTheme()
 		end,
 		mode = { "n" },
 		desc = "Toggle Theme",
@@ -125,7 +144,7 @@ wk.add({
 	{
 		"<leader>rc",
 		function()
-			FindAndReplaceConfirm()
+			utils.find.FindAndReplaceConfirm()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and rename occurrences with confirmation",
@@ -135,7 +154,7 @@ wk.add({
 	{
 		"<leader>ra",
 		function()
-			FindAndReplaceAll()
+			utils.find.FindAndReplaceAll()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and replace all occurrences",
@@ -149,7 +168,7 @@ wk.add({
 	{
 		"<leader>xc",
 		function()
-			FindAndDeleteConfirm()
+			utils.find.FindAndDeleteConfirm()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and delete occurrences with confirmation",
@@ -159,7 +178,7 @@ wk.add({
 	{
 		"<leader>xa",
 		function()
-			FindAndDeleteAll()
+			utils.find.FindAndDeleteAll()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and delete all occurrences",
@@ -177,13 +196,6 @@ wk.add({
 	mode = "n",
 	desc = "Format buffer",
 	icon = " ",
-})
---
--- [[ Dropbar Keymaps ]]
---
-local dropbar_api = require("dropbar.api")
-wk.add({
-	{ ".", dropbar_api.pick, mode = { "n" }, desc = "Pick symbols in winbar", icon = "" },
 })
 --
 -- [[ Todo-comments Keymap ]]
@@ -373,7 +385,13 @@ wk.add({
 	{
 		"<leader><leader>",
 		function()
-			snacks.picker.buffers({ layout = { preset = "select" } })
+			snacks.picker.buffers({
+				layout = {
+					preset = function()
+						return vim.o.columns >= 120 and "ivy" or "dropdown"
+					end,
+				},
+			})
 		end,
 		mode = "n",
 		opts,
@@ -389,6 +407,16 @@ wk.add({
 		opts,
 		desc = "Fuzzily search in current buffer",
 		icon = "󰺯 ",
+	},
+	---@diagnostic disable: undefined-field
+	{
+		"<leader>u",
+		function()
+			snacks.picker.undo()
+		end,
+		mode = "n",
+		desc = "Search Undo History",
+		icon = "󰅴 ",
 	},
 	{
 		"<leader>.",
@@ -458,7 +486,7 @@ wk.add({
 	{
 		"<leader>ss",
 		function()
-			snacks.picker.pickers({ layout = { preset = "select" } })
+			snacks.picker.pickers()
 		end,
 		mode = { "n", "v" },
 		desc = "Search Select",
@@ -470,7 +498,11 @@ wk.add({
 			---@diagnostic disable: undefined-field
 			snacks.picker.todo_comments({
 				keywords = { "TODO", "FIX", "HACK", "WARNING" },
-				layout = { preset = "ivy" },
+				layout = {
+					preset = function()
+						return vim.o.columns >= 120 and "ivy" or "dropdown"
+					end,
+				},
 				cwd = vim.fn.expand("%:p:h"),
 			})
 		end,
