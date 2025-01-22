@@ -34,6 +34,7 @@ return {
 				["yaml"] = { "prettier" },
 			},
 
+			---@diagnostic disable: missing-return
 			formatters = {
 				["markdown-toc"] = {
 					condition = function(_, ctx)
