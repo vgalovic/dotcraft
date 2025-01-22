@@ -6,7 +6,53 @@ return {
 		{ "nvim-tree/nvim-web-devicons" },
 	},
 	opts = {
-		dashboard = { example = "compact_files" },
+		dashboard = {
+			preset = {
+				header = require("utils.week").print_day_of_week(),
+			},
+			enable = true,
+			width = 72,
+			sections = {
+				{ section = "header", padding = 2 },
+
+				{
+					align = "center",
+					padding = 2,
+					text = {
+						{ "  Update ", hl = "@label" },
+						-- { "  Sessions ", hl = "@type" },
+						{ "  Config ", hl = "@function" },
+						{ "  New File ", hl = "@string" },
+						{ "  Files ", hl = "@number" },
+						{ "  Recent ", hl = "@property" },
+						{ "  Quit", hl = "@error" },
+					},
+				},
+				{ icon = "", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+				{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+
+				{ text = "", action = ":Lazy update", key = "u" },
+				-- { text = "", section = "session", key = "s" },
+				{
+					text = "",
+					action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+					key = "c",
+				},
+				{
+					text = "",
+					action = function()
+						vim.cmd("enew")
+						require("utils.save_as").SaveAs()
+					end,
+					key = "n",
+				},
+				{ text = "", action = ":lua Snacks.dashboard.pick('files')", key = "f" },
+				{ text = "", action = ":lua Snacks.dashboard.pick('oldfiles')", key = "r" },
+				{ text = "", action = ":qa", key = "q" },
+
+				{ section = "startup", padding = 1 },
+			},
+		},
 		bigfile = { enabled = true },
 		indent = { enabled = true },
 		scroll = { enabled = true },
@@ -14,8 +60,6 @@ return {
 		input = { enabled = true },
 		picker = {
 			enabled = true,
-			prompt = " ",
-			sources = {},
 			layout = {
 				cycle = true,
 				--- Use the default layout or dropdown if the window is too narrow
