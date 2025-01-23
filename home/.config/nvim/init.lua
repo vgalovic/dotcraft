@@ -7,5 +7,6 @@
 
 require("config.setup")
 require("config.lazy")
+require("config.editor")
 require("config.autocommands")
-require("config.keymap")
+require("config.mappings")

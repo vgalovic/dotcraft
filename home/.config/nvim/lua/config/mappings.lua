@@ -12,9 +12,6 @@ local minidiff = require("mini.diff")
 local wk = require("which-key")
 local snacks = require("snacks")
 --
--- custom functions
-local utils = require("utils")
---
 -- [[ Disable arow keys ]]
 --
 map({ "n", "v", "i" }, "<Up>", "<cmd>echo 'Use K key!'<CR>", { noremap = true })
@@ -102,7 +99,7 @@ wk.add({
 	"<leader>+",
 	function()
 		vim.cmd("enew")
-		utils.save_as.SaveAs()
+		require("utils.save_as").SaveAs()
 	end,
 	mode = { "n" },
 	desc = "new file",
@@ -114,11 +111,11 @@ wk.add({
 local save_opts = { desc = "Save as", noremap = true, silent = true }
 --
 map({ "n", "v" }, "<A-w>", function()
-	utils.save_as.SaveAs()
+	require("utils.save_as").SaveAs()
 end, save_opts)
 --
 map("i", "<A-w>", function()
-	utils.save_as.SaveAs()
+	require("utils.save_as").SaveAs()
 	vim.cmd("startinsert")
 end, save_opts)
 --
@@ -128,7 +125,7 @@ wk.add({
 	{
 		"<leader>c",
 		function()
-			utils.theme.ToggleTheme()
+			require("utils.theme").ToggleTheme()
 		end,
 		mode = { "n" },
 		desc = "Toggle Theme",
@@ -144,7 +141,7 @@ wk.add({
 	{
 		"<leader>rc",
 		function()
-			utils.find.FindAndReplaceConfirm()
+			require("utils.find").FindAndReplaceConfirm()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and rename occurrences with confirmation",
@@ -154,7 +151,7 @@ wk.add({
 	{
 		"<leader>ra",
 		function()
-			utils.find.FindAndReplaceAll()
+			require("utils.find").FindAndReplaceAll()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and replace all occurrences",
@@ -168,7 +165,7 @@ wk.add({
 	{
 		"<leader>xc",
 		function()
-			utils.find.FindAndDeleteConfirm()
+			require("utils.find").FindAndDeleteConfirm()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and delete occurrences with confirmation",
@@ -178,7 +175,7 @@ wk.add({
 	{
 		"<leader>xa",
 		function()
-			utils.find.FindAndDeleteAll()
+			require("utils.find").FindAndDeleteAll()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and delete all occurrences",
