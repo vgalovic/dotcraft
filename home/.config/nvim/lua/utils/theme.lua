@@ -1,4 +1,5 @@
 local M = {}
+
 M.ToggleTheme = function()
 	---@diagnostic disable: undefined-field
 	if vim.opt.background:get() == "dark" then
