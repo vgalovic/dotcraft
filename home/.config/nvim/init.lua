@@ -5,8 +5,8 @@
 --   ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
 --   ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝     ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝
 
-require("config.setup")
-require("config.lazy")
-require("config.editor")
-require("config.autocommands")
-require("config.mappings")
+require("core.setup")
+require("core.lazy")
+require("core.editor")
+require("core.autocommands")
+require("core.mappings")
