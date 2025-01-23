@@ -1,5 +1,6 @@
 local M = {}
 
+--- Get a random header from the table
 M.get_random_header = function()
 	local headers = {
 

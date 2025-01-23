@@ -11,6 +11,7 @@ local function shuffle(t)
 	end
 end
 
+--- Get a random shuffled list of highlights
 M.get_random_hl = function()
 	local groups = {
 		"@Function",
