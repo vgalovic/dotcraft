@@ -26,7 +26,7 @@ function M.setup_lsp_autocommands()
 		group = augroup_lsp_attach,
 		callback = function(event)
 			-- Setup LSP-specific keymaps for this buffer
-			local lsp_keymap = require("config.mappings")
+			local lsp_keymap = require("core.mappings")
 			lsp_keymap.setup_lsp_keymaps(event.buf)
 
 			-- Highlight references on hover if supported

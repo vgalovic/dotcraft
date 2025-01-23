@@ -35,40 +35,40 @@ map({ "n", "v" }, ";", ":")
 map({ "n", "v" }, "č", ":")
 map({ "n", "v" }, "Č", ":")
 --
--- [[ navigation Keymaps ]]
+-- [[ navigation ]]
 --
 map({ "n", "t" }, "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
 map({ "n", "t" }, "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
 map({ "n", "t" }, "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
 map({ "n", "t" }, "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
 --
--- [[ Split Keymaps ]]
+-- [[ Split ]]
 --
 wk.add({
 	{ "<leader>v", "<C-w>v", desc = "Vertical split", mode = { "n", "v" }, icon = "" },
 	{ "<leader>h", "<C-w>s", desc = "Horizontal split", mode = { "n", "v" }, icon = "" },
 })
 --
---[[ Buffer Keymaps ]]
+--[[ Buffer ]]
 --
 map({ "n", "v" }, "<A-j>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer" })
 map({ "n", "v" }, "<A-k>", "<CMD>bnext<CR>", { desc = "Go to next buffer" })
 map({ "n", "v" }, "<A-s>", "<cmd>b#<cr>", { desc = "Go to last active buffer" })
 map({ "n", "v" }, "<A-q>", "<Cmd>bd<CR>", { desc = "Quit curetn buffer" })
 --
--- [[ highlights keymap ]]
+-- [[ highlights ]]
 --
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Stop the highlighting for the 'hlsearch' option." })
 --
--- [[ Visual keymaps ]]
+-- [[ Visual ]]
 --
 map("v", "<C-s>", ":sort<CR>") -- Sort highlighted text in visual mode with Control+S
 map("v", "K", ":m '>-2<CR>gv=gv") -- Move current line up
 map("v", "J", ":m '>+1<CR>gv=gv") -- Move current line down
 --
--- [[ Diagnostic keymap ]]
+-- [[ Diagnostic ]]
 --
 wk.add({
 	"<leader>q",
@@ -79,7 +79,7 @@ wk.add({
 	icon = "󱖫 ",
 })
 --
--- [[ Terminal keymap ]]
+-- [[ Terminal ]]
 --
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -89,46 +89,46 @@ wk.add({
 -- or just use <C-\><C-n> to exit terminal mode
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 --
--- [[ Delete marks keymap ]]
+-- [[ Delete marks ]]
 --
 map("n", "<C-m>", "<cmd>delmarks!<CR>", { desc = "Delete marks for current buffer" })
 --
--- [[ New File keymap ]]
+-- [[ New File ]]
 --
 wk.add({
 	"<leader>+",
 	function()
 		vim.cmd("enew")
-		require("utils.save_as").SaveAs()
+		require("utils.mapping_actions.save_as").SaveAs()
 	end,
 	mode = { "n" },
 	desc = "new file",
 	icon = " ",
 })
 --
--- [[ SaveAs() Keymaps ]]
+-- [[ SaveAs() ]]
 --
 local save_opts = { desc = "Save as", noremap = true, silent = true }
 --
 map({ "n", "v" }, "<A-w>", function()
-	require("utils.save_as").SaveAs()
+	require("utils.mapping_actions.save_as").SaveAs()
 end, save_opts)
 --
 map("i", "<A-w>", function()
-	require("utils.save_as").SaveAs()
+	require("utils.mapping_actions.save_as").SaveAs()
 	vim.cmd("startinsert")
 end, save_opts)
 --
--- [[ Toggle Theme Keymaps ]]
+-- [[ Toggle Background ]]
 --
 wk.add({
 	{
-		"<leader>c",
+		"<leader>b",
 		function()
-			require("utils.theme").ToggleTheme()
+			require("utils.mapping_actions.background").ToggleBackground()
 		end,
 		mode = { "n" },
-		desc = "Toggle Theme",
+		desc = "Toggle Background",
 		icon = " ",
 	},
 })
@@ -141,7 +141,7 @@ wk.add({
 	{
 		"<leader>rc",
 		function()
-			require("utils.find").FindAndReplaceConfirm()
+			require("utils.mapping_actions.find").FindAndReplaceConfirm()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and rename occurrences with confirmation",
@@ -151,7 +151,7 @@ wk.add({
 	{
 		"<leader>ra",
 		function()
-			require("utils.find").FindAndReplaceAll()
+			require("utils.mapping_actions.find").FindAndReplaceAll()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and replace all occurrences",
@@ -165,7 +165,7 @@ wk.add({
 	{
 		"<leader>xc",
 		function()
-			require("utils.find").FindAndDeleteConfirm()
+			require("utils.mapping_actions.find").FindAndDeleteConfirm()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and delete occurrences with confirmation",
@@ -175,7 +175,7 @@ wk.add({
 	{
 		"<leader>xa",
 		function()
-			require("utils.find").FindAndDeleteAll()
+			require("utils.mapping_actions.find").FindAndDeleteAll()
 		end,
 		mode = { "n", "v" },
 		desc = "Find and delete all occurrences",
@@ -183,7 +183,7 @@ wk.add({
 	},
 })
 --
--- [[ Autoformat Keymaps ]]
+-- [[ Autoformat ]]
 --
 wk.add({
 	"<leader>f",
@@ -195,7 +195,7 @@ wk.add({
 	icon = " ",
 })
 --
--- [[ Todo-comments Keymap ]]
+-- [[ Todo-comments ]]
 --
 wk.add({
 	{
@@ -219,7 +219,7 @@ wk.add({
 	},
 })
 --
--- [[ Mini.files Keymaps ]]
+-- [[ Mini.files ]]
 --
 wk.add({
 	{
@@ -232,13 +232,13 @@ wk.add({
 	},
 })
 --
--- [[ Mini.session Keymaps ]]
+-- [[ Mini.session ]]
 --
 wk.add({
 	{ "<leader>z", "<cmd>mksession<CR>", mode = { "n", "v" }, desc = "Save Session", icon = " " },
 })
 --
--- [[ Mini.diff Keymaps ]]
+-- [[ Mini.diff ]]
 --
 wk.add({
 	{
@@ -252,7 +252,7 @@ wk.add({
 	},
 })
 --
---[[ Snacks.notifier Keymap ]]
+--[[ Snacks.notifier ]]
 --
 wk.add({
 	{
@@ -265,7 +265,7 @@ wk.add({
 	},
 })
 --
--- [[ Snacks.lazygit Keymap ]]
+-- [[ Snacks.lazygit ]]
 --
 wk.add({
 	{
@@ -294,7 +294,7 @@ wk.add({
 	},
 })
 --
--- [[ Snacks.git.blame_line Keymap ]]
+-- [[ Snacks.git.blame_line ]]
 --
 wk.add({
 	{
@@ -308,7 +308,7 @@ wk.add({
 	},
 })
 --
--- [[ Snacks.gitbrowse Keymap ]]
+-- [[ Snacks.gitbrowse ]]
 --
 wk.add({
 	{
@@ -322,7 +322,7 @@ wk.add({
 	},
 })
 --
--- [[ Snacks.terminal Keymap ]]
+-- [[ Snacks.terminal ]]
 --
 wk.add({
 	{
@@ -335,7 +335,7 @@ wk.add({
 	},
 })
 --
--- [[ Snacks.words Keymap ]]
+-- [[ Snacks.words ]]
 --
 wk.add({
 	{
@@ -358,7 +358,7 @@ wk.add({
 	},
 })
 --
--- [[ Snacks.picker.commands Keymap ]]
+-- [[ Snacks.picker.commands ]]
 --
 wk.add({
 	{
@@ -441,7 +441,7 @@ wk.add({
 			snacks.picker.keymaps({ layout = { preview = false, preset = "default" } })
 		end,
 		mode = { "n", "v" },
-		desc = "Search Keymaps",
+		desc = "Search ",
 		icon = "󰌌 ",
 	},
 	{
@@ -554,7 +554,7 @@ wk.add({
 	},
 })
 --
--- [[ LSP Keymaps ]]
+-- [[ LSP ]]
 --
 local M = {}
 

@@ -1,4 +1,4 @@
-local random_hls = require("utils.random_hl").get_random_hl()
+local random_hls = require("utils.dashboard.random_hl").get_random_hl()
 
 return {
 	"folke/snacks.nvim",
@@ -10,7 +10,7 @@ return {
 	opts = {
 		dashboard = {
 			preset = {
-				header = require("utils.random_header").get_random_header(),
+				header = require("utils.dashboard.random_header").get_random_header(),
 			},
 			enable = true,
 			width = 72,
@@ -79,7 +79,7 @@ return {
 			style = "compact",
 			top_down = false,
 
-			lsp_utils = require("config/autocommands").setup_lsp_progress(),
+			lsp_utils = require("core.autocommands").setup_lsp_progress(),
 		},
 		lazygit = { configure = false },
 		quickfile = { enabled = true },

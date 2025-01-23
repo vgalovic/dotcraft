@@ -11,7 +11,7 @@ return {
 
 		local servers = require("lsp/ensure_installed").lsp
 
-		require("config.autocommands").setup_lsp_autocommands()
+		require("core.autocommands").setup_lsp_autocommands()
 
 		-- Set up completion for LSP servers using the "blink.cmp" plugin
 		for server, config in pairs(servers) do
