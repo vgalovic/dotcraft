@@ -1,3 +1,5 @@
+local random_hls = require("utils.random_hl").get_random_hl()
+
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
@@ -8,7 +10,7 @@ return {
 	opts = {
 		dashboard = {
 			preset = {
-				header = require("utils.week").print_day_of_week(),
+				header = require("utils.random_header").get_random_header(),
 			},
 			enable = true,
 			width = 72,
@@ -19,13 +21,13 @@ return {
 					align = "center",
 					padding = 2,
 					text = {
-						{ "  Update ", hl = "@label" },
-						-- { "  Sessions ", hl = "@type" },
-						{ "  Config ", hl = "@function" },
-						{ "  New File ", hl = "@string" },
-						{ "  Files ", hl = "@number" },
-						{ "  Recent ", hl = "@property" },
-						{ "  Quit", hl = "@error" },
+						{ "  Update ", hl = random_hls[1] },
+						-- { "  Sessions ", hl = random_hls[2] },
+						{ "  Config ", hl = random_hls[3] },
+						{ "  New File ", hl = random_hls[4] },
+						{ "  Files ", hl = random_hls[5] },
+						{ "  Recent ", hl = random_hls[6] },
+						{ "  Quit", hl = random_hls[7] },
 					},
 				},
 				{ icon = "", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
