@@ -11,4 +11,5 @@ nvim
 shell
 television
 yazi
+zathura
 zed

@@ -1,0 +1,80 @@
+# ---------------------------------------
+# colorscheme
+
+include catppuccin-mocha
+
+# ---------------------------------------
+# general
+
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+
+set adjust-open best-fit
+set continuous true
+
+set recolor false
+
+set search-highlight true
+set search-case ignore
+
+set show-scrollbars false
+
+set synctex true
+set synctex-editor-command "nvim +%{line} %{input}"
+
+# ---------------------------------------
+# basic mappings
+
+map u scroll half-up
+map d scroll half-down
+
+map D toggle_page_mode
+
+map r reload
+map R rotate
+
+map <M-k> zoom in
+map <M-j> zoom out
+
+map i recolor
+map p print
+
+# ---------------------------------------
+# fullscreen
+
+map F toggle_fullscreen
+
+map [fullscreen] u scroll half-up
+map [fullscreen] d scroll half-down
+
+map [fullscreen] D toggle_page_mode
+
+map [fullscreen] r reload
+map [fullscreen] R rotate
+
+map [fullscreen] <M-k> zoom in
+map [fullscreen] <M-j> zoom out
+
+map [fullscreen] i recolor
+
+map [fullscreen] <Esc> toggle_fullscreen
+
+# ---------------------------------------
+# presentation
+
+map P toggle_presentation
+
+map [presentation] u scroll half-up
+map [presentation] d scroll half-down
+
+map [presentation] r reload
+map [presentation] R rotate
+
+map [presentation] <M-k> zoom in
+map [presentation] <M-j> zoom out
+
+map [presentation] i recolor
+
+map [presentation] <Esc> toggle_presentation
+

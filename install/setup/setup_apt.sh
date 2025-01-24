@@ -143,6 +143,12 @@ install_mpv () {
     print_msg "mpv installation completed!"
 }
 
+install_zathura () {
+    print_msg "installing zathura..."
+    sudo apt install -y zathura || print_error "Failed to install zathura."
+    print_msg "zathura installation completed!"
+}
+
 # Update package lists
 update_apt
 
@@ -185,4 +191,9 @@ fi
 # Install MPV
 if prompt_yes_default "Do you want to install mpv?"; then
     install_mpv
+fi
+
+# Install Zathura
+if prompt_yes_default "Do you want to install zathura?"; then
+    install_zathura
 fi
