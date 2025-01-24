@@ -27,6 +27,7 @@ wk.add({
 	{ "<leader>l", group = "LSP", mode = { "n", "v" }, icon = " " },
 	{ "<leader>g", group = "Git", mode = { "n" }, icon = " " },
 	{ "<leader>s", group = "Search", mode = { "n", "v" }, icon = " " },
+	{ "<leader>y", group = "Yazi", mode = { "n", "v" }, icon = "󰇥 " },
 })
 --
 -- [[ Enables ";" to call command ]]
@@ -119,20 +120,6 @@ map("i", "<A-w>", function()
 	vim.cmd("startinsert")
 end, save_opts)
 --
--- [[ Toggle Background ]]
---
-wk.add({
-	{
-		"<leader>b",
-		function()
-			require("utils.mapping_actions.background").ToggleBackground()
-		end,
-		mode = { "n" },
-		desc = "Toggle Background",
-		icon = " ",
-	},
-})
---
 -- [[ Find and .. ]]
 --
 -- Replace ..
@@ -218,6 +205,31 @@ wk.add({
 		icon = "󰧡 ",
 	},
 })
+--
+-- [[ Yazi ]]
+--
+wk.add({
+	{
+		"<leader>yf",
+		mode = { "n", "v" },
+		"<cmd>Yazi<cr>",
+		desc = "Open yazi at the current file",
+		icon = " ",
+	},
+	{
+		"<leader>yw",
+		"<cmd>Yazi cwd<cr>",
+		desc = "Open yazi in nvim's working directory",
+		icon = " ",
+	},
+	{
+		"<leader>yr",
+		"<cmd>Yazi toggle<cr>",
+		desc = "Resume the last yazi session",
+		icon = " ",
+	},
+})
+
 --
 -- [[ Mini.files ]]
 --
