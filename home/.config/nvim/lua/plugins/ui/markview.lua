@@ -5,6 +5,9 @@ return {
 
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",
-		"nvim-tree/nvim-web-devicons",
 	},
+	config = function()
+		require("markview.extras.headings").setup()
+		require("markview.extras.editor").setup()
+	end,
 }

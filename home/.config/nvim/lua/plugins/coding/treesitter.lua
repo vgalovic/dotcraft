@@ -25,11 +25,14 @@ return {
 				"markdown_inline",
 				"matlab",
 				"query",
+				"typst",
+				"python",
 				"regex",
 				"vim",
 				"vimdoc",
 				"vhdl",
 				"verilog",
+				"yaml",
 			},
 
 			highlight = {
