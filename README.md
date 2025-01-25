@@ -19,7 +19,7 @@ git clone https://github.com/vgalovic/dotcraft.git ~/.dotfiles
 cd .dotfiles
 ```
 
-# Making Scripts Executable
+## Making Scripts Executable
 
 To run the scripts, you’ll first need to make them executable. Use the following commands in your terminal:
 
