@@ -4,18 +4,18 @@ return {
 	lazy = false,
 	priority = 1000,
 	config = function()
-		local is_neovide = vim.g.neovide ~= nil -- Disable transparency in Neovide
+		-- local is_neovide = vim.g.neovide ~= nil -- Disable transparency in Neovide
 		require("catppuccin").setup({
 			flavour = "auto",
 			background = { -- :h background
 				light = "latte",
 				dark = "mocha",
 			},
-			transparent_background = not is_neovide, -- disables setting the background color.
+			transparent_background = false, -- disables setting the background color.
 			show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
 			term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
 			dim_inactive = {
-				enabled = false, -- dims the background color of inactive window
+				enabled = true, -- dims the background color of inactive window
 				shade = "dark",
 				percentage = 0.15, -- percentage of the shade to apply to the inactive window
 			},
