@@ -94,11 +94,13 @@ function M.setup_lsp_progress()
 			end, p)
 
 			local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+			---@diagnostic disable: param-type-mismatch
 			vim.notify(table.concat(msg, "\n"), "info", {
 				id = "lsp_progress",
 				title = client.name,
 				opts = function(notif)
 					notif.icon = #progress[client.id] == 0 and " "
+						---@diagnostic disable: undefined-field
 						or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
 				end,
 			})
