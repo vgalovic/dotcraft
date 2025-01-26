@@ -1,9 +1,10 @@
 .bashenv
 .bashrc
 .clang-format
-.profile
 .gitconfig
+.profile
+.tmux.conf
+.vimrc
 .zprofile
 .zshenv
 .zshrc
-.tmux.conf
