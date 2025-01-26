@@ -20,6 +20,8 @@ set search-case ignore
 
 set show-scrollbars false
 
+set selection-clipboard clipboard
+
 set synctex true
 set synctex-editor-command "nvim +%{line} %{input}"
 
