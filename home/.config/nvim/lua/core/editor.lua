@@ -1,3 +1,6 @@
+-- Set the theme
+local theme = "catppuccin-mocha"
+
 -- Append characters to fillchars for a cleaner look
 vim.opt.fillchars:append({ eob = " " })
 
@@ -50,4 +53,11 @@ vim.opt.inccommand = "split"
 vim.opt.scrolloff = 10
 
 -- Setup color scheme
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme(theme)
+
+return {
+	-- Set the lualine theme
+	get_lualine_theme = function()
+		return theme
+	end,
+}
