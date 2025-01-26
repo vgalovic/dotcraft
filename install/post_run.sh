@@ -12,6 +12,16 @@ execute_script "setup_colorscript"
 
 execute_script "setup_anime"
 
+if command -v nvim >/dev/null; then
+    NVIM_PATH=$(command -v nvim)
+    print_msg "Setting up Neovim as sudoedit"
+    if sudo update-alternatives --install /usr/bin/editor editor "$NVIM_PATH" 100; then
+        sudo update-alternatives --config editor
+    else
+        print_error "Failed to set up Neovim as sudoedit."
+    fi
+fi
+
 if command -v mpv >/dev/null; then
     execute_script "setup_mpv_plugins"
 fi
