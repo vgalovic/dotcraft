@@ -1,6 +1,7 @@
 local M = {}
 
--- Function to shuffle a table randomly
+-- Shuffle a table in-place using Fisher-Yates algorithm
+---@param t table
 local function shuffle(t)
 	-- Seed the random generator to ensure different results each time
 	math.randomseed(os.time())
@@ -11,7 +12,7 @@ local function shuffle(t)
 	end
 end
 
---- Get a random shuffled list of highlights
+---@return string[] groups random highlight groups from the table
 M.get_random_hl = function()
 	local groups = {
 		"@Function",

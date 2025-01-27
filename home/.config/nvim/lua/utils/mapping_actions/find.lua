@@ -1,5 +1,8 @@
+---@class find
+
 local M = {}
 
+-- Find and replace in the current buffer with confirmation
 M.FindAndReplaceConfirm = function()
 	vim.ui.input({ prompt = "  Find: " }, function(old_text)
 		if old_text and old_text ~= "" then
@@ -18,6 +21,7 @@ M.FindAndReplaceConfirm = function()
 	end)
 end
 
+-- Find and replace in current buffer without confirmation
 M.FindAndReplaceAll = function()
 	vim.ui.input({ prompt = "  Find: " }, function(old_text)
 		if old_text and old_text ~= "" then
@@ -36,6 +40,7 @@ M.FindAndReplaceAll = function()
 	end)
 end
 
+-- Find and delete in the current buffer with confirmation
 M.FindAndDeleteConfirm = function()
 	vim.ui.input({ prompt = "󰆴 Find and delete: " }, function(old_text)
 		if old_text and old_text ~= "" then
@@ -47,6 +52,7 @@ M.FindAndDeleteConfirm = function()
 	end)
 end
 
+-- Find and delete in current buffer without confirmation
 M.FindAndDeleteAll = function()
 	vim.ui.input({ prompt = "󰆴 Find and delete: " }, function(old_text)
 		if old_text and old_text ~= "" then

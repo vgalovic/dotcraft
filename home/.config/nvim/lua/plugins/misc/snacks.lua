@@ -1,3 +1,4 @@
+local header = require("utils.dashboard.random_header").get_random_header()
 local random_hls = require("utils.dashboard.random_hl").get_random_hl()
 
 return {
@@ -10,7 +11,7 @@ return {
 	opts = {
 		dashboard = {
 			preset = {
-				header = require("utils.dashboard.random_header").get_random_header(),
+				header = header,
 			},
 			enable = true,
 			width = 72,
@@ -64,7 +65,7 @@ return {
 			enabled = true,
 			layout = {
 				cycle = true,
-				--- Use the default layout or dropdown if the window is too narrow
+				---@comment Use the default layout or dropdown if the window is too narrow
 				--- @default "default"
 				--- @options ["default", "dropdown", "ivy", "select", "telescope", "vertical", "vscode"]
 				preset = function()

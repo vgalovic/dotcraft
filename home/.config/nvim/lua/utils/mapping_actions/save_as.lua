@@ -1,5 +1,9 @@
+---@diagnostic disable: param-type-mismatch
+---@class save_as
+
 local M = {}
 
+-- If it is a new file, prompt for a filename and save it, otherwise, save the current file
 M.SaveAs = function()
 	local current_file = vim.fn.expand("%:p") -- Get the current file path
 	if current_file ~= "" then
