@@ -9,9 +9,9 @@ return {
 		local lspconfig = require("lspconfig")
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-		local servers = require("lsp/ensure_installed").lsp
+		local servers = require("lsp.ensure_installed").lsp
 
-		require("core.autocommands").setup_lsp_autocommands()
+		require("lsp.autocommands").setup_lsp_autocommands()
 
 		-- Set up completion for LSP servers using the "blink.cmp" plugin
 		for server, config in pairs(servers) do

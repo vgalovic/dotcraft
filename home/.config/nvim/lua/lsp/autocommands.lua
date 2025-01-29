@@ -1,24 +1,11 @@
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
---
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-})
---
---
+---@diagnostic disable: param-type-mismatch
+---@diagnostic disable: undefined-field
+
 local M = {}
---
+
 --[[ LSP Autocommands]]
---
+
 -- Utility functions shared between progress reports for LSP and DAP
---
 function M.setup_lsp_autocommands()
 	local augroup_lsp_attach = vim.api.nvim_create_augroup("lsp-attach", { clear = true })
 
@@ -26,7 +13,7 @@ function M.setup_lsp_autocommands()
 		group = augroup_lsp_attach,
 		callback = function(event)
 			-- Setup LSP-specific keymaps for this buffer
-			local lsp_keymap = require("core.mappings")
+			local lsp_keymap = require("config.mappings")
 			lsp_keymap.setup_lsp_keymaps(event.buf)
 
 			-- Highlight references on hover if supported
@@ -57,9 +44,8 @@ function M.setup_lsp_autocommands()
 		end,
 	})
 end
---
+
 -- LSP progress reporting through notifier
---
 function M.setup_lsp_progress()
 	---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
 	local progress = vim.defaulttable()
@@ -94,18 +80,16 @@ function M.setup_lsp_progress()
 			end, p)
 
 			local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-			---@diagnostic disable: param-type-mismatch
 			vim.notify(table.concat(msg, "\n"), "info", {
 				id = "lsp_progress",
 				title = client.name,
 				opts = function(notif)
 					notif.icon = #progress[client.id] == 0 and " "
-						---@diagnostic disable: undefined-field
 						or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
 				end,
 			})
 		end,
 	})
 end
---
+
 return M
