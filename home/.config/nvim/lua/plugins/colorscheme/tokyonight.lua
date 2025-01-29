@@ -3,5 +3,8 @@ return {
 	enabled = false,
 	lazy = false,
 	priority = 1000,
-	opts = {},
+	opts = {
+		style = "moon",
+		light_style = "day",
+	},
 }

@@ -41,14 +41,10 @@ return {
 			custom_highlights = {},
 			default_integrations = true,
 			integrations = {
-				cmp = true,
 				blink_cmp = true,
-				fzf = true,
 				treesitter = true,
-				render_markdown = true,
 				mason = true,
 				noice = true,
-				notify = true,
 				snacks = true,
 				mini = {
 					enabled = true,
