@@ -1,14 +1,20 @@
 local header = require("utils.dashboard.random_header").get_random_header()
 local random_hls = require("utils.dashboard.random_hl").get_random_hl()
+local buffer = require("utils.mapping_actions.buffer")
 
 return {
 	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
-	requires = {
-		{ "nvim-tree/nvim-web-devicons" },
-	},
+
 	opts = {
+		bigfile = { enabled = true },
+		scroll = { enabled = true },
+		input = { enabled = true },
+		scope = { enabled = true },
+		lazygit = { configure = false },
+		quickfile = { enabled = true },
+
 		dashboard = {
 			preset = {
 				header = header,
@@ -41,14 +47,8 @@ return {
 					action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
 					key = "c",
 				},
-				{
-					text = "",
-					action = function()
-						vim.cmd("enew")
-						require("utils.save_as").SaveAs()
-					end,
-					key = "n",
-				},
+				-- stylua: ignore
+				{ text = "", action = function() buffer.new_file() end, key = "n", },
 				{ text = "", action = ":lua Snacks.dashboard.pick('files')", key = "f" },
 				{ text = "", action = ":lua Snacks.dashboard.pick('oldfiles')", key = "r" },
 				{ text = "", action = ":qa", key = "q" },
@@ -56,11 +56,20 @@ return {
 				{ section = "startup", padding = 1 },
 			},
 		},
-		bigfile = { enabled = true },
-		indent = { enabled = true },
-		scroll = { enabled = true },
-		scope = { enabled = true },
-		input = { enabled = true },
+		indent = {
+			scope = {
+				hl = {
+					"SnacksIndent1",
+					"SnacksIndent2",
+					"SnacksIndent3",
+					"SnacksIndent4",
+					"SnacksIndent5",
+					"SnacksIndent6",
+					"SnacksIndent7",
+					"SnacksIndent8",
+				},
+			},
+		},
 		picker = {
 			enabled = true,
 			layout = {
@@ -80,16 +89,14 @@ return {
 			style = "compact",
 			top_down = false,
 
-			lsp_utils = require("core.autocommands").setup_lsp_progress(),
+			lsp_utils = require("lsp.autocommands").setup_lsp_progress(),
 		},
-		lazygit = { configure = false },
-		quickfile = { enabled = true },
 		statuscolumn = {
 			enabled = true,
 			left = { "mark", "sign" },
 			right = { "fold", "git" },
 			folds = {
-				open = false,
+				open = true,
 				git_hl = true,
 			},
 			git = {
