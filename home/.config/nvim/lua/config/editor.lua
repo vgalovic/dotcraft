@@ -1,5 +1,5 @@
 -- Set the theme
-local theme = "catppuccin-mocha"
+local theme = "catppuccin"
 
 -- Append characters to fillchars for a cleaner look
 vim.opt.fillchars:append({ eob = " " })
@@ -11,10 +11,14 @@ vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- Don't show the mode, cursorline and cmdline
-vim.opt.showmode = false
-vim.opt.cursorline = false
-vim.opt.cmdheight = 0
+-- Enable cursorline
+vim.opt.cursorline = true
+
+-- Cmdline
+vim.opt.cmdheight = 0 -- Hide the command line when not in use
+vim.opt.showmode = false -- Disable mode display
+vim.opt.ruler = false -- Remove "All" and line/column info
+vim.opt.shortmess:append("c") -- Suppress unnecessary messages
 
 -- Sync clipboard between OS and Neovim
 vim.opt.clipboard = "unnamedplus"
@@ -52,11 +56,20 @@ vim.opt.inccommand = "split"
 -- Minimal lines to keep above and below the cursor
 vim.opt.scrolloff = 10
 
+-- enabele folding:
+vim.o.foldmethod = "expr" -- Use expression folding
+vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- Tree-sitter's fold expression
+
+-- Optional: Start with all folds closed
+vim.o.foldenable = true
+vim.o.foldlevel = 99 -- Open most folds by default (set to lower for fewer open folds)
+
 -- Setup color scheme
 vim.cmd.colorscheme(theme)
 
 return {
 	-- Set the lualine theme
+	---@return string theme
 	get_lualine_theme = function()
 		return theme
 	end,

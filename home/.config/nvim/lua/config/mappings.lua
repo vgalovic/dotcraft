@@ -1,25 +1,25 @@
 ---@diagnostic disable: assign-type-mismatch
 ---@diagnostic disable: undefined-field
---
--- To reduce the time it takes to invoke a function, set locals from the mapping keymaps
+
 local map = vim.keymap.set
 -- local nvim_map = vim.api.nvim_set_keymap
---
--- Options for key mappings:
-local opts = { noremap = true, silent = true }
-local save_opts = { desc = "Save as", noremap = true, silent = true }
---
--- My custom functions:
-local save_as = require("utils.mapping_actions.save_as")
+
+local default_opts = { noremap = true, silent = true }
+
+-- Function to generate options with a custom description
+local function get_opts(desc)
+	return vim.tbl_extend("force", default_opts, { desc = desc })
+end
+
+local buffer = require("utils.mapping_actions.buffer")
 local find = require("utils.mapping_actions.find")
---
--- Variables used to reference plugins:
+
 local wk = require("which-key")
 local todo = require("todo-comments")
 local files = require("mini.files")
 local diff = require("mini.diff")
 local snacks = require("snacks")
---
+
 return {
 	--
 	-- [[ Disable arrow keys ] ]
@@ -47,10 +47,12 @@ return {
 	--
 	-- [[ Buffers ]]
 	--
-	map({ "n", "v" }, "<A-j>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer" }),
-	map({ "n", "v" }, "<A-k>", "<CMD>bnext<CR>", { desc = "Go to next buffer" }),
-	map({ "n", "v" }, "<A-s>", "<cmd>b#<cr>", { desc = "Go to last active buffer" }),
-	map({ "n", "v" }, "<A-q>", "<Cmd>bd<CR>", { desc = "Quit current buffer" }),
+	map({ "n", "v" }, "<M-j>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer" }),
+	map({ "n", "v" }, "<M-k>", "<CMD>bnext<CR>", { desc = "Go to next buffer" }),
+	map({ "n", "v" }, "<M-s>", "<cmd>b#<cr>", { desc = "Go to last active buffer" }),
+	map({ "n", "v" }, "<M-q>", "<Cmd>bd<CR>", { desc = "Quit current buffer" }),
+	-- stylua: ignore
+	map({ "n", "v" }, "<M-Q>", function() buffer.delete_other_buffers() end, { desc = 'Delete all buffers except the current one' }),
 	--
 	-- [[ Highlights ]]
 	--
@@ -70,11 +72,10 @@ return {
 	--
 	map("n", "<C-m>", "<cmd>delmarks!<CR>", { desc = "Delete marks for current buffer" }),
 	--
-	-- [[ Save As ]]
+	-- [[ Save ]]
 	--
 	-- stylua: ignore start
-	map({ "n", "v" }, "<A-w>", function() save_as.SaveAs() end, save_opts),
-	map("i", "<A-w>", function() save_as.SaveAs() vim.cmd("startinsert") end, save_opts),
+	map({ "n", "v", "i" }, "<M-w>", function() buffer.save() end, get_opts("Save")),
 	-- stylua: ignore end
 	--
 	-- [[ LSP ]]
@@ -143,7 +144,7 @@ return {
 		--
 		-- [[ New File ]]
 		--
-		{ "<leader>+", function() vim.cmd("enew") save_as.SaveAs() end, mode = { "n" }, desc = "New file", icon = " " },
+		{ "<leader>+", function() buffer.new_file() end, mode = { "n" }, desc = "New file", icon = " " },
 		--
 		-- [[ Snacks.git.blame_line ]]
 		--
@@ -167,8 +168,8 @@ return {
 		--
 		{ "<C-;>", function() snacks.picker.commands({ layout = { preset = "vscode" } }) end, desc = "Command List", icon = " " },
 		{ "<M-;>", function() snacks.picker.command_history() end, desc = "Command History", icon = " " },
-		{ "<leader>/", function() snacks.picker.lines({ layout = { preset = "select" } }) end, mode = "n", opts, desc = "Fuzzily search in current buffer", icon = "󰺯 " },
-		{ "<leader>.", function() snacks.picker.recent() end, mode = "n", opts, desc = "Search Recent Files", icon = "󰥔 " },
+		{ "<leader>/", function() snacks.picker.lines({ layout = { preset = "select" } }) end, mode = "n", default_opts, desc = "Fuzzily search in current buffer", icon = "󰺯 " },
+		{ "<leader>.", function() snacks.picker.recent() end, mode = "n", default_opts, desc = "Search Recent Files", icon = "󰥔 " },
 		-- stylua: ignore end
 		{
 			"<leader><leader>",
@@ -182,7 +183,7 @@ return {
 				})
 			end,
 			mode = "n",
-			opts,
+			default_opts,
 			desc = "Find existing buffers",
 			icon = "󱦞 ",
 		},

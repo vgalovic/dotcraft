@@ -1,11 +1,15 @@
+---@diagnostic disable: undefined-field, deprecated
+
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
 
 	config = function()
+		local theme = require("config.editor").get_lualine_theme()
+
 		require("lualine").setup({
 			options = {
-				theme = require("core.editor").get_lualine_theme(),
+				theme = theme,
 				component_separators = "",
 				section_separators = { left = "", right = "" },
 				disabled_filetypes = {
@@ -18,11 +22,10 @@ return {
 				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = { "buffers" },
 				lualine_x = {
-					{
-						---@diagnostic disable: undefined-field, deprecated
-						require("noice").api.statusline.mode.get,
-						cond = require("noice").api.statusline.mode.has,
-					},
+					-- {
+					-- require("noice").api.statusline.mode.get,
+					-- cond = require("noice").api.statusline.mode.has,
+					-- },
 					"filetype",
 					"encoding",
 					"fileformat",
