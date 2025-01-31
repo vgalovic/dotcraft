@@ -1,5 +1,8 @@
 return {
 	"supermaven-inc/supermaven-nvim",
+	cmd = {
+		"SupermavenUseFree",
+	},
 	config = function()
 		require("supermaven-nvim").setup({
 			keymaps = {
@@ -7,7 +10,7 @@ return {
 				clear_suggestion = "<C-Esc>",
 				accept_word = "<C-.>",
 			},
-			-- ignore_filetypes = { cpp = true }, -- or { "cpp", }
+			ignore_filetypes = { "bigfile", "snacks_input", "snacks_notif" },
 			color = {
 				suggestion_color = "#626880",
 				cterm = 244,
