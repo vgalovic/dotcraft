@@ -16,7 +16,6 @@ local find = require("utils.mapping_actions.find")
 
 local wk = require("which-key")
 local todo = require("todo-comments")
-local files = require("mini.files")
 local diff = require("mini.diff")
 local snacks = require("snacks")
 
@@ -110,7 +109,6 @@ return {
 		{ "<leader>r", group = "Find and Replace", mode = { "n", "v" }, icon = "󰛔 " },
 		{ "<leader>s", group = "Search", mode = { "n", "v" }, icon = " " },
 		{ "<leader>x", group = "Find and Delete", mode = { "n", "v" }, icon = "󰆴 " },
-		{ "<leader>y", group = "Yazi", mode = { "n", "v" }, icon = "󰇥 " },
 		--
 		-- [[ Autoformat ]]
 		--
@@ -133,10 +131,6 @@ return {
 		-- [[ Mini.diff ]]
 		--
 		{ "<leader>gt", function() diff.toggle_overlay(vim.api.nvim_get_current_buf()) end, mode = { "n", "v" }, desc = "Toggle Diff Overlay", icon = "󰈚 " },
-		--
-		-- [[ Mini.files ]]
-		--
-		{ "-", function() files.open(vim.api.nvim_buf_get_name(0)) end, mode = { "n", "v" }, desc = "Open Files", icon= "󰙅 " },
 		--
 		-- [[ Mini.session ]]
 		--
@@ -166,6 +160,7 @@ return {
 		--
 		-- [[ Snacks.picker ]]
 		--
+		{ "`", function () snacks.explorer() end, desc = "Explorer", icon = "󰙅 " },
 		{ "<C-;>", function() snacks.picker.commands({ layout = { preset = "vscode" } }) end, desc = "Command List", icon = " " },
 		{ "<M-;>", function() snacks.picker.command_history() end, desc = "Command History", icon = " " },
 		{ "<leader>/", function() snacks.picker.lines({ layout = { preset = "select" } }) end, mode = "n", default_opts, desc = "Fuzzily search in current buffer", icon = "󰺯 " },
@@ -236,12 +231,6 @@ return {
 		--
 		{ "[t", function() todo.jump_prev({ keywords = { "TODO", "FIX", "HACK", "WARNING" } }) end, mode = "n", desc = "Previous todo comment", icon = "󰧡 " },
 		{ "]t", function() todo.jump_next({ keywords = { "TODO", "FIX", "HACK", "WARNING" } }) end, mode = "n", desc = "Next todo comment", icon = "󰧣 " },
-		--
-		-- [[ Yazi ]]
-		--
-		{ "<leader>yf", mode = { "n", "v" }, "<cmd>Yazi<cr>", desc = "Open yazi at the current file", icon = " " },
-		{ "<leader>yr", mode = { "n", "v" }, "<cmd>Yazi toggle<cr>", desc = "Resume the last yazi session", icon = " " },
-		{ "<leader>yw", mode = { "n", "v" }, "<cmd>Yazi cwd<cr>", desc = "Open yazi in nvim's working directory", icon = " " },
 		-- stylua: ignore end
 	}),
 }

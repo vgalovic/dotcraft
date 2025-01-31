@@ -1,3 +1,6 @@
+---@diagnostic disable: undefined-global
+---@diagnostic disable: undefined-field
+
 local header = require("utils.dashboard.random_header").get_random_header()
 local random_hls = require("utils.dashboard.random_hl").get_random_hl()
 local buffer = require("utils.mapping_actions.buffer")
@@ -82,6 +85,9 @@ return {
 				end,
 			},
 		},
+		explorer = {
+			replace_netrw = true,
+		},
 		notifier = {
 			enabled = true,
 			--- @default "compact"
@@ -89,7 +95,7 @@ return {
 			style = "compact",
 			top_down = false,
 
-			lsp_utils = require("lsp.autocommands").setup_lsp_progress(),
+			-- lsp_utils = require("lsp.autocommands").setup_lsp_progress(),
 		},
 		statuscolumn = {
 			enabled = true,
@@ -107,6 +113,13 @@ return {
 		words = {
 			enabled = true,
 			notify_jump = true,
+		},
+		terminal = {
+			win = {
+				wo = {
+					winbar = "",
+				},
+			},
 		},
 	},
 }

@@ -54,18 +54,5 @@ return { -- Collection of various small independent plugins/modules
 				hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
 			},
 		})
-		--
-		require("mini.files").setup({
-			mappings = {
-				go_in_plus = "<CR>",
-			},
-			windows = {
-				-- preview = true,
-				-- width_preview = 50,
-
-				width_nofocus = 30,
-				width_focus = 30,
-			},
-		})
 	end,
 }
