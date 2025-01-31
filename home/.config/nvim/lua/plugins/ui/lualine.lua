@@ -2,7 +2,10 @@
 
 return {
 	"nvim-lualine/lualine.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
+	dependencies = {
+		{ require("mini.icons").mock_nvim_web_devicons() },
+		"arkav/lualine-lsp-progress",
+	},
 
 	config = function()
 		local theme = require("config.editor").get_lualine_theme()
@@ -18,31 +21,40 @@ return {
 				},
 			},
 			sections = {
-				lualine_a = { "mode" },
+				lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
 				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = { "buffers" },
 				lualine_x = {
-					-- {
-					-- require("noice").api.statusline.mode.get,
-					-- cond = require("noice").api.statusline.mode.has,
-					-- },
-					"filetype",
+					{
+						"lsp_progress",
+						timer = { progress_enddelay = 500, spinner = 150, lsp_client_name_enddelay = 1000 },
+						spinner_symbols = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+					},
+					{
+						require("noice").api.statusline.mode.get,
+						cond = require("noice").api.statusline.mode.has,
+					},
+					"searchcount",
+					"selectioncount",
 					"encoding",
 					"fileformat",
 				},
 				lualine_y = { "progress" },
-				lualine_z = { "location" },
+				lualine_z = {
+					{ "location", separator = { right = "" }, left_padding = 2 },
+				},
 			},
 			inactive_sections = {
-				lualine_a = {},
+				lualine_a = { "filename" },
 				lualine_b = {},
-				lualine_x = { "filetype", "encoding", "location" },
+				lualine_c = {},
+				lualine_x = { "encoding", "fileformat" },
 				lualine_y = {},
-				lualine_z = {},
+				lualine_z = { "location" },
 			},
 			tabline = {},
 			winbar = {},
-			extensions = {},
+			extensions = { "lazy", "mason" },
 		})
 	end,
 }
