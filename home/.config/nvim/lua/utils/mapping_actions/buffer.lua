@@ -11,7 +11,7 @@ local SaveAs = function()
 	else
 		vim.ui.input({ prompt = " Save As: " }, function(new_file)
 			if not new_file or new_file == "" then
-				print("No filename provided. Save canceled.")
+				vim.notify("No filename provided. Save canceled.", vim.log.levels.WARN, { title = "Save" })
 				return
 			end
 
@@ -19,24 +19,23 @@ local SaveAs = function()
 			if vim.fn.filereadable(new_file) == 1 then
 				vim.ui.input({ prompt = "󰽂 File exists. Overwrite? (y/N): " }, function(confirm)
 					if confirm and confirm:lower() == "y" then
-						---@diagnostic disable: assign-type-mismatch
 						local ok, err = pcall(vim.cmd, "write! " .. vim.fn.fnameescape(new_file))
 						if not ok then
-							print("Error saving file: " .. err)
+							vim.notify("Error saving file: " .. err, vim.log.levels.ERROR, { title = "Save" })
 						else
-							print("File saved successfully.")
+							vim.notify("File saved successfully.", vim.log.levels.INFO, { title = "Save" })
 						end
 					else
-						print("Save canceled.")
+						vim.notify("File not saved.", vim.log.levels.WARN, { title = "Save" })
 					end
 				end)
 			else
 				-- Save to the new file if it doesn't exist
 				local ok, err = pcall(vim.cmd, "write! " .. vim.fn.fnameescape(new_file))
 				if not ok then
-					print("Error saving file: " .. err)
+					vim.notify("Error saving file: " .. err, vim.log.levels.ERROR, { title = "Save" })
 				else
-					print("File saved successfully.")
+					vim.notify("File saved successfully.", vim.log.levels.INFO, { title = "Save" })
 				end
 			end
 		end)
