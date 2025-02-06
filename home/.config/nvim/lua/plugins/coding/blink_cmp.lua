@@ -170,6 +170,8 @@ return {
 				local success, node = pcall(vim.treesitter.get_node)
 				if vim.bo.filetype == "lua" then
 					return { "lazydev", "lsp", "path" }
+				elseif vim.bo.filetype == "markdown" then
+					return { "markdown", "lsp", "path" }
 				elseif
 					success
 					and node
@@ -208,6 +210,12 @@ return {
 					module = "lazydev.integrations.blink",
 					-- make lazydev completions top priority (see `:h blink.cmp`)
 					score_offset = 100,
+				},
+
+				markdown = {
+					name = "RenderMarkdown",
+					module = "render-markdown.integ.blink",
+					fallbacks = { "lsp" },
 				},
 			},
 		},

@@ -15,6 +15,7 @@ return {
 	{ import = "plugins.colorscheme" },
 	{ import = "plugins.core" },
 	{ import = "plugins.games" },
+	{ import = "plugins.langtools" },
 	{ import = "plugins.misc" },
 	{ import = "plugins.ui" },
 }
