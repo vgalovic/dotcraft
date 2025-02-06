@@ -4,43 +4,22 @@ return {
 	opts = {
 		--- @default "classic"
 		--- @options ["classic", "modern", "helix"]
-		preset = "modern",
+		preset = "helix",
+
+		delay = 0,
+
 		icons = {
-			breadcrumb = "»", -- Symbol in the command chain
-			separator = "➜", -- Separator between key and command
-			mappings = vim.g.have_nerd_font, -- Default group icon (or Nerd Font if available)
+			mappings = false,
 		},
 
-		-- Define Nerd Font keys if available, else fallback key names
-		keys = vim.g.have_nerd_font and {} or {
-			Up = "<Up> ",
-			Down = "<Down> ",
-			Left = "<Left> ",
-			Right = "<Right> ",
-			C = "<C-…> ",
-			M = "<M-…> ",
-			D = "<D-…> ",
-			S = "<S-…> ",
-			CR = "<CR> ",
-			Esc = "<Esc> ",
-			ScrollWheelDown = "<ScrollWheelDown> ",
-			ScrollWheelUp = "<ScrollWheelUp> ",
-			NL = "<NL> ",
-			BS = "<BS> ",
-			Space = "<Space> ",
-			Tab = "<Tab> ",
-			F1 = "<F1>",
-			F2 = "<F2>",
-			F3 = "<F3>",
-			F4 = "<F4>",
-			F5 = "<F5>",
-			F6 = "<F6>",
-			F7 = "<F7>",
-			F8 = "<F8>",
-			F9 = "<F9>",
-			F10 = "<F10>",
-			F11 = "<F11>",
-			F12 = "<F12>",
+		spec = {
+			{ "<leader>d", group = "Find and Delete", mode = { "n", "v" } },
+			{ "<leader>g", group = "Git", mode = { "n" } },
+			{ "<leader>l", group = "LSP", mode = { "n", "v" } },
+			{ "<leader>r", group = "Find and Replace", mode = { "n", "v" } },
+			{ "<leader>p", group = "Packge manager", mode = { "n" } },
+			{ "<leader>s", group = "Search", mode = { "n", "v" } },
+			{ "<leader>t", group = "Toggle", mode = { "n" } },
 		},
 	},
 }
