@@ -1,6 +1,9 @@
 # Dotcraft
 
-This is my _dotfiles repository_, which includes all my configuration files located in the `config` folder. The repository also contains installation scripts in the `install` folder to help you configure your system, meant for _Ubuntu_ (or _Linux Mint_).
+This is my _dotfiles repository_, which includes all my configuration files
+located in the `config` folder. The repository also contains installation
+scripts in the `install` folder to help you configure your system, meant for
+_Ubuntu_ (or _Linux Mint_).
 
 ## Prerequisites
 
@@ -36,11 +39,14 @@ After making the scripts executable, you can run the main setup script with:
 ./install/run.sh
 ```
 
-> 📝 **Note:** Running `run.sh` will automatically prompt you to restart your computer. A restart is required to complete the initial setup. Be sure to save any open work before proceeding.
+> 📝 **Note:** Running `run.sh` will automatically prompt you to restart
+> your computer. A restart is required to complete the initial setup. Be sure
+> to save any open work before proceeding.
 
 ## Post-Setup
 
-After restarting, you may want to run `post_run.sh` to complete the setup and install some none essential packages. To do so open a terminal and run:
+After restarting, you may want to run `post_run.sh` to complete the setup and
+install some none essential packages. To do so open a terminal and run:
 
 ```bash
 cd .dotfiles
@@ -51,7 +57,9 @@ These commands can't be run from `run.sh` directly.
 
 ## Troubleshooting
 
-The scripts will log their output to `script_output.log`. If something goes wrong during the setup process, you can check this log file to see what happened. This applies to both the `run.sh` script and `post_run.sh`.
+The scripts will log their output to `script_output.log`. If something goes
+wrong during the setup process, you can check this log file to see what
+happened. This applies to both the `run.sh` script and `post_run.sh`.
 
 ```bash
 cat ~/.dotfiles/install/output.log
