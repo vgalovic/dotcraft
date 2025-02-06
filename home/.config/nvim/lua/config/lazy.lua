@@ -28,13 +28,13 @@ require("lazy").setup({
 	--
 
 	-- Here is a more advanced example where we pass configuration
-	-- options to `gitsigns.nvim`. This is equivalent to the following Lua:
-	--    require('gitsigns').setup({ ... })
+	-- options to `lazy.nvim`. This is equivalent to the following Lua:
+	--    require('lazy').setup({ ... })
 	--
-	-- See `:help gitsigns` to understand what the configuration keys do
+	-- See `:help lazy.nvim` to understand what the configuration keys do
 
 	spec = {
-		-- { "Bilal2453/luvit-meta", lazy = true },
+		{ "Bilal2453/luvit-meta", lazy = true },
 		{
 			-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
 			-- used for completion, annotations and signatures of Neovim apis
@@ -79,6 +79,10 @@ require("lazy").setup({
 		},
 	},
 })
+
+-- keymap to open lazy plugin menu
+vim.keymap.set("n", "<leader>pl", "<cmd>Lazy<cr>", { noremap = true, silent = true, desc = "Lazy" })
+
 -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
 --
 -- This is often very useful to both group configuration, as well as handle

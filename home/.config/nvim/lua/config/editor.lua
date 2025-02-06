@@ -1,6 +1,3 @@
--- Set the theme
-local theme = "catppuccin"
-
 -- Append characters to fillchars for a cleaner look
 vim.opt.fillchars:append({ eob = " " })
 
@@ -77,12 +74,5 @@ vim.o.foldenable = true
 vim.o.foldlevel = 99 -- Open most folds by default (set to lower for fewer open folds)
 
 -- Setup color scheme
-vim.cmd.colorscheme(theme)
-
-return {
-	-- Set the lualine theme
-	---@return string theme
-	get_lualine_theme = function()
-		return theme
-	end,
-}
+--- @options ["catppuccin", "tokyonight"]
+vim.cmd.colorscheme("catppuccin")

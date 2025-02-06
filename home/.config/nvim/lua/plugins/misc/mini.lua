@@ -1,9 +1,20 @@
+---@diagnostic disable: duplicate-set-field
+
 return { -- Collection of various small independent plugins/modules
 	"echasnovski/mini.nvim",
 	version = false,
 	config = function()
 		require("mini.icons").setup()
+
+		-- require("mini.tabline").setup()
+
+		-- local statusline = require("mini.statusline")
+		-- statusline.setup({ use_icons = vim.g.have_nerd_font })
+		-- statusline.section_location = function()
+		-- 	return "%2l:%-2v"
+		-- end
 		--
+
 		-- Better Around/Inside textobjects
 		--
 		-- Examples:
@@ -18,9 +29,9 @@ return { -- Collection of various small independent plugins/modules
 		-- - sd'   - [S]urround [D]elete [']quotes
 		-- - sr)'  - [S]urround [R]eplace [)] [']
 		require("mini.surround").setup()
-		--
+
 		require("mini.pairs").setup()
-		--
+
 		require("mini.jump2d").setup({
 			hooks = {
 				pre = function()
@@ -28,7 +39,7 @@ return { -- Collection of various small independent plugins/modules
 				end,
 			},
 		})
-		--
+
 		require("mini.sessions").setup({
 			hooks = {
 				pre = {
@@ -38,7 +49,8 @@ return { -- Collection of various small independent plugins/modules
 				},
 			},
 		})
-		--
+		vim.keymap.set({ "n", "v" }, "<leader>z", "<cmd>mksession<CR>", { desc = "Save Session" })
+
 		require("mini.diff").setup({
 			view = {
 				style = "sign", -- number | sign
@@ -47,7 +59,12 @@ return { -- Collection of various small independent plugins/modules
 				signs = { add = "▕▏", change = "▕▏", delete = "▁▁" },
 			},
 		})
-		--
+		vim.keymap.set("n", "<leader>gt", function()
+			require("mini.diff").toggle_overlay(vim.api.nvim_get_current_buf())
+		end, { desc = "Toggle Diff Overlay" })
+
+		require("mini.git").setup()
+
 		require("mini.hipatterns").setup({
 			highlighters = {
 				-- Highlight hex color strings (`#rrggbb`) using that color

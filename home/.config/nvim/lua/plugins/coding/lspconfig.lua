@@ -1,5 +1,12 @@
+---@diagnostic disable: missing-fields
+
 return {
 	"neovim/nvim-lspconfig",
+	event = {
+		"BufReadPre",
+		"BufNewFile",
+	},
+
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
 		"saghen/blink.cmp",
@@ -8,32 +15,48 @@ return {
 	config = function()
 		local lspconfig = require("lspconfig")
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 		local servers = require("lsp.ensure_installed").lsp
 
+		-- Setup LSP autocommands (optimized version)
 		require("lsp.autocommands").setup_lsp_autocommands()
 
-		-- Set up completion for LSP servers using the "blink.cmp" plugin
-		for server, config in pairs(servers) do
-			-- Merge capabilities with blink.cmp if defined
-			config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-			lspconfig[server].setup(config)
-		end
-
-		-- Set up LSP server configurations without notifications
+		-- Configure Mason to ensure servers are installed
 		require("mason-lspconfig").setup({
-			ensure_installed = vim.tbl_keys(servers), -- Ensure LSP servers are installed
-			automatic_installation = false, -- Disable automatic installation
+			ensure_installed = vim.tbl_keys(servers),
+			automatic_installation = false,
 			handlers = {
 				function(server_name)
 					local server = servers[server_name] or {}
 					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					require("lspconfig")[server_name].setup(server)
+					lspconfig[server_name].setup(server)
 				end,
 			},
 		})
 
-		-- Load the LSP configurations
 		require("lsp").setup()
+	end,
+
+	setup_lsp_keymaps = function(bufnr)
+		local map = vim.keymap.set
+		local snacks = require("snacks")
+
+		local function lsp_map(keys, func, desc, mode)
+			mode = mode or "n"
+			map(mode, keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+		end
+
+		-- Use `snacks` for LSP navigation
+		-- stylua: ignore start
+		lsp_map("gd", function() snacks.picker.lsp_definitions() end, "Goto Definition")
+		lsp_map("gy", function() snacks.picker.lsp_type_definitions() end, "Type Definition")
+		lsp_map("gr", function() snacks.picker.lsp_references() end, "Goto References")
+		lsp_map("gI", function() snacks.picker.lsp_implementations() end, "Goto Implementation")
+		lsp_map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+		lsp_map("<leader>ls", function() snacks.picker.lsp_symbols() end, "Document Symbols")
+		lsp_map("<leader>lw", function() snacks.picker.lsp_symbols({ cwd = vim.fn.expand("%:p:h") }) end, "Workspace Symbols")
+		lsp_map("<leader>lc", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
+		lsp_map("<tab>", vim.lsp.buf.hover, "Buffer hover")
+		lsp_map("<backspace>", vim.lsp.buf.rename, "Rename")
+		-- stylua: ignore end
 	end,
 }
