@@ -29,12 +29,6 @@ vim.opt.breakindent = true
 -- Enable smart ident
 vim.o.smartindent = true
 
--- Prevents netrw from being loaded
-vim.g.loaded_netrw = 1
-
--- Disables netrw’s related plugins, such as file browsing, remote file editing, and directory listing
-vim.g.loaded_netrwPlugin = 1
-
 -- Save undo history
 vim.opt.undofile = true
 
