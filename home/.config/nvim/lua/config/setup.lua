@@ -4,6 +4,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Set this to true if you're using Nerd Font, otherwise false
+vim.g.have_nerd_font = true
+
 -- Disable providers
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -19,4 +22,5 @@ vim.cmd("set softtabstop=4")
 -- Set the number of spaces to use for each step of (auto)indent
 vim.cmd("set shiftwidth=4")
 
+-- Disable swap files
 vim.opt.swapfile = false
