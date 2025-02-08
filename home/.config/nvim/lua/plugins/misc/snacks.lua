@@ -7,7 +7,7 @@ local random_hls = require("utils.dashboard.random_hl").get_random_hl()
 local buffer = require("utils.mapping_actions.buffer")
 
 return {
-	"folke/Snacks.nvim",
+	"folke/snacks.nvim",
 	priority = 1000,
 	lazy = false,
 
