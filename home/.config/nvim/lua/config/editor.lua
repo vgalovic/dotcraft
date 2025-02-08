@@ -68,5 +68,4 @@ vim.o.foldenable = true
 vim.o.foldlevel = 99 -- Open most folds by default (set to lower for fewer open folds)
 
 -- Setup color scheme
---- @options ["catppuccin", "tokyonight"]
 vim.cmd.colorscheme("catppuccin")
