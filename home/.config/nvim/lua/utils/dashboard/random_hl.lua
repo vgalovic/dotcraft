@@ -15,16 +15,24 @@ end
 ---@return string[] groups random highlight groups from the table
 M.get_random_hl = function()
 	local groups = {
-		"@Function",
-		"@String",
-		"@Keyword",
-		"@Error",
-		"@Type",
-		"@Constant",
-		"@Label",
-		"@Number",
-		"@Type",
-		"@Operator",
+		--
+		-- Colors in comments are highlights of catppuccin colorsscheme,
+		-- for diferent colorschemes, colors might be different
+		--
+		"@parameter", ---- #EBA0AD
+		"@property", ----- #B4BEFF
+		"@symbol", ------- #F2CDCE
+		"Character", ----- #94E2D6
+		"Conditional", --- #CBA6F8
+		"Constant", ------ #FAB388
+		"Function", ------ #89B4FB
+		"Label", --------- #74C7ED
+		"Operator", ------ #89DCEC
+		"PreProc", ------- #F5C2E8
+		"Type", ---------- #F9E2B0
+		"diffAdded", ----- #A6E3A2
+		"diffRemoved", --- #F38BA9
+		"diffchanged", --- #89B4FB
 	}
 
 	-- Shuffle the table every time the function is called
