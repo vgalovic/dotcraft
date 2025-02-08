@@ -9,7 +9,7 @@ end
 
 local buffer = require("utils.mapping_actions.buffer")
 local find = require("utils.mapping_actions.find")
-local github = require("utils.mapping_actions.github")
+local misc = require("utils.mapping_actions.misc")
 --
 -- [[ Disable arrow keys ] ]
 --
@@ -92,4 +92,4 @@ map({ "n", "v" }, "<leader>dc", function() find.FindAndDeleteConfirm() end, { de
 --
 -- [[ Github repo ]]
 --
-map({ "n", "v" }, "gR", function() github.open_plugin_repo() end, { desc = "Open Plugin Repository" })
+map({ "n", "v" }, "gR", function() misc.open_plugin_repo() end, { desc = "Open Plugin Repository" })
