@@ -40,7 +40,7 @@ return {
 				additional_vim_regex_highlighting = true,
 				notify_on_error = true,
 			},
-			indent = { enable = false },
+			indent = { enable = true },
 		})
 	end,
 }
