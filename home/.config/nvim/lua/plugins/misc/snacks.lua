@@ -24,6 +24,13 @@ return {
 				header = header,
 			},
 			width = 72,
+			formats = {
+				header = { hl = random_hls[1] },
+
+				key = function(item)
+					return { { "(", hl = "special" }, { item.key, hl = "key" }, { ")", hl = "special" } }
+				end,
+			},
 			sections = {
 				{ section = "header", padding = 2 },
 
@@ -31,13 +38,13 @@ return {
 					align = "center",
 					padding = 2,
 					text = {
-						{ "  Update ", hl = random_hls[1] },
-						{ "  Sessions ", hl = random_hls[2] },
-						{ "  Config ", hl = random_hls[3] },
+						{ "  Update ", hl = random_hls[5] },
+						{ "  Sessions ", hl = random_hls[3] },
+						{ "  Config ", hl = random_hls[7] },
 						{ "  New File ", hl = random_hls[4] },
-						{ "  Files ", hl = random_hls[5] },
-						{ "  Recent ", hl = random_hls[6] },
-						{ "  Quit", hl = random_hls[7] },
+						{ "  Files ", hl = random_hls[10] },
+						{ "  Recent ", hl = random_hls[12] },
+						{ "  Quit", hl = random_hls[8] },
 					},
 				},
 				{ icon = "", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
@@ -83,6 +90,46 @@ return {
 					return vim.o.columns >= 120 and "default" or "dropdown"
 				end,
 			},
+			sources = {
+				commands = { layout = { preset = "vscode" } },
+				diagnostics = { layout = { preset = "vertical" } },
+				keymaps = {
+					layout = { preview = false, preset = "default" },
+				},
+				buffers = {
+					layout = {
+						preset = function()
+							return vim.o.columns >= 120 and "ivy" or "dropdown"
+						end,
+					},
+				},
+				lines = { layout = { preset = "select" } },
+				projects = {
+					dev = { "~/dev", "~/projects", "~/Documents/", "~/Projects" },
+					patterns = {
+						".git",
+						"_darcs",
+						".hg",
+						".bzr",
+						".svn",
+						".vscode",
+						"pyvenv.cfg",
+						"pyproject.toml",
+						"package.json",
+						"compile_commands.json",
+						"Makefile",
+					},
+					recent = true,
+				},
+				pickers = { layout = { preset = "select" } },
+				todo_comments = {
+					layout = {
+						preset = function()
+							return vim.o.columns >= 120 and "ivy" or "dropdown"
+						end,
+					},
+				},
+			},
 		},
 		explorer = {
 			replace_netrw = true,
@@ -122,8 +169,8 @@ return {
 	},
 
 	keys = {
-		-- stylua: ignore start
-		--
+		--stylua: ignore start
+
 		-- Git commands
 		{ "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
 		{ "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
@@ -136,45 +183,31 @@ return {
 
 		-- Picker
 		{ "-", function() Snacks.explorer() end, desc = "Explorer" },
-		{ "<C-;>", function() Snacks.picker.commands({ layout = { preset = "vscode" } }) end, desc = "Command List" },
+		{ "<C-;>", function() Snacks.picker.commands() end, desc = "Command List" },
 		{ "<M-;>", function() Snacks.picker.command_history() end, desc = "Command History" },
-		{ "<leader>/", function() Snacks.picker.lines({ layout = { preset = "select" } }) end, desc = "Fuzzily search in current buffer" },
+		{ "<leader>/", function() Snacks.picker.lines() end, desc = "Fuzzily search in current buffer" },
 		{ "<leader>.", function() Snacks.picker.recent() end, desc = "Search Recent Files" },
 
-		{ "<leader><leader>", function()
-			Snacks.picker.buffers({
-				layout = {
-					preset = function()
-						return vim.o.columns >= 120 and "ivy" or "dropdown"
-					end,
-				},
-			})
-		end, desc = "Find existing buffers" },
+
+		{ "<leader><leader>", function() Snacks.picker.buffers() end, desc = "Find existing buffers" },
 
 		-- Search
 		{ "<leader>sh", function() Snacks.picker.help() end, desc = "Search Help" },
 		{ "<leader>sf", function() Snacks.picker.files() end, desc = "Search Files" },
 		{ "<leader>sg", function() Snacks.picker.grep() end, desc = "Search by Grep" },
-		{ "<leader>sk", function() Snacks.picker.keymaps({ layout = { preview = false, preset = "default" } }) end, desc = "Search Keymaps" },
+		{ "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Search Keymaps" },
 		{ "<leader>sr", function() Snacks.picker.resume() end, desc = "Search Resume" },
-		{ "<leader>sd", function() Snacks.picker.diagnostics({ layout = { preset = "vertical" } }) end, desc = "Workspace Diagnostics" },
-		{ "<leader>ss", function() Snacks.picker.pickers({ layout = { preset = "select" } }) end, desc = "Search Select" },
-		{ "<leader>sw", function() Snacks.picker.grep_word({ cwd = vim.fn.expand("%:p:h") }) end, desc = "Search current Word" },
+		{ "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Workspace Diagnostics" },
+		{ "<leader>ss", function() Snacks.picker.pickers() end, desc = "Search Select" },
+		{ "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Search current Word" },
 		{ "<leader>s/", function() Snacks.picker.grep_buffers() end, desc = "Search in Open Files" },
 		{ "<leader>sc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Search Neovim Config" },
 		{ "<leader>u", function() Snacks.picker.undo() end, desc = "Undo History" },
 
-		{ "<leader>st", function()
-			Snacks.picker.todo_comments({
-				keywords = { "TODO", "FIX", "HACK", "WARNING" },
-				layout = {
-					preset = function()
-						return vim.o.columns >= 120 and "ivy" or "dropdown"
-					end,
-				},
-				cwd = vim.fn.expand("%:p:h"),
-			})
-		end, desc = "Search Todos" },
+		{ "<leader>st", function() Snacks.picker.todo_comments({cwd = vim.fn.expand("%:p:h")}) end, desc = "Search Todos" },
+
+
+		{ "<leader>sp", function() Snacks.picker.projects() end, desc = "Search Project" },
 
 		-- Terminal
 		{ "<C-/>", function() Snacks.terminal.toggle() end, mode = {"n", "t"}, desc = "Toggle Terminal" },
@@ -182,9 +215,10 @@ return {
 		-- Words navigation
 		{ "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference" },
 		{ "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference" },
-		--
-		-- stylua: ignore end
+
+		--stylua: ignore end
 	},
+
 	init = function()
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "VeryLazy",
@@ -202,8 +236,8 @@ return {
 				Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>ts")
 				Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
 				Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>tr")
-				Snacks.toggle.diagnostics():map("<leader>td")
-				Snacks.toggle.line_number():map("<leader>tl")
+				Snacks.toggle.diagnostics():map("<leader>tD")
+				Snacks.toggle.line_number():map("<leader>tn")
 				Snacks.toggle
 					.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
 					:map("<leader>tc")
