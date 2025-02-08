@@ -21,6 +21,7 @@ return {
 		-- asmfmt = {},
 		beautysh = {},
 		latexindent = {},
+		["markdown-toc"] = {},
 		prettier = {},
 		stylua = {},
 		verible = {},
