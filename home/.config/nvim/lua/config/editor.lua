@@ -1,3 +1,6 @@
+-- Setup color scheme
+vim.cmd.colorscheme("catppuccin")
+
 -- Append characters to fillchars for a cleaner look
 vim.opt.fillchars:append({ eob = " " })
 
@@ -66,6 +69,3 @@ vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- Tree-sitter's fold expression
 -- Optional: Start with all folds closed
 vim.o.foldenable = true
 vim.o.foldlevel = 99 -- Open most folds by default (set to lower for fewer open folds)
-
--- Setup color scheme
-vim.cmd.colorscheme("catppuccin")
