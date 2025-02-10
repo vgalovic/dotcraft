@@ -70,7 +70,7 @@ map("n", "<C-m>", "<cmd>delmarks!<CR>", { desc = "Delete marks for current buffe
 -- [[ Diagnostic ]]
 --
 -- stylua: ignore start
-map("n", "<leader>q", function() vim.diagnostic.setloclist() end, { desc = "Open diagnostic Quickfix list" })
+map("n", "<C-q>", function() vim.diagnostic.setloclist() end, { desc = "Open diagnostic Quickfix list" })
 --
 -- [[ Save ]]
 --

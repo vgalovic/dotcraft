@@ -15,6 +15,7 @@ return {
 		bigfile = { enabled = true },
 		scroll = { enabled = true },
 		input = { enabled = true },
+		image = { enabled = true },
 		scope = { enabled = true },
 		lazygit = { configure = false },
 		quickfile = { enabled = true },
@@ -47,7 +48,7 @@ return {
 						{ "  Quit", hl = random_hls[8] },
 					},
 				},
-				{ icon = "", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+				{ icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
 				{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
 
 				{ text = "", action = ":Lazy update", key = "u" },
@@ -90,6 +91,14 @@ return {
 					return vim.o.columns >= 120 and "default" or "dropdown"
 				end,
 			},
+			icons = {
+				diagnostics = {
+					Error = " ",
+					Warn = " ",
+					Info = " ",
+					Hint = " ",
+				},
+			},
 			sources = {
 				commands = { layout = { preset = "vscode" } },
 				diagnostics = { layout = { preset = "vertical" } },
@@ -105,7 +114,7 @@ return {
 				},
 				lines = { layout = { preset = "select" } },
 				projects = {
-					dev = { "~/dev", "~/projects", "~/Documents/", "~/Projects" },
+					dev = { "~/dev", "~/projects", "~/Documents/", "~/Projects", "~/.dotfiles" },
 					patterns = {
 						".git",
 						"_darcs",
@@ -119,7 +128,7 @@ return {
 						"compile_commands.json",
 						"Makefile",
 					},
-					recent = true,
+					recent = false,
 				},
 				pickers = { layout = { preset = "select" } },
 				todo_comments = {

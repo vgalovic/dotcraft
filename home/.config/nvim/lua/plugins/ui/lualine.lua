@@ -21,7 +21,14 @@ return {
 			lualine_a = {
 				{ "mode", separator = { left = "", right = "" }, left_padding = 2, right_padding = 2 },
 			},
-			lualine_b = { "branch", "diff", "diagnostics" },
+			lualine_b = {
+				"branch",
+				"diff",
+				{
+					"diagnostics",
+					symbols = { error = " ", warn = " ", info = " ", hint = " " },
+				},
+			},
 			lualine_c = { "buffers" },
 			lualine_x = {
 				{
