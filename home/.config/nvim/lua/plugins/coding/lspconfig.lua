@@ -52,9 +52,9 @@ return {
 		lsp_map("gr", function() snacks.picker.lsp_references() end, "Goto References")
 		lsp_map("gI", function() snacks.picker.lsp_implementations() end, "Goto Implementation")
 		lsp_map("gD", vim.lsp.buf.declaration, "Goto Declaration")
-		lsp_map("<leader>ls", function() snacks.picker.lsp_symbols() end, "Document Symbols")
-		lsp_map("<leader>lw", function() snacks.picker.lsp_symbols({ cwd = vim.fn.expand("%:p:h") }) end, "Workspace Symbols")
-		lsp_map("<leader>lc", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
+		lsp_map("<leader>cs", function() snacks.picker.lsp_symbols() end, "Document Symbols")
+		lsp_map("<leader>cw", function() snacks.picker.lsp_symbols({ cwd = vim.fn.expand("%:p:h") }) end, "Workspace Symbols")
+		lsp_map("<leader>cc", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
 		lsp_map("<tab>", vim.lsp.buf.hover, "Buffer hover")
 		lsp_map("<backspace>", vim.lsp.buf.rename, "Rename")
 		-- stylua: ignore end

@@ -14,8 +14,8 @@ return {
 
 		spec = {
 			{ "<leader>d", group = "Find and Delete", mode = { "n", "v" } },
+			{ "<leader>c", group = "Code" },
 			{ "<leader>g", group = "Git", mode = { "n" } },
-			{ "<leader>l", group = "LSP", mode = { "n", "v" } },
 			{ "<leader>r", group = "Find and Replace", mode = { "n", "v" } },
 			{ "<leader>p", group = "Packge manager", mode = { "n" } },
 			{ "<leader>s", group = "Search", mode = { "n", "v" } },
