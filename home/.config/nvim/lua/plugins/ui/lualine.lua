@@ -9,7 +9,7 @@ return {
 
 	opts = {
 		options = {
-			theme = "auto",
+			theme = vim.g.colorscheme,
 			component_separators = "",
 			section_separators = { left = "", right = "" },
 			disabled_filetypes = {
@@ -19,7 +19,7 @@ return {
 		},
 		sections = {
 			lualine_a = {
-				{ "mode", separator = { left = "", right = "" }, left_padding = 2, right_padding = 2 },
+				{ "mode", separator = { right = "" }, left_padding = 2, right_padding = 2 },
 			},
 			lualine_b = {
 				"branch",
@@ -42,7 +42,7 @@ return {
 			},
 			lualine_y = { "progress" },
 			lualine_z = {
-				{ "location", separator = { left = "", right = "" }, left_padding = 2, right_padding = 2 },
+				{ "location", separator = { left = "" }, left_padding = 2, right_padding = 2 },
 			},
 		},
 		inactive_sections = {
