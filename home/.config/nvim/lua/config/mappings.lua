@@ -29,10 +29,10 @@ map({ "n", "v" }, "Č", ":")
 --
 -- [[ Navigation ]]
 --
-map({ "n", "t" }, "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
-map({ "n", "t" }, "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
-map({ "n", "t" }, "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
-map({ "n", "t" }, "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
+-- map({ "n", "t" }, "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
+-- map({ "n", "t" }, "<C-l>", "<C-w>l", { desc = "Move focus to the right window" })
+-- map({ "n", "t" }, "<C-j>", "<C-w>j", { desc = "Move focus to the lower window" })
+-- map({ "n", "t" }, "<C-k>", "<C-w>k", { desc = "Move focus to the upper window" })
 --
 -- [[ Split ]]
 --
@@ -41,8 +41,8 @@ map({ "n", "v" }, "<leader>v", "<C-w>v", { desc = "Vertical split" })
 --
 -- [[ Buffers ]]
 --
-map({ "n", "v" }, "<M-j>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer" })
-map({ "n", "v" }, "<M-k>", "<CMD>bnext<CR>", { desc = "Go to next buffer" })
+map({ "n", "v" }, "<M-[>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer" })
+map({ "n", "v" }, "<M-]>", "<CMD>bnext<CR>", { desc = "Go to next buffer" })
 map({ "n", "v" }, "<M-s>", "<cmd>b#<cr>", { desc = "Go to last active buffer" })
 map({ "n", "v" }, "<M-q>", "<Cmd>bd<CR>", { desc = "Quit current buffer" })
 --
@@ -71,6 +71,7 @@ map("n", "<C-m>", "<cmd>delmarks!<CR>", { desc = "Delete marks for current buffe
 --
 -- stylua: ignore start
 map("n", "<C-q>", function() vim.diagnostic.setloclist() end, { desc = "Open diagnostic Quickfix list" })
+map("n", "Q", function ()  vim.diagnostic.open_float() end, { noremap = true, silent = true, desc = "Open diagnostic Float under cursor" })
 --
 -- [[ Save ]]
 --
