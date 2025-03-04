@@ -2,7 +2,6 @@
 
 source "$HOME/.dotfiles/install/setup/print_and_log.sh"
 
-
 add_brew_path() {
     print_msg "Linuxbrew is installed. Adding to PATH in .bashrc..."
 
@@ -100,20 +99,6 @@ install_with_retries() {
     return 1
 }
 
-# Function to install Tmux with optional TPM
-install_tmux() {
-    read -p "Install Tmux? (y/N): " install_tmux_choice
-    if [[ "$install_tmux_choice" =~ ^[Yy]$ ]]; then
-        if install_with_retries "tmux"; then
-            print_msg "Cloning Tmux Plugin Manager (TPM)..."
-            git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || \
-                print_error "Failed to clone Tmux Plugin Manager"
-        fi
-    else
-        print_msg "Skipping Tmux installation."
-    fi
-}
-
 # Function to install default applications from brew_applications.txt
 install_brew_default() {
     load_brew_applications
@@ -131,7 +116,6 @@ install_brew_default() {
             install_with_retries "$app"
         done
 
-        install_tmux
     fi
 }
 
