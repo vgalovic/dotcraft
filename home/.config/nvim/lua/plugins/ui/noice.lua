@@ -15,7 +15,7 @@ return {
 			view = "cmdline_popup",
 		},
 		notify = {
-			enabled = false,
+			enabled = true,
 		},
 		lsp = {
 			signature = {
@@ -39,9 +39,6 @@ return {
 			command_palette = true, -- Position the cmdline and popupmenu together
 			lsp_doc_border = true, -- Add a border to hover docs and signature help
 			-- long_message_to_split = true, -- long messages will be sent to a split
-		},
-		command = {
-			enable = true,
 		},
 		routes = {},
 	},
