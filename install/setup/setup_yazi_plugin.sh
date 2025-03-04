@@ -30,7 +30,7 @@ install_yazi_apt_required() {
     for app in "${apt_yazi_required_apps[@]}"; do
         print_msg "Checking if $app is installed..."
 
-        if dpkg -l | grep -q "^ii  $app "; then
+        if command -v "$app" &> /dev/null; then
             print_msg "$app is already installed."
         else
             print_msg "Installing APT package: $app..."
