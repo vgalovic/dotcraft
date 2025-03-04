@@ -55,7 +55,7 @@ return {
 		lsp_map("<leader>cs", function() snacks.picker.lsp_symbols() end, "Document Symbols")
 		lsp_map("<leader>cw", function() snacks.picker.lsp_symbols({ cwd = vim.fn.expand("%:p:h") }) end, "Workspace Symbols")
 		lsp_map("<leader>cc", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
-		lsp_map("<tab>", vim.lsp.buf.hover, "Buffer hover")
+		lsp_map("K", vim.lsp.buf.hover, "Buffer hover")
 		lsp_map("<backspace>", vim.lsp.buf.rename, "Rename")
 		-- stylua: ignore end
 	end,

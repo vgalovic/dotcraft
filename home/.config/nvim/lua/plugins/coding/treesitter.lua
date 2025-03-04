@@ -7,6 +7,13 @@ return {
 		ignore_install = {},
 		sync_install = false,
 		modules = {},
+		highlight = {
+			enable = true,
+			additional_vim_regex_highlighting = false,
+			notify_on_error = true,
+			disable = {},
+		},
+		indent = { enable = true },
 		ensure_installed = {
 			"bash",
 			"c",
@@ -33,13 +40,5 @@ return {
 			"verilog",
 			"yaml",
 		},
-
-		highlight = {
-			enable = true, -- Enable highlighting
-			additional_vim_regex_highlighting = true,
-			notify_on_error = true,
-			disable = {},
-		},
-		indent = { enable = true },
 	},
 }
