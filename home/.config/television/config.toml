@@ -185,3 +185,9 @@ toggle_preview = "ctrl-o"
 
 # man pages channel
 "man" = "manpages"
+
+# video channel
+"mpv" = "videos"
+
+# zathura files channel
+"zathura" = "zathura_files"
