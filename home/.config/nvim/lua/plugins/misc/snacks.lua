@@ -2,6 +2,21 @@
 ---@diagnostic disable: undefined-global
 ---@diagnostic disable: undefined-field
 
+-- Disable winbar for floating windows
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	callback = function()
+		local win = vim.api.nvim_get_current_win()
+		local config = vim.api.nvim_win_get_config(win)
+
+		-- Check if the current window is floating
+		if config.relative ~= "" then
+			-- Disable winbar for any floating window
+			vim.wo[win].winbar = ""
+			vim.w[win].winbar_no_attach = true
+		end
+	end,
+})
+
 local header = require("utils.dashboard.random_header").get_random_header()
 local random_hls = require("utils.dashboard.random_hl").get_random_hl()
 local buffer = require("utils.mapping_actions.buffer")
@@ -15,7 +30,6 @@ return {
 		bigfile = { enabled = true },
 		scroll = { enabled = true },
 		input = { enabled = true },
-		image = { enabled = true },
 		scope = { enabled = true },
 		lazygit = { configure = false },
 		quickfile = { enabled = true },
@@ -39,12 +53,12 @@ return {
 					align = "center",
 					padding = 2,
 					text = {
-						{ "  Update ", hl = random_hls[5] },
+						{ "  Update ", hl = random_hls[2] },
 						{ "  Sessions ", hl = random_hls[3] },
-						{ "  Config ", hl = random_hls[7] },
-						{ "  New File ", hl = random_hls[4] },
-						{ "  Files ", hl = random_hls[10] },
-						{ "  Recent ", hl = random_hls[12] },
+						{ "  Config ", hl = random_hls[3] },
+						{ "  New File ", hl = random_hls[5] },
+						{ "  Files ", hl = random_hls[6] },
+						{ "  Recent ", hl = random_hls[7] },
 						{ "  Quit", hl = random_hls[8] },
 					},
 				},
@@ -59,7 +73,7 @@ return {
 					key = "c",
 				},
 				-- stylua: ignore
-				{ text = "", action = function() buffer.new_file() end, key = "n", },
+			{ text = "", action = function() buffer.new_file() end, key = "n", },
 				{ text = "", action = ":lua Snacks.dashboard.pick('files')", key = "f" },
 				{ text = "", action = ":lua Snacks.dashboard.pick('oldfiles')", key = "r" },
 				{ text = "", action = ":qa", key = "q" },
@@ -67,17 +81,25 @@ return {
 				{ section = "startup", padding = 1 },
 			},
 		},
+		image = {
+			doc = {
+				float = true,
+				inline = false,
+				max_width = 60,
+				max_height = 30,
+			},
+		},
 		indent = {
 			scope = {
 				hl = {
-					"SnacksIndent1",
-					"SnacksIndent2",
-					"SnacksIndent3",
-					"SnacksIndent4",
-					"SnacksIndent5",
-					"SnacksIndent6",
-					"SnacksIndent7",
-					"SnacksIndent8",
+					random_hls[1],
+					random_hls[2],
+					random_hls[3],
+					random_hls[4],
+					random_hls[5],
+					random_hls[6],
+					random_hls[7],
+					random_hls[8],
 				},
 			},
 		},
@@ -102,6 +124,7 @@ return {
 			sources = {
 				commands = { layout = { preset = "vscode" } },
 				diagnostics = { layout = { preset = "vertical" } },
+				diagnostics_buffer = { layout = { preset = "vertical" } },
 				keymaps = {
 					layout = { preview = false, preset = "default" },
 				},
@@ -112,9 +135,9 @@ return {
 						end,
 					},
 				},
-				lines = { layout = { preset = "select" } },
+				lines = { layout = { preset = "vertical" } },
 				projects = {
-					dev = { "~/dev", "~/projects", "~/Documents/", "~/Projects", "~/.dotfiles" },
+					dev = { "~/Documents/", "~/Projects", "~/.dotfiles" },
 					patterns = {
 						".git",
 						"_darcs",
@@ -191,13 +214,13 @@ return {
 		{ "<leader>sn", function() Snacks.notifier.show_history() end, desc = "Notification History" },
 
 		-- Picker
-		{ "-", function() Snacks.explorer() end, desc = "Explorer" },
 		{ "<C-;>", function() Snacks.picker.commands() end, desc = "Command List" },
 		{ "<M-;>", function() Snacks.picker.command_history() end, desc = "Command History" },
+		{ "<M-\\>", function() Snacks.explorer({cwd = vim.fn.expand("%:p:h")}) end, desc = "Snacks Explorer" },
+		{ "<leader>u", function() Snacks.picker.undo() end, desc = "Undo History" },
 		{ "<leader>/", function() Snacks.picker.lines() end, desc = "Fuzzily search in current buffer" },
+        { "<leader>,", function() Snacks.picker.smart() end, desc = "Smart find files" },
 		{ "<leader>.", function() Snacks.picker.recent() end, desc = "Search Recent Files" },
-
-
 		{ "<leader><leader>", function() Snacks.picker.buffers() end, desc = "Find existing buffers" },
 
 		-- Search
@@ -209,14 +232,11 @@ return {
 		{ "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Workspace Diagnostics" },
 		{ "<leader>ss", function() Snacks.picker.pickers() end, desc = "Search Select" },
 		{ "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Search current Word" },
-		{ "<leader>s/", function() Snacks.picker.grep_buffers() end, desc = "Search in Open Files" },
 		{ "<leader>sc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Search Neovim Config" },
-		{ "<leader>u", function() Snacks.picker.undo() end, desc = "Undo History" },
-
 		{ "<leader>st", function() Snacks.picker.todo_comments({cwd = vim.fn.expand("%:p:h")}) end, desc = "Search Todos" },
-
-
 		{ "<leader>sp", function() Snacks.picker.projects() end, desc = "Search Project" },
+        { "<leader>sz", function() Snacks.picker.zoxide() end, desc = "Search last used directory" },
+		{ "<leader>s/", function() Snacks.picker.grep_buffers() end, desc = "Search in Open Files" },
 
 		-- Terminal
 		{ "<C-/>", function() Snacks.terminal.toggle() end, mode = {"n", "t"}, desc = "Toggle Terminal" },

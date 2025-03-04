@@ -4,16 +4,25 @@ return { -- Collection of various small independent plugins/modules
 	"echasnovski/mini.nvim",
 	version = false,
 	config = function()
-		require("mini.icons").setup()
+		require("mini.comment").setup()
+
+		local icons = require("mini.icons")
+
+		-- Looks if nerd font is installed
+		-- If nerd font is installed, then use glyphs, otherwise use ascii
+		if vim.g.have_nerd_font then
+			icons.setup()
+		else
+			icons.setup({ style = "ascii" })
+		end
 
 		-- require("mini.tabline").setup()
-
+		--
 		-- local statusline = require("mini.statusline")
 		-- statusline.setup({ use_icons = vim.g.have_nerd_font })
 		-- statusline.section_location = function()
 		-- 	return "%2l:%-2v"
 		-- end
-		--
 
 		-- Better Around/Inside textobjects
 		--
@@ -31,6 +40,12 @@ return { -- Collection of various small independent plugins/modules
 		require("mini.surround").setup()
 
 		require("mini.pairs").setup()
+
+		require("mini.jump").setup({
+			mappings = {
+				repeat_jump = ".",
+			},
+		})
 
 		require("mini.jump2d").setup({
 			hooks = {
@@ -71,5 +86,29 @@ return { -- Collection of various small independent plugins/modules
 				hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
 			},
 		})
+		local files = require("mini.files")
+		files.setup({
+			mappings = {
+				close = "q",
+				go_in = "l",
+				go_in_plus = "<CR>",
+				go_out = "h",
+				go_out_plus = "H",
+				mark_goto = "'",
+				mark_set = "m",
+				reset = "<BS>",
+				reveal_cwd = ".",
+				show_help = "g?",
+				synchronize = "=",
+				trim_left = "<",
+				trim_right = ">",
+			},
+		})
+
+		vim.keymap.set("n", "\\", function()
+			if not files.close() then
+				files.open(vim.fn.expand("%:p:h"), true)
+			end
+		end, { desc = "Open Mini Files" })
 	end,
 }
