@@ -15,12 +15,12 @@
     "version": "2"
   },
   "features": {
-    "inline_completion_provider": "supermaven"
+    "edit_prediction_provider": "zed"
   },
   "telemetry": {
     "metrics": false
   },
-  "vim_mode": false,
+  "vim_mode": true,
   "vim": {
     "toggle_relative_line_numbers": true,
     "use_system_clipboard": "always",
@@ -32,20 +32,22 @@
   "buffer_font_size": 14,
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "ui_font_family": "JetBrainsMono Nerd Font",
+  "restore_on_startup": "none",
   "theme": {
-    "mode": "system",
+    "mode": "dark",
     "light": "Catppuccin Latte",
     "dark": "Catppuccin Mocha"
   },
+  "icon_theme": "Catppuccin Mocha",
   "journal": {
     "path": "~/Documents/Zed",
     "hour_format": "hour24"
   },
   "auto_install_extensions": {
-    "Ctppuccin Themes": true,
+    "Catppuccin Themes": true,
+    "Catppuccin Icons": true,
     "Make": true,
     "NeoCMake": true,
-    "Nix": true,
     "Verilog": true
   },
   "languages": {
@@ -56,26 +58,6 @@
     "C++": {
       "format_on_save": "on",
       "use_on_type_format": true
-    },
-    "Dart": {
-      "tab_size": 2
-    },
-    "Elixir": {
-      "language_servers": ["elixir-ls", "!next-ls", "!lexical", "..."]
-    },
-    "Go": {
-      "code_actions_on_format": {
-        "source.organizeImports": true
-      }
-    },
-    "HEEX": {
-      "language_servers": ["elixir-ls", "!next-ls", "!lexical", "..."]
-    },
-    "Java": {
-      "prettier": {
-        "allowed": true,
-        "plugins": ["prettier-plugin-java"]
-      }
     },
     "JSON": {
       "prettier": {
@@ -94,18 +76,9 @@
         "allowed": true
       }
     },
-    "Ruby": {
-      "language_servers": ["solargraph", "!ruby-lsp", "!rubocop", "..."]
-    },
-    "Starlark": {
-      "language_servers": ["starpls", "!buck2-lsp", "..."]
-    },
-    "Svelte": {
-      "language_servers": ["svelte-language-server", "..."],
-      "prettier": {
-        "allowed": true,
-        "plugins": ["prettier-plugin-svelte"]
-      }
+    "VHDL": {
+      "format_on_save": "on",
+      "use_on_type_format": true
     },
     "Verilog": {
       "format_on_save": "on",
