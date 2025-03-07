@@ -1,0 +1,26 @@
+[global]
+font = "JetBrainsMono Nerd Font 11"
+timeout = 5
+origin = top-right
+icon_theme = Papirus
+enable_recursive_icon_lookup = true
+
+frame_color = "#ca9ee6"
+separator_color= frame
+highlight = "#ca9ee6"
+
+[urgency_low]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[urgency_normal]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[urgency_critical]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+frame_color = "#fab387"
+
+# vim: ft=cfg
+

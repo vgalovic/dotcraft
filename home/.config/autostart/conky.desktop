@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Conky
+Exec=sh -c "$HOME/.config/conky/conky.sh"
+StartupNotify=false
+Terminal=false
+Icon=conky-logomark-violet
+Categories=System;Monitor;
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
+Name[en_US]=Conky
+Comment[en_US]=System Monitor
+X-GNOME-Autostart-Delay=0
+
+
