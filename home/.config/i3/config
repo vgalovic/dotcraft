@@ -16,11 +16,15 @@ gaps outer 4
 for_window [all] title_window_icon on
 for_window [all] title_window_icon padding 2px
 for_window [window_type="floating"] gaps none
-for_window [class=".*"] border none
-default_border pixel 2
+for_window [class=".*"] border pixel 4
+default_border pixel 4
+default_floating_border pixel 4
 title_align center
 gaps inner 10
 gaps top 40
+
+# Set Conky as floating window
+for_window [class="Conky"] floating enable
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
