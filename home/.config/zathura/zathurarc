@@ -6,6 +6,10 @@ include catppuccin-mocha
 # ---------------------------------------
 # general
 
+set guioptions none
+
+set font "JetBrainsMono Nerd Font 11"
+
 set statusbar-h-padding 0
 set statusbar-v-padding 0
 set page-padding 1
@@ -27,6 +31,8 @@ set synctex-editor-command "nvim +%{line} %{input}"
 
 # ---------------------------------------
 # basic mappings
+
+map <C-Tab> toggle_statusbar
 
 map u scroll half-up
 map d scroll half-down
