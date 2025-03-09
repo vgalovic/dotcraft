@@ -23,8 +23,10 @@ title_align center
 gaps inner 10
 gaps top 40
 
-# Set Conky as floating window
+# Set floating windows
+for_window [class="Blueman-manager"] floating enable
 for_window [class="Conky"] floating enable
+for_window [class="copyq"] floating enable
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -49,7 +51,7 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh
 
 # with keybind
-bindsym $mod+Delete exec --no-startup-id ~/.config/i3/lock.sh
+bindsym $mod+Escape exec --no-startup-id ~/.config/i3/lock.sh
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -93,7 +95,7 @@ bindsym $mod+q kill
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
-bindsym $mod+space exec --no-startup-id rofi -show drun
+bindsym $mod+slash exec --no-startup-id rofi -show drun
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
 # change focus
@@ -121,10 +123,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-# bindsym $mod+h split h
+bindsym $mod+minus split h
 
 # split in vertical orientation
-# bindsym $mod+v split v
+bindsym $mod+backslash split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -138,13 +140,13 @@ bindsym $mod+w layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-# bindsym $mod+f focus mode_toggle
+bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-# bindsym $mod+a focus parent
+bindsym $mod+a focus parent
 
 # focus the child container
-# bindsym $mod+d focus child
+bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -189,7 +191,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Escape exec ~/.config/rofi/powermenu/powermenu.sh
+bindsym $mod+Shift+Escape exec ~/.config/rofi/powermenu/powermenu.sh
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -238,14 +240,23 @@ exec --no-startup-idfeh --bg-scale ~/Pictures/Wallpapers/cyberpunk\ city/wallhav
 # Set the initial keyboard layout
 exec --no-startup-id setxkbmap -layout us,rs -variant ,latin -option 'grp:alt_shift_toggle'
 
-#file manager
-bindsym $mod+e exec --no-startup-id kitty yazi
+# Launch applications
+mode "$mode_launcher" {
+    bindsym d exec flatpak run com.discordapp.Discord; mode "default"
+    bindsym b exec blueman-manager; mode "default"
+    bindsym e exec "$HOME/.local/share/AppImage/neovide.appimage"; mode "default"
+    bindsym f exec kitty yazi; mode "default"
+    bindsym m exec thunderbird; mode "default"
+    bindsym t exec kitty btop; mode "default"
+    bindsym w exec "$HOME/.local/share/AppImage/zen_browser.appimage %u"; mode "default"
 
-#btop
-bindsym $mod+p exec --no-startup-id kitty btop
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym $mod+o mode "default"
+}
 
-# Bluetooth
-bindsym $mod+b exec --no-startup-id blueman-manager
+set $mode_launcher Open
+bindsym $mod+o mode "$mode_launcher"
 
 # Setup catppuccin colors
 set $rosewater #f5e0dc
