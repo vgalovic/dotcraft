@@ -43,7 +43,7 @@ map({ "n", "v" }, "<leader>v", "<C-w>v", { desc = "Vertical split" })
 --
 map({ "n", "v" }, "<M-[>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer" })
 map({ "n", "v" }, "<M-]>", "<CMD>bnext<CR>", { desc = "Go to next buffer" })
-map({ "n", "v" }, "<M-s>", "<cmd>b#<cr>", { desc = "Go to last active buffer" })
+map({ "n", "v" }, "<M-'>", "<cmd>b#<cr>", { desc = "Go to last active buffer" })
 map({ "n", "v" }, "<M-q>", "<Cmd>bd<CR>", { desc = "Quit current buffer" })
 --
 -- stylua: ignore
@@ -55,9 +55,18 @@ map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Stop the highlighting for the
 --
 -- [[ Visual Mode ]]
 --
-map("v", "<C-s>", ":sort<CR>", { desc = "Sort highlighted text" })
+map("v", "<M-s>", ":sort<CR>", { desc = "Sort highlighted text" })
 map("v", "K", ":m '>-2<CR>gv=gv", { desc = "Move current line up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move current line down" })
+--
+-- [[ Select ]]
+--
+vim.keymap.set("n", "<C-a>", "ggVG", { noremap = true, silent = true, desc = "Select all" })
+--
+-- [[ Increment and decrement numbers ]]
+--
+map("n", "+", "<C-a>", { noremap = true, silent = true, desc = "Increment number" })
+map("n", "-", "<C-x>", { noremap = true, silent = true, desc = "Decrement number" })
 --
 -- [[ Terminal ]]
 --
@@ -75,7 +84,7 @@ map("n", "Q", function ()  vim.diagnostic.open_float() end, { noremap = true, si
 --
 -- [[ Save ]]
 --
-map({ "n", "v", "i" }, "<M-w>", function() buffer.save() end, get_opts("Save"))
+map({ "n", "v", "i" }, "<C-s>", function() buffer.save() end, get_opts("Save"))
 --
 -- [[ New File ]]
 --
