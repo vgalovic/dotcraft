@@ -20,7 +20,7 @@ must_execute_script "setup_apt"
 must_execute_script "setup_kvantum_papirus"
 
 # Execute other setup scripts with user prompts
-for script in setup_flatpack setup_brew setup_terminal_and_prompt setup_mega_sync setup_latex setup_rust setup_pipx setup_npm; do
+for script in setup_i3wm setup_flatpack setup_brew setup_terminal_and_prompt setup_mega_sync setup_latex setup_rust setup_pipx setup_npm; do
     execute_script "$script"
 done
 
