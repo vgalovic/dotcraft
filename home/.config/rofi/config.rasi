@@ -8,7 +8,6 @@ configuration {
     display-run:                " ";
     display-filebrowser:        " ";
     display-window:             " ";
-    display-combi:              "󰚾 ";
     drun-display-format:        "{name}";
     window-format:              "{w} · {c} · {t}";
     color-enabled:              true;
