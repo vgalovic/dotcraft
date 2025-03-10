@@ -1,4 +1,7 @@
 install/output.log
+home/.config/autostart/copyq.desktop
+home/.config/autostart/Flameshot.desktop
+home/.config/autostart/megasync.desktop
 home/.config/bat/themes/
 home/.config/bat/syntaxes/
 home/.config/btop/btop.log
