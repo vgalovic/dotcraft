@@ -31,6 +31,7 @@ install_i3() {
 install_utils() {
     print_msg "Installing Essential Utilities"
     sudo apt install -y \
+        dunst \
         polybar \
         i3lock \
         i3-gaps \
