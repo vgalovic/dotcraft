@@ -5,6 +5,7 @@ conky
 dunst
 fastanime
 fastfetch
+flameshot
 i3
 kitty
 lazygit
