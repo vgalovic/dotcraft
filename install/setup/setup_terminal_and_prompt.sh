@@ -25,45 +25,5 @@ install_starship() {
     curl -sS https://starship.rs/install.sh | sh || { print_error "Failed to install Starship prompt"; }
 }
 
-# Function to install JetBrains Mono Nerd Font
-install_jetbrains_mono() {
-    # Download the JetBrains Mono Nerd Font
-    print_msg "Downloading JetBrains Mono Nerd Font..."
-    if ! wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip; then
-        print_error "Failed to download the font."
-        return 1
-    fi
-
-    # Unzip the font
-    print_msg "Unzipping JetBrains Mono Nerd Font..."
-    if ! unzip -q JetBrainsMono.zip -d JetBrainsMono; then
-        print_error "Failed to unzip the font."
-        return 1
-    fi
-
-    # Create the local fonts directory if it doesn't exist
-    mkdir -p ~/.local/share/fonts
-
-    # Move the fonts to the local fonts directory
-    print_msg "Installing JetBrains Mono Nerd Font..."
-    if ! mv JetBrainsMono/*.ttf ~/.local/share/fonts/; then
-        print_error "Failed to move fonts to the local directory."
-        return 1
-    fi
-
-    # Refresh the font cache
-    print_msg "Refreshing font cache..."
-    if ! fc-cache -fv; then
-        print_error "Failed to refresh the font cache."
-        return 1
-    fi
-
-    # Clean up
-    rm -rf JetBrainsMono JetBrainsMono.zip
-
-    print_msg "JetBrains Mono Nerd Font installation complete!"
-}
-
 install_kitty
 install_starship
-install_jetbrains_mono
