@@ -5,22 +5,61 @@
 source "$HOME/.dotfiles/install/setup/print_and_log.sh"
 echo "Installation log: $(date)" > "$LOG_FILE"
 
-# Variables
-SETUP_DIR="$HOME/.dotfiles/install/setup"
-
 # Ensure SETUP_DIR exists
 if [ ! -d "$SETUP_DIR" ]; then
     print_error "The directory $SETUP_DIR does not exist."
     exit 1
 fi
 
-
 # Run essential setup scripts without prompting
-must_execute_script "setup_apt"
+if command -v apt >/dev/null; then
+    must_execute_script "setup_apt"
+elif command -v dnf >/dev/null; then
+    must_execute_script "setup_dnf"
+elif command -v pacman >/dev/null; then
+    execute_script "setup_yay"
+fi
+
 must_execute_script "setup_kvantum_papirus"
 
+# Execute setup scripts for install packages tools
+for script in setup_rust setup_pipx setup_npm; do
+    execute_script "$script"
+done
+
+execute_script "setup_flatpak"
+
+if command -v dnf >/dev/null; then
+    echo "There are packages that are seted up to be installed via Homebrew, but you are using Fedora which already has moust of packages to the latest version in its repos."
+    PS3="Do you want to install applications via: "
+    options=("dnf (recommended)" "Homebrew" "Skip")
+    select opt in "${options[@]}"; do
+        case "$opt" in
+            "dnf (recommended)")
+                print_msg "Installing packages via dnf..."
+                must_execute_script "setup_dnf_alternative"
+                break
+                ;;
+            "HomeBrew")
+                print_msg "Installing packages via Homebrew..."
+                must_execute_script "setup_brew"
+                break
+                ;;
+            "Skip")
+                print_msg "Skipping this part of the setup."
+                break
+                ;;
+            *)
+                print_error "Invalid option. Please select again."
+                ;;
+        esac
+    done
+else
+    execute_script "setup_brew"
+fi
+
 # Execute other setup scripts with user prompts
-for script in setup_i3wm setup_flatpack setup_brew setup_terminal_and_prompt setup_microsoft setup_mega_sync setup_latex setup_rust setup_pipx setup_npm; do
+for script in setup_terminal_and_prompt setup_fonts setup_mega_sync setup_latex ; do
     execute_script "$script"
 done
 

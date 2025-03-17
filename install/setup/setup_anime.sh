@@ -41,5 +41,5 @@ install_dependencies() {
 }
 
 install_dependencies
-install_fastanime
+install_curd
 

@@ -2,12 +2,21 @@
 
 source "$HOME/.dotfiles/install/setup/print_and_log.sh"
 
-pipx_install() {
+install_pipx() {
     print_msg "Installing pipx..."
-    sudo apt install pipx || { print_error "Failed to install pipx."; exit 1; }
-    sudo pipx ensurepath --global || { print_error "Failed to ensure pipx path."; }
-    sudo pipx ensurepath --prepend || { print_error "Failed to ensure pipx path."; }
-    print_msg "pipx is installed"
+
+    if command -v apt > /dev/null; then
+        sudo apt install -y pipx || { print_error "Failed to install pipx."; exit 1; }
+    elif command -v dnf > /dev/null; then
+        sudo dnf install -y pipx || { print_error "Failed to install pipx."; exit 1; }
+    else
+        print_error "Unsupported package manager."
+        exit 1
+    fi
+
+    pipx ensurepath || { print_error "Failed to ensure pipx path."; exit 1; }
+
+    print_msg "pipx is installed."
 }
 
 pipx_apps() {
@@ -17,5 +26,5 @@ pipx_apps() {
     fi
 }
 
-pipx_install
+install_pipx
 pipx_apps

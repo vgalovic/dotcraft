@@ -21,23 +21,34 @@ if [ -d "$HOME/.config/yazi/plugins" ]; then
 fi
 
 # Function to check and install APT packages required for Yazi
-install_yazi_apt_required() {
-    local apt_yazi_required_apps=(
+install_yazi_app_required() {
+    local yazi_required_apps=(
         "exiftool"
         "hexyl"
     )
 
-    for app in "${apt_yazi_required_apps[@]}"; do
+    for app in "${yazi_required_apps[@]}"; do
         print_msg "Checking if $app is installed..."
 
         if command -v "$app" &> /dev/null; then
             print_msg "$app is already installed."
         else
             print_msg "Installing APT package: $app..."
-            if ! sudo apt install -y "$app"; then
-                print_error "Failed to install $app via APT."
-            else
-                print_msg "$app installed successfully."
+            if command -v apt &> /dev/null; then
+                if ! sudo apt install -y "$app"; then
+                    print_error "Failed to install $app via APT."
+                else
+                    print_msg "$app installed successfully."
+                fi
+            else if command -v dnf &> /dev/null; then
+                    if ! sudo dnf install -y "$app"; then
+                        print_error "Failed to install $app via DNF."
+                    else
+                        print_msg "$app installed successfully."
+                    fi
+                else
+                    print_error "Failed to install $app. Please install it manually."
+                fi
             fi
         fi
     done
@@ -107,7 +118,7 @@ download_catppuccin_theme() {
 }
 
 # If Yazi APT packages are needed
-install_yazi_apt_required
+install_yazi_app_required
 
 # Main script execution
 install_yazi_plugins

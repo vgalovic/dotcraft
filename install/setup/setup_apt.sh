@@ -178,14 +178,17 @@ if prompt_yes_default "Do you want to install ZSH?"; then
     install_zsh
 fi
 
-# Install CopyQ
-if prompt_yes_default "Do you want to install CopyQ?"; then
-    install_copyq
-fi
+# Check if running on KDE desktop environment
+if [[ "$XDG_CURRENT_DESKTOP" != "KDE" ]]; then
+    # Install CopyQ
+    if prompt_yes_default "Do you want to install CopyQ?"; then
+        install_copyq
+    fi
 
-# Install Conky
-if prompt_yes_default "Do you want to install conky?"; then
-    install_conky
+    # Install Conky
+    if prompt_yes_default "Do you want to install Conky?"; then
+        install_conky
+    fi
 fi
 
 # Install MPV

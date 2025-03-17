@@ -1,6 +1,10 @@
 #!/bin/bash
 
+# Location of the log file
 LOG_FILE="$HOME/.dotfiles/install/output.log"
+
+# Location of the setup scripts
+SETUP_DIR="$HOME/.dotfiles/install/setup"
 
 # Function to print messages in color to the terminal and log them with a timestamp
 print_msg() {

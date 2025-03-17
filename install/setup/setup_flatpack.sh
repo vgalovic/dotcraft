@@ -7,7 +7,14 @@ install_flatpak() {
     # Install Flatpak if not installed
     if ! command -v flatpak &> /dev/null; then
         print_msg "Flatpak is not installed. Installing..."
-        sudo apt update && sudo apt install -y flatpak || { print_error "Failed to install Flatpak"; return 1; }
+        if command -v apt &> /dev/null; then
+            sudo apt update && sudo apt install -y flatpak || { print_error "Failed to install Flatpak"; return 1; }
+        elif command -v dnf &> /dev/null; then
+            sudo dnf install -y flatpak || { print_error "Failed to install Flatpak"; return 1; }
+        else
+            print_error "Flatpak installation not supported for your distribution."
+            return 1
+        fi
     else
         print_msg "Flatpak is already installed."
     fi
@@ -64,7 +71,7 @@ load_flatpak_applications() {
 # Function to install Flatpak applications
 install_flatpak_apps() {
     # Load Flatpak applications
-    load_flatpak_applications    
+    load_flatpak_applications
 
     # Check if any applications are available to install
     if [[ ${#flatpak_applications[@]} -eq 0 ]]; then
