@@ -63,6 +63,10 @@ alias top="btop"
 
 #--------------------------------------------------------------------------------------
 
+alias ff="fastfetch"
+
+#--------------------------------------------------------------------------------------
+
 alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
 alias yazi_plugin_update="$HOME/.dotfiles/install/setup/setup_yazi_plugin.sh"
 
