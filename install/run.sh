@@ -20,6 +20,8 @@ elif command -v pacman >/dev/null; then
     execute_script "setup_yay"
 fi
 
+execute_script "setup_nvidia_470xx_driver"
+
 must_execute_script "setup_kvantum_papirus"
 
 # Execute setup scripts for install packages tools
