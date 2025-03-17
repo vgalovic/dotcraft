@@ -8,6 +8,7 @@ STOW_LIST="$HOME/.dotfiles/install/stow_list"
 CONFIG="$HOME/.config"
 
 # Load file lists from external text files
+HOME_DIRS_TXT="$STOW_LIST/home_dirs.txt"
 HOME_FILES_TXT="$STOW_LIST/home_files.txt"
 CONFIG_DIRS_TXT="$STOW_LIST/config_dirs.txt"
 CONFIG_FILES_TXT="$STOW_LIST/config_files.txt"
@@ -25,6 +26,7 @@ load_list() {
 }
 
 # Load arrays from text files
+load_list "$HOME_DIRS_TXT" home_dirs || { print_error "Failed to load home dirs."; exit 1; }
 load_list "$HOME_FILES_TXT" home_files || { print_error "Failed to load home files."; exit 1; }
 load_list "$CONFIG_DIRS_TXT" config_dirs || { print_error "Failed to load config dirs."; exit 1; }
 load_list "$CONFIG_FILES_TXT" config_files || { print_error "Failed to load config files."; exit 1; }
@@ -57,6 +59,11 @@ backup_files() {
             print_msg "$file not found, skipping backup."
         fi
     }
+
+    Backup home directory files
+    for dir in "${home_dirs[@]}"; do
+        backup "-d" "$HOME/$dir" "$HOME/$dir"
+    done
 
     # Backup home config files
     for file in "${home_files[@]}"; do
