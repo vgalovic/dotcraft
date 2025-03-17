@@ -4,7 +4,7 @@
 scrot /tmp/screenshot.png
 
 # Blur it (choose ffmpeg OR imagemagick)
-ffmpeg -i /tmp/screenshot.png -vf "gblur=sigma=8" -frames:v 1 /tmp/blurred.png -y
+ffmpeg -i /tmp/screenshot.png -vf "gblur=sigma=8" -frames:v 1 -update 1 /tmp/blurred.png -y
 # convert /tmp/screenshot.png -blur 0x8 /tmp/blurred.png  # Alternative method
 
 # Lock the screen

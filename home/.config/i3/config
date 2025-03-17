@@ -12,9 +12,6 @@
 # Set mod
 set $mod Mod4
 
-# Set terminal
-set $TERM kitty
-
 # separate borders for focused and unfocused windows
 gaps outer 4
 for_window [all] title_window_icon on
@@ -44,7 +41,12 @@ font pango:JetBrainsMono Nerd Font 11
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
+# exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id dex-autostart --autostart --environment i3
+
+# Enable tap-to-click for the touchpad on startup
+exec --no-startup-id xinput set-prop 12 "libinput Tapping Enabled" 1
+exec --no-startup-id xinput set-prop 12 "libinput Scroll Method Enabled" 0, 0, 1
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
@@ -74,9 +76,9 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86AudioStop exec --no-startup-id playerctl stop
 
-# Use brightnessctl to adjust screen brightness.
-bindsym XF86MonBrightnessUp exec  --no-startup-id brightnessctl set +10% && $refresh_i3status
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%- && $refresh_i3status
+# Use light to adjust screen brightness.
+bindsym XF86MonBrightnessUp exec  --no-startup-id light -A 10 && $refresh_i3status
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 10 && $refresh_i3status
 
 # Use flameshot to take screenshots.
 bindsym Print exec --no-startup-id flameshot gui
@@ -91,7 +93,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec $TERM
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+q kill
@@ -238,28 +240,38 @@ bindsym $mod+r mode "resize"
 
 # Compositor
 exec_always picom
-exec_always --no-startup-id xapp-status
 
-# kill any hanging polybar processes
-exec_always killall polybar
+# Polybar
 exec_always --no-startup-id ~/.config/polybar/launch_polybar.sh
 
 # Walppaper
 exec --no-startup-idfeh --bg-scale ~/Pictures/Wallpapers/cyberpunk\ city/wallhaven-jxq55y_1920x1080.png
 
 # Set the initial keyboard layout
-exec --no-startup-id setxkbmap -layout us,rs -variant ,latin -option 'grp:alt_shift_toggle'
+exec --no-startup-id setxkbmap -layout us,rs -variant ,latin -option 'grp:alt_space_toggle'
+
+# Assign if whacing anime in sub or dub
+mode "$mode_curd"  {
+    bindsym s exec curd -rofi; mode "default"
+    bindsym d exec curd -dub -rofi; mode "default"
+
+    # back to normal: Enter or Escape or $mod+a
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+set $mode_curd Curd: s[sub] d[dub]
 
 # Launch applications
 mode "$mode_launcher" {
-    bindsym c exec curd -rofi; mode "default"
+    bindsym c mode $mode_curd
     bindsym d exec flatpak run com.discordapp.Discord; mode "default"
-    bindsym b exec blueman-manager; mode "default"
     bindsym e exec "$HOME/.local/share/AppImage/neovide.appimage"; mode "default"
-    bindsym f exec kitty yazi; mode "default"
+    bindsym f exec thunar; mode "default"
     bindsym m exec thunderbird; mode "default"
+    bindsym q exec flatpak run org.qbittorrent.qBittorrent; mode "default"
     bindsym t exec kitty btop; mode "default"
     bindsym w exec "$HOME/.local/share/AppImage/zen_browser.appimage"; mode "default"
+    bindsym y exec kitty yazi; mode "default"
 
     # back to normal: Enter or Escape or $mod+o
     bindsym Escape mode "default"
@@ -267,11 +279,29 @@ mode "$mode_launcher" {
     bindsym $mod+o mode "default"
 }
 
-set $mode_launcher Open
+set $mode_launcher Open: [c]curd [d]discord [e]neovide [f]thunar [m]thunderbird [t]btop [q]qbittorrent [w]zen [y]yazi
 bindsym $mod+o mode "$mode_launcher"
 
+# Open Password Manager & 2FA App
+mode "$mode_auth"  {
+    # Launcher
+    bindsym b exec flatpak run com.bitwarden.desktop; mode "default"
+    bindsym e exec flatpak run io.ente.auth; mode "default"
+
+    # back to normal: Enter or Escape or $mod+a
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym $mod+a mode "default"
+}
+
+set $mode_auth Auth: [b]bitwarden [e]ente
+bindsym $mod+a mode "$mode_auth"
+
+# Bluetooth
+bindsym $mod+b exec --no-startup-id  blueman-manager
+
 # Copyq
-bindsym $mod+v mode exec --no-startup-id copyq show
+bindsym $mod+v exec --no-startup-id copyq show
 
 # Setup catppuccin colors
 set $rosewater #f5e0dc
