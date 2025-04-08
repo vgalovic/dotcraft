@@ -22,7 +22,6 @@ rich-cli
 ripgrep
 sevenzip
 television
-thefuck
 tlrc
 yazi
 zoxide
