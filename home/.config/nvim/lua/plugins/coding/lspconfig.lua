@@ -49,7 +49,7 @@ return {
 		-- stylua: ignore start
 		lsp_map("gd", function() snacks.picker.lsp_definitions() end, "Goto Definition")
 		lsp_map("gy", function() snacks.picker.lsp_type_definitions() end, "Type Definition")
-		lsp_map("gr", function() snacks.picker.lsp_references() end, "Goto References")
+		lsp_map("gR", function() snacks.picker.lsp_references() end, "Goto References")
 		lsp_map("gI", function() snacks.picker.lsp_implementations() end, "Goto Implementation")
 		lsp_map("gD", vim.lsp.buf.declaration, "Goto Declaration")
 		lsp_map("<leader>cs", function() snacks.picker.lsp_symbols() end, "Document Symbols")
