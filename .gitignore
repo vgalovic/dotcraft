@@ -1,6 +1,8 @@
 install/output.log
 home/.config/autostart/copyq.desktop
 home/.config/autostart/Flameshot.desktop
+home/.config/autostart/AB\ Download\ Manager.desktop
+home/.config/autostart/org.kde.kdeconnect.nonplasma-1.desktop
 home/.config/autostart/megasync.desktop
 home/.config/bat/themes/
 home/.config/bat/syntaxes/
