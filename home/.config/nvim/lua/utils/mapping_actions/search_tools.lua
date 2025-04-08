@@ -3,7 +3,7 @@ local M = {}
 -- Search Engine URLs: Define the search engines and their respective URLs
 local search_engines = {
 	duckduckgo = "https://duckduckgo.com/?q=%s",
-	brave = "https://search.brave.com/search?q=%s&source=web",
+	brave = "https://search.brave.com/search?q=%s&source=web&summary",
 	ecosia = "https://www.ecosia.org/search?method=index&q=%s",
 	google = "https://www.google.com/search?q=%s",
 	github = "https://github.com/search?q=%s&type=repositories",
