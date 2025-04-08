@@ -1,7 +1,7 @@
 return {
 	"saghen/blink.cmp",
 	event = { "InsertEnter", "CmdlineEnter", "CmdlineEnter /,?" },
-	dependencies = { "rafamadriz/friendly-snippets" },
+	dependencies = { "rafamadriz/friendly-snippets", "huijiro/blink-cmp-supermaven" },
 
 	version = "*",
 
@@ -23,6 +23,18 @@ return {
 					"show_and_insert",
 					"select_next",
 				},
+        -- stylua: ignore start
+        ["<A-1>"] = { function(cmp) cmp.accept({ index = 1 }) end, },
+        ["<A-2>"] = { function(cmp) cmp.accept({ index = 2 }) end, },
+        ["<A-3>"] = { function(cmp) cmp.accept({ index = 3 }) end, },
+        ["<A-4>"] = { function(cmp) cmp.accept({ index = 4 }) end, },
+        ["<A-5>"] = { function(cmp) cmp.accept({ index = 5 }) end, },
+        ["<A-6>"] = { function(cmp) cmp.accept({ index = 6 }) end, },
+        ["<A-7>"] = { function(cmp) cmp.accept({ index = 7 }) end, },
+        ["<A-8>"] = { function(cmp) cmp.accept({ index = 8 }) end, },
+        ["<A-9>"] = { function(cmp) cmp.accept({ index = 9 }) end, },
+        ["<A-0>"] = { function(cmp) cmp.accept({ index = 10 }) end, },
+				-- stylua: ignore end
 			},
 			completion = {
 				menu = {
@@ -35,7 +47,7 @@ return {
 		},
 
 		completion = {
-			ghost_text = { enabled = false },
+			ghost_text = { enabled = true },
 
 			keyword = { range = "full" },
 
@@ -140,7 +152,7 @@ return {
 			--- @options ["default", "super-tab", "enter"]
 			preset = "super-tab",
 
-            -- stylua: ignore start
+      -- stylua: ignore start
 			["<A-1>"] = { function(cmp) cmp.accept({ index = 1 }) end, },
 			["<A-2>"] = { function(cmp) cmp.accept({ index = 2 }) end, },
 			["<A-3>"] = { function(cmp) cmp.accept({ index = 3 }) end, },
@@ -161,7 +173,7 @@ return {
 			default = function()
 				local success, node = pcall(vim.treesitter.get_node)
 				if vim.bo.filetype == "lua" then
-					return { "lazydev", "lsp", "path" }
+					return { "lazydev", "lsp", "path", "supermaven" }
 				elseif
 					success
 					and node
@@ -169,7 +181,7 @@ return {
 				then
 					return { "buffer" }
 				else
-					return { "lsp", "path", "snippets" } --, 'buffer' }
+					return { "lsp", "path", "supermaven", "snippets" } --, 'buffer' }
 				end
 			end,
 
@@ -186,6 +198,18 @@ return {
 					module = "lazydev.integrations.blink",
 					-- make lazydev completions top priority (see `:h blink.cmp`)
 					score_offset = 100,
+				},
+				supermaven = {
+					name = "supermaven",
+					module = "blink-cmp-supermaven",
+					async = true,
+					transform_items = function(ctx, items)
+						for _, item in ipairs(items) do
+							item.kind_icon = ""
+							item.kind_name = "SuperMaven"
+						end
+						return items
+					end,
 				},
 			},
 		},
