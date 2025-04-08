@@ -13,11 +13,11 @@ vim.g.colorscheme = "catppuccin"
 -- Enable expandtab for spaces instead of tabs
 vim.cmd("set expandtab")
 -- Set the number of spaces that a <Tab> counts for
-vim.cmd("set tabstop=4")
+vim.cmd("set tabstop=2")
 -- Set the number of spaces that a <Tab> counts for while editing
-vim.cmd("set softtabstop=4")
+vim.cmd("set softtabstop=2")
 -- Set the number of spaces to use for each step of (auto)indent
-vim.cmd("set shiftwidth=4")
+vim.cmd("set shiftwidth=2")
 
 -- Disable swap files
 vim.opt.swapfile = false
