@@ -11,6 +11,7 @@ local search_engines = {
 	reddit = "https://www.reddit.com/search/?q=%s&restrict_sr=on",
 	stackoverflow = "https://stackoverflow.com/search?q=%s",
 	wikipedia = "https://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s",
+	youtube = "https://www.youtube.com/results?search_query=%s",
 }
 
 -- Default web browser class (e.g., "zen" for Zen browser)
@@ -26,7 +27,7 @@ local function open_in_browser(url)
 
 	-- Optionally bring the browser to focus after a short delay
 	vim.defer_fn(function()
-		vim.fn.jobstart({ "wmctrl", "-a", browser_class }, { detach = true }) -- Target Zen window
+		vim.fn.jobstart({ "wmctrl", "-a", browser_class }, { detach = true })
 	end, 1500)
 end
 
@@ -100,6 +101,16 @@ vim.api.nvim_create_user_command("StackOverflow", function(o)
 end, {
 	nargs = "+", -- Accepts one or more arguments
 	desc = "Search on StackOverflow", -- Description for the command
+})
+
+-- YouTube Search Command
+vim.api.nvim_create_user_command("YouTube", function(o)
+	local escaped = table.concat(o.fargs, " ")
+	vim.notify("Searching on YouTube: " .. escaped, vim.log.levels.INFO, { title = "Web Search" })
+	web_search(escaped, "youtube") -- Use youtube search engine
+end, {
+	nargs = "+", -- Accepts one or more arguments
+	desc = "Search on YouTube", -- Description for the command
 })
 
 -- =========================================
