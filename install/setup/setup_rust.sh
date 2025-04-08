@@ -25,6 +25,9 @@ install_rust() {
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh || { print_error "Failed to install Rust."; exit 1; }
     print_msg "Rust is installed"
 
+    print_msg "Install Cargo updater..."
+    cargo install cargo-update || { print_error "Failed to install Cargo updater."; exit 1; }
+    print_msg "Cargo updater is installed"
 }
 
 install_rust

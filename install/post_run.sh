@@ -22,6 +22,16 @@ if command -v nvim >/dev/null; then
     fi
 fi
 
+if command -v kitty >/dev/null; then
+    KITTY_PATH=$(command -v kitty)
+    print_msg "Setting up Neovim as sudoedit"
+    if sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator "$KITTY_PATH" 100; then
+       sudo update-alternatives --config x-terminal-emulator
+    else
+        print_error "Failed to set up Neovim as sudoedit."
+    fi
+fi
+
 if command -v mpv >/dev/null; then
     execute_script "setup_mpv_plugins"
 fi

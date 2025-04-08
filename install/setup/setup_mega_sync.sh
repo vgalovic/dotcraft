@@ -102,6 +102,7 @@ download_megasync() {
             fi
 
             megasync_pkg="Arch_Extra/x86_64/megasync-x86_64.pkg.tar.zst"
+            megasync_path="$download_path/megasync.pkg.tar.zst"
             ;;
         "Debian")
             if dpkg -l | grep -q "megasync"; then
@@ -110,6 +111,7 @@ download_megasync() {
             fi
 
             megasync_pkg="Debian_${os_version}/amd64/megasync-Debian_${os_version}_amd64.deb"
+            megasync_path="$download_path/megasync.deb"
             ;;
         "fedora")
             if rpm -q "megasync" &>/dev/null; then
@@ -118,6 +120,7 @@ download_megasync() {
             fi
 
             megasync_pkg="Fedora_${os_version}/x86_64/megasync-Fedora_${os_version}.x86_64.rpm"
+            megasync_path="$download_path/megasync.rpm"
             ;;
         "linuxmint" | "ubuntu")
             if dpkg -l | grep -q "megasync"; then
@@ -126,6 +129,7 @@ download_megasync() {
             fi
 
             megasync_pkg="xUbuntu_${os_version}/amd64/megasync-xUbuntu_${os_version}_amd64.deb"
+            megasync_path="$download_path/megasync.deb"
             ;;
         "opensuse")
             if zypper -q info "megasync" &>/dev/null; then
@@ -138,6 +142,7 @@ download_megasync() {
             else
                 megasync_pkg="openSUSE_Leap_${os_version}/x86_64/megasync-openSUSE_Leap_${os_version}.x86_64.rpm"
             fi
+            megasync_path="$download_path/megasync.rpm"
             ;;
         "raspbian")
             if dpkg -l | grep -q "megasync"; then
@@ -146,6 +151,7 @@ download_megasync() {
             fi
 
             megasync_pkg="Raspbian_${os_version}/armhf/megasync-Raspbian_${os_version}_armhf.deb"
+            megasync_path="$download_path/megasync.deb"
             ;;
         *)
             print_error "Unsupported OS: $os. Exiting."
@@ -153,10 +159,8 @@ download_megasync() {
             ;;
     esac
 
-    megasync_path="$download_path/$megasync_pkg"
-
     print_msg "Downloading MEGA Sync package for $os..."
-    wget -cq "https://mega.nz/linux/repo/$megasync_pkg" -O "$megasync_path" || {
+    wget -c "https://mega.nz/linux/repo/$megasync_pkg" -O "$megasync_path" || {
         print_error "Failed to download MEGA Sync package."
         return 1
     }
@@ -231,6 +235,7 @@ download_file_manager_integration() {
             fi
 
             file_manager_integration_pkg="Arch_Extra/x86_64/${file_manager}-megasync-x86_64.pkg.tar.zst"
+            file_manager_integration_path="$download_path/${file_manager}-megasync..pkg.tar.zst"
             ;;
         "Debian")
             if dpkg -l | grep -q "${file_manager}-megasync"; then
@@ -239,6 +244,7 @@ download_file_manager_integration() {
             fi
 
             file_manager_integration_pkg="Debian_${os_version}/amd64/${file_manager}-megasync-Debian_${os_version}_amd64.deb"
+            file_manager_integration_path="$download_path/${file_manager}-megasync.deb"
             ;;
         "fedora")
             if rpm -q "${file_manager}-megasync" &>/dev/null; then
@@ -247,6 +253,7 @@ download_file_manager_integration() {
             fi
 
             file_manager_integration_pkg="Fedora_${os_version}/x86_64/${file_manager}-megasync-Fedora_${os_version}.x86_64.rpm"
+             file_manager_integration_path="$download_path/${file_manager}-megasync.rpm"
             ;;
         "linuxmint" | "ubuntu")
             if dpkg -l | grep -q "${file_manager}-megasync"; then
@@ -254,7 +261,8 @@ download_file_manager_integration() {
                 return 0
             fi
 
-            file_manager_integration_pkg="xUbuntu_${ubuntu_version}/amd64/${file_manager}-megasync-xUbuntu_${ubuntu_version}_amd64.deb"
+            file_manager_integration_pkg="xUbuntu_${os_version}/amd64/${file_manager}-megasync-xUbuntu_${os_version}_amd64.deb"
+            file_manager_integration_path="$download_path/${file_manager}-megasync.deb"
             ;;
 
         "opensuse")
@@ -268,6 +276,7 @@ download_file_manager_integration() {
             else
                 file_manager_integration_pkg="openSUSE_Leap_${os_version}/x86_64/${file_manager}-megasync-openSUSE_Leap_${os_version}.x86_64.rpm"
             fi
+             file_manager_integration_path="$download_path/${file_manager}-megasync.rpm"
             ;;
         "raspbian")
             print_msg "Raspbian is not supported for file manager integrations."
@@ -279,10 +288,8 @@ download_file_manager_integration() {
             ;;
     esac
 
-    file_manager_integration_path="$download_path/$file_manager_integration_pkg"
-
     print_msg "Downloading MEGA file manager integration deb file for $file_manager..."
-    wget -cq "https://mega.nz/linux/repo/$file_manager_integration_pkg" -O "$file_manager_integration_path" || {
+    wget -c "https://mega.nz/linux/repo/$file_manager_integration_pkg" -O "$file_manager_integration_path" || {
         print_error "Failed to download MEGA file manager integration deb file for $file_manager."
         return 1
     }

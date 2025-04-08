@@ -192,16 +192,20 @@ cache_fonts() {
 microsoft_fonts() {
     print_msg "Installing Microsoft fonts"
 
-    if command apt -v &>/dev/null; then
-        sudo apt install ttf-mscorefonts-installer -y ||{ print_error "Failed to install microsoft fonts"; return 1 }
-    elif command dnf -v &>/dev/null; then
-        sudo dnf install curl cabextract xorg-x11-font-utils fontconfig ||{ print_error "Failed to install dependencies"; return 1 }
-        sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm || {
-            print_error "Failed to install Microsoft fonts"; return 1
-        }
+    # Check for package manager and install Microsoft fonts
+    if command -v apt -v &>/dev/null; then
+        # For Debian-based systems (Ubuntu, etc.)
+        sudo apt update && sudo apt install ttf-mscorefonts-installer -y || { print_error "Failed to install Microsoft fonts"; return 1; }
+    elif command -v dnf -v &>/dev/null; then
+        # For Red Hat-based systems (Fedora, CentOS, etc.)
+        sudo dnf install -y curl cabextract xorg-x11-font-utils fontconfig || { print_error "Failed to install dependencies"; return 1; }
+        sudo rpm -i https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm || { print_error "Failed to install Microsoft fonts"; return 1; }
+    else
+        print_error "Package manager not supported or not found"
+        return 1
     fi
 
-    print_msg "Installed Microsoft fonts"
+    print_msg "Microsoft fonts installed successfully"
 }
 
 # Function to download all fonts
