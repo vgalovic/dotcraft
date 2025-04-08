@@ -9,7 +9,7 @@ end
 
 local buffer = require("utils.mapping_actions.buffer")
 local find = require("utils.mapping_actions.find")
-local misc = require("utils.mapping_actions.misc")
+local search = require("utils.mapping_actions.search_tools")
 --
 -- [[ Disable arrow keys ] ]
 --
@@ -102,4 +102,12 @@ map({ "n", "v" }, "<leader>dc", function() find.FindAndDeleteConfirm() end, { de
 --
 -- [[ Github repo ]]
 --
-map({ "n", "v" }, "gR", function() misc.open_plugin_repo() end, { desc = "Open Plugin Repository" })
+map({ "n", "v" }, "gP", function() search.open_plugin_repo() end, { desc = "Open Plugin Repository" })
+--
+-- [[ Search on diagnostic ]]
+--
+map({ "n", "v" }, "gq", function() search.search_ondiagnostic_under_cursor() end, { desc = "Search diagnostic under cursor" })
+--
+-- [[ Search selected text ]]
+--
+map({ "v" }, "gs", function() search.search_selected_text() end, { desc = "Search selected text" })
