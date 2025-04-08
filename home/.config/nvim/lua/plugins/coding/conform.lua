@@ -18,17 +18,17 @@ return {
 
 		formatters_by_ft = {
 			["bash"] = { "beautysh" },
-			["latex"] = { "latexindent" },
 			["json"] = { "prettier" },
+			["latex"] = { "latexindent" },
 			["lua"] = { "stylua" },
 			["markdown"] = { "prettier", "markdown-toc" },
 			["markdown.mdx"] = { "prettier", "markdown-toc" },
 			["python"] = { "ruff" },
 			["sh"] = { "beautysh" },
 			["SystemVerilog"] = { "verible" },
-			["vhdl"] = { "vsg" },
-			["zsh"] = { "beautysh" },
+			["verilog"] = { "verible" },
 			["yaml"] = { "prettier" },
+			["zsh"] = { "beautysh" },
 		},
 
 		---@diagnostic disable: missing-return
