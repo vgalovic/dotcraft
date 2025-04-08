@@ -84,3 +84,5 @@ alias vi="nvim"
 alias vim="nvim"
 
 #--------------------------------------------------------------------------------------
+
+alias neovide="$HOME/.local/share/AppImage/neovide.appimage"
