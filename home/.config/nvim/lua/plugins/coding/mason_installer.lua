@@ -6,8 +6,7 @@ return {
 		local ensure_installed = require("lsp/ensure_installed")
 
 		-- Combine all tools (LSP, linters, and formatters) into one list and get the keys only
-		local all_tools =
-			vim.tbl_deep_extend("force", {}, ensure_installed.lsp, ensure_installed.linter, ensure_installed.formatter)
+		local all_tools = vim.tbl_deep_extend("force", {}, ensure_installed.lsp, ensure_installed.formatter)
 
 		-- Setup mason-tool-installer with the combined tool list
 		mason_tool_installer.setup({

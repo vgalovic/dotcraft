@@ -14,9 +14,6 @@ return {
 		verible = {},
 		vhdl_ls = {},
 	},
-	linter = {
-		vsg = {},
-	},
 	formatter = {
 		-- asmfmt = {},
 		beautysh = {},
@@ -24,7 +21,6 @@ return {
 		["markdown-toc"] = {},
 		prettier = {},
 		stylua = {},
-		verible = {},
 		yamlfmt = {},
 	},
 }
