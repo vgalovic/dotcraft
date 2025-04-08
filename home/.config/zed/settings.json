@@ -48,8 +48,10 @@
     "Catppuccin Icons": true,
     "Make": true,
     "NeoCMake": true,
-    "Verilog": true
+    "Verilog": true,
+    "VHDL": true
   },
+  "tab_size": 2,
   "languages": {
     "C": {
       "format_on_save": "on",
