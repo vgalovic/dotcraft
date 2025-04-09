@@ -1,3 +1,6 @@
+-- Commands that you can be run in commnadline: Search, SearchWith, Wikipedia, StackOverflow, YouTube, SetSearchEngine
+-- Functions than you can be set with keybind: search_diagnostic_under_cursor, search_selected_text, open_plugin_repo
+
 local M = {}
 
 -- Search Engine URLs: Define the search engines and their respective URLs
@@ -14,11 +17,12 @@ local search_engines = {
 	youtube = "https://www.youtube.com/results?search_query=%s",
 }
 
--- Default web browser class (e.g., "zen" for Zen browser)
-local browser_class = "zen"
-
 -- Current search engine (can be changed to any engine from the search_engines table)
 local current_search_engine = "brave"
+
+-- Default web browser class (e.g., "zen" for Zen browser)
+-- You can find the class of your browser with command: xprop | grep WM_CLASS
+local browser_class = "zen"
 
 -- Function to open URL in a web browser
 local function open_in_browser(url)
@@ -71,13 +75,13 @@ end
 
 -- General Web Search Command
 vim.api.nvim_create_user_command("Search", function(o)
-	local escaped = table.concat(o.fargs, " ") -- Combine all arguments into a single string
+	local query = table.concat(o.fargs, " ") -- Combine all arguments into a single string
 	vim.notify(
-		"Searching on web using " .. current_search_engine .. ": " .. escaped,
+		"Searching on web using " .. current_search_engine .. ": " .. query,
 		vim.log.levels.INFO,
 		{ title = "Web Search" }
 	)
-	web_search(escaped) -- Perform the web search
+	web_search(query) -- Perform the web search
 end, {
 	nargs = "+", -- Accepts one or more arguments
 	desc = "Search on web", -- Description for the command
@@ -85,9 +89,9 @@ end, {
 
 -- Wikipedia Search Command
 vim.api.nvim_create_user_command("Wikipedia", function(o)
-	local escaped = table.concat(o.fargs, " ")
-	vim.notify("Searching on Wikipedia: " .. escaped, vim.log.levels.INFO, { title = "Web Search" })
-	web_search(escaped, "wikipedia") -- Use Wikipedia search engine
+	local query = table.concat(o.fargs, " ")
+	vim.notify("Searching on Wikipedia: " .. query, vim.log.levels.INFO, { title = "Web Search" })
+	web_search(query, "wikipedia") -- Use Wikipedia search engine
 end, {
 	nargs = "+", -- Accepts one or more arguments
 	desc = "Search on Wikipedia", -- Description for the command
@@ -95,9 +99,9 @@ end, {
 
 -- StackOverflow Search Command
 vim.api.nvim_create_user_command("StackOverflow", function(o)
-	local escaped = table.concat(o.fargs, " ")
-	vim.notify("Searching on StackOverflow: " .. escaped, vim.log.levels.INFO, { title = "Web Search" })
-	web_search(escaped, "stackoverflow") -- Use StackOverflow search engine
+	local query = table.concat(o.fargs, " ")
+	vim.notify("Searching on StackOverflow: " .. query, vim.log.levels.INFO, { title = "Web Search" })
+	web_search(query, "stackoverflow") -- Use StackOverflow search engine
 end, {
 	nargs = "+", -- Accepts one or more arguments
 	desc = "Search on StackOverflow", -- Description for the command
@@ -105,12 +109,64 @@ end, {
 
 -- YouTube Search Command
 vim.api.nvim_create_user_command("YouTube", function(o)
-	local escaped = table.concat(o.fargs, " ")
-	vim.notify("Searching on YouTube: " .. escaped, vim.log.levels.INFO, { title = "Web Search" })
-	web_search(escaped, "youtube") -- Use youtube search engine
+	local query = table.concat(o.fargs, " ")
+	vim.notify("Searching on YouTube: " .. query, vim.log.levels.INFO, { title = "Web Search" })
+	web_search(query, "youtube") -- Use youtube search engine
 end, {
 	nargs = "+", -- Accepts one or more arguments
 	desc = "Search on YouTube", -- Description for the command
+})
+
+-- Search with a specified engine
+vim.api.nvim_create_user_command("SearchWith", function(opts)
+	local engine = opts.fargs[1]
+	local query = table.concat(vim.list_slice(opts.fargs, 2), " ")
+
+	if not search_engines[engine] then
+		vim.notify(
+			"Unknown search engine: " .. engine .. ", using default",
+			vim.log.levels.ERROR,
+			{ title = "Web Search" }
+		)
+		vim.notify(
+			"Searching on web using " .. current_search_engine .. ": " .. query,
+			vim.log.levels.INFO,
+			{ title = "Web Search" }
+		)
+		web_search(query)
+		return
+	end
+
+	vim.notify("Searching on web using " .. engine .. ": " .. query, vim.log.levels.INFO, { title = "Web Search" })
+	web_search(query, engine)
+end, {
+	nargs = "+",
+	desc = "Search with a specific engine",
+	complete = function(_, line, _)
+		-- Split the full command line into words using whitespace
+		local args = vim.split(line, "%s+")
+
+		-- Only proceed if there are exactly two arguments:
+		-- 1. The command name
+		-- 2. The partial engine name
+		if #args == 2 then
+			local partial = args[2] or "" -- Get the second argument (the user's input so far)
+
+			local matches = {} -- Table to collect matching engine names
+
+			-- Loop through all search engine names
+			for engine in pairs(search_engines) do
+				-- If the engine name starts with the partial input
+				if engine:find(partial) == 1 then
+					table.insert(matches, engine) -- Add it to the list of matches
+				end
+			end
+
+			return matches -- Return the list of matching engines for autocomplete
+		end
+
+		return {} -- If not exactly one argument after the command, return nothing
+	end,
 })
 
 -- =========================================
@@ -118,7 +174,7 @@ end, {
 -- =========================================
 
 -- Grabs the diagnostic under cursor and searches it with language context
-function M.search_ondiagnostic_under_cursor()
+function M.search_diagnostic_under_cursor()
 	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
 	if #diagnostics == 0 then
 		vim.notify("No diagnostic under cursor", vim.log.levels.INFO, { title = "Search on diagnostic" })
@@ -187,8 +243,19 @@ vim.api.nvim_create_user_command("SetSearchEngine", function(o)
 		vim.notify("Unknown search engine: " .. engine, vim.log.levels.ERROR, { title = "Search Engine" })
 	end
 end, {
-	nargs = 1, -- Expecting 1 argument
-	desc = "Set search engine", -- Description for the command
+	nargs = 1,
+	desc = "Set search engine",
+	complete = function(_, line, _)
+		local input = vim.split(line, "%s+")
+		local partial = input[#input] or ""
+		local matches = {}
+		for engine in pairs(search_engines) do
+			if engine:find(partial) == 1 then
+				table.insert(matches, engine)
+			end
+		end
+		return matches
+	end,
 })
 
 return M
