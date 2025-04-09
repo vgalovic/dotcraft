@@ -215,8 +215,8 @@ return {
 						async = true,
 						transform_items = function(_, items)
 							for _, item in ipairs(items) do
-								item.kind_icon = ""
 								item.kind_name = "SuperMaven"
+								item.kind_hl = "MiniIconsAzure"
 							end
 							return items
 						end,

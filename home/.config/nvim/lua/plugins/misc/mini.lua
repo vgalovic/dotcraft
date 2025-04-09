@@ -11,9 +11,18 @@ return { -- Collection of various small independent plugins/modules
 		-- Looks if nerd font is installed
 		-- If nerd font is installed, then use glyphs, otherwise use ascii
 		if vim.g.have_nerd_font then
-			icons.setup()
+			icons.setup({
+				lsp = {
+					supermaven = { glyph = "", ascii = "S", hl = "MiniIconsAzure" },
+				},
+			})
 		else
-			icons.setup({ style = "ascii" })
+			icons.setup({
+				style = "ascii",
+				lsp = {
+					supermaven = { glyph = "", ascii = "S", hl = "MiniIconsAzure" },
+				},
+			})
 		end
 
 		-- require("mini.tabline").setup()
