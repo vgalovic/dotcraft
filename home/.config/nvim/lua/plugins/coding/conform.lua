@@ -24,6 +24,7 @@ return {
 			["markdown"] = { "prettier", "markdown-toc" },
 			["markdown.mdx"] = { "prettier", "markdown-toc" },
 			["python"] = { "ruff" },
+			["rust"] = { "rustfmt" },
 			["sh"] = { "beautysh" },
 			["SystemVerilog"] = { "verible" },
 			["verilog"] = { "verible" },
