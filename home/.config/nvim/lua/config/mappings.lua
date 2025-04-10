@@ -111,3 +111,7 @@ map({ "n", "v" }, "gq", function() search.search_diagnostic_under_cursor()() end
 -- [[ Search selected text ]]
 --
 map({ "v" }, "gs", function() search.search_selected_text() end, { desc = "Search selected text" })
+--
+-- [[Set register for system clipboard]]
+--
+map({"n", "v"}, ",", "\"+", get_opts("Set register for system clipboard"))

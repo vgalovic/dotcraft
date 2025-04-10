@@ -18,7 +18,7 @@ vim.opt.ruler = false -- Remove "All" and line/column info
 vim.opt.shortmess:append("c") -- Suppress unnecessary messages
 
 -- Sync clipboard between OS and Neovim
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"
 
 -- Enable auto indentation
 vim.opt.autoindent = true
