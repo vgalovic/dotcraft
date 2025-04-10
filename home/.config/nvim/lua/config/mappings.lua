@@ -106,7 +106,7 @@ map({ "n", "v" }, "gP", function() search.open_plugin_repo() end, { desc = "Open
 --
 -- [[ Search on diagnostic ]]
 --
-map({ "n", "v" }, "gq", function() search.search_diagnostic_under_cursor()() end, { desc = "Search diagnostic under cursor" })
+map({ "n", "v" }, "gq", function() search.search_diagnostic_under_cursor() end, { desc = "Search diagnostic under cursor" })
 --
 -- [[ Search selected text ]]
 --
