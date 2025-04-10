@@ -22,8 +22,7 @@ return {
 			{},
 			ensure_installed.lsp,
 			ensure_installed.linters,
-			ensure_installed.formatter,
-			ensure_installed.others
+			ensure_installed.formatter
 		)
 
 		-- Setup mason-tool-installer with the combined tool list

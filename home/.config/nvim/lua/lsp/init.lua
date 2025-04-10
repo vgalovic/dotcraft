@@ -16,6 +16,7 @@ M.setup = function()
 	require("lsp.lspconfig.clangd")()
 	require("lsp.lspconfig.ltex")()
 	require("lsp.lspconfig.lua_ls")()
+	require("lsp.lspconfig.rust_analyzer")()
 	require("lsp.lspconfig.verible")()
 end
 
