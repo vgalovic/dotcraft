@@ -24,15 +24,19 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = vim.tbl_keys(servers),
 			automatic_installation = false,
-			handlers = {
-				function(server_name)
-					local server = servers[server_name] or {}
-					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					lspconfig[server_name].setup(server)
-				end,
-			},
 		})
 
+		require("mason-lspconfig").setup_handlers({
+			function(server_name)
+				if server_name == "rust_analyzer" then
+					return
+				end
+
+				local server = servers[server_name] or {}
+				server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+				lspconfig[server_name].setup(server)
+			end,
+		})
 		require("lsp").setup()
 	end,
 

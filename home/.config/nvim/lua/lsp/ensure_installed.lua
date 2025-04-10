@@ -10,7 +10,6 @@ return {
 		marksman = {},
 		pyright = {},
 		ruff = {},
-		rust_analyzer = {},
 		svlangserver = {},
 		verible = {},
 		vhdl_ls = {},
@@ -25,5 +24,8 @@ return {
 		rustfmt = {},
 		stylua = {},
 		yamlfmt = {},
+	},
+	others = {
+		rust_analyzer = {},
 	},
 }
