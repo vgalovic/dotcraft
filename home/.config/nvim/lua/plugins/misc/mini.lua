@@ -52,7 +52,7 @@ return { -- Collection of various small independent plugins/modules
 
 		require("mini.jump").setup({
 			mappings = {
-				repeat_jump = ".",
+				repeat_jump = "<C-.>",
 			},
 		})
 
