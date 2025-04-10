@@ -21,40 +21,7 @@ return {
 				nerd_font_variant = "mono",
 			},
 
-			cmdline = {
-				enabled = true,
-				keymap = {
-					["<Tab>"] = {
-						function(cmp)
-							if cmp.is_ghost_text_visible() and not cmp.is_menu_visible() then
-								return cmp.accept()
-							end
-						end,
-						"show_and_insert",
-						"select_next",
-					},
-        -- stylua: ignore start
-        ["<A-1>"] = { function(cmp) cmp.accept({ index = 1 }) end, },
-        ["<A-2>"] = { function(cmp) cmp.accept({ index = 2 }) end, },
-        ["<A-3>"] = { function(cmp) cmp.accept({ index = 3 }) end, },
-        ["<A-4>"] = { function(cmp) cmp.accept({ index = 4 }) end, },
-        ["<A-5>"] = { function(cmp) cmp.accept({ index = 5 }) end, },
-        ["<A-6>"] = { function(cmp) cmp.accept({ index = 6 }) end, },
-        ["<A-7>"] = { function(cmp) cmp.accept({ index = 7 }) end, },
-        ["<A-8>"] = { function(cmp) cmp.accept({ index = 8 }) end, },
-        ["<A-9>"] = { function(cmp) cmp.accept({ index = 9 }) end, },
-        ["<A-0>"] = { function(cmp) cmp.accept({ index = 10 }) end, },
-					-- stylua: ignore end
-				},
-				completion = {
-					menu = {
-						auto_show = function()
-							return vim.fn.getcmdtype() == ":"
-						end,
-					},
-					ghost_text = { enabled = true },
-				},
-			},
+			cmdline = { enabled = true },
 
 			completion = {
 				ghost_text = { enabled = true },
@@ -71,16 +38,9 @@ return {
 					},
 				},
 
-				trigger = {
-					show_in_snippet = true,
-				},
+				trigger = { show_in_snippet = true },
 
 				menu = {
-					-- Show menu unless in cmdline with "/" or "?"
-					-- auto_show = function(ctx)
-					-- return ctx.mode ~= "cmdline" or not vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
-					-- end,
-
 					border = "rounded",
 
 					draw = {
