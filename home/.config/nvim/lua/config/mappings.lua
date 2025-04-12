@@ -53,15 +53,20 @@ map({ "n", "v" }, "<M-Q>", function() buffer.delete_other_buffers() end, { desc 
 --
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Stop the highlighting for the 'hlsearch' option." })
 --
+-- [[ Messages ]]
+--
+map("n", "gm", "<cmd>messages<cr>", get_opts("Open messages"))
+--
 -- [[ Visual Mode ]]
 --
 map("v", "<M-s>", ":sort<CR>", { desc = "Sort highlighted text" })
 map("v", "K", ":m '>-2<CR>gv=gv", { desc = "Move current line up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move current line down" })
 --
--- [[ Select ]]
+-- [[ Select all ]]
 --
-vim.keymap.set("n", "<C-a>", "ggVG", { noremap = true, silent = true, desc = "Select all" })
+-- stylua: ignore
+vim.keymap.set("n", "<C-a>", function() vim.cmd("normal! ggVG") end, { noremap = true, silent = true, desc = "Select all" })
 --
 -- [[ Increment and decrement numbers ]]
 --
