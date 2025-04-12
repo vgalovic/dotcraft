@@ -10,7 +10,6 @@
 ------------------------------------------------------------------
 
 return {
-	{ import = "plugins.ai" },
 	{ import = "plugins.coding" },
 	{ import = "plugins.colorscheme" },
 	{ import = "plugins.core" },
