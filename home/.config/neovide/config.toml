@@ -13,5 +13,10 @@ vsync = false
 wsl = false
 
 [font]
-normal = ["JetBrainsMono Nerd Font"] # Will use the bundled Fira Code Nerd Font by default
+normal = ["JetBrainsMono Nerd Font"]
 size = 11
+
+[box-drawing]
+mode = "selected-native"
+selected = "▕▏▁▁"
+
