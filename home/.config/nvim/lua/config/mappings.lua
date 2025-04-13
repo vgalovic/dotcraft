@@ -63,6 +63,10 @@ map("v", "<M-s>", ":sort<CR>", { desc = "Sort highlighted text" })
 map("v", "K", ":m '>-2<CR>gv=gv", { desc = "Move current line up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move current line down" })
 --
+-- [[Set register for system clipboard]]
+--
+map({ "n", "v" }, ",", '"+', get_opts("Set register for system clipboard"))
+--
 -- [[ Select all ]]
 --
 -- stylua: ignore
@@ -105,10 +109,6 @@ map({ "n", "v" }, "<leader>rc", function() find.FindAndReplaceConfirm() end, { d
 map({ "n", "v" }, "<leader>da", function() find.FindAndDeleteAll() end, { desc = "Find and delete all occurrences" })
 map({ "n", "v" }, "<leader>dc", function() find.FindAndDeleteConfirm() end, { desc = "Find and delete occurrences with confirmation" })
 --
--- [[ Github repo ]]
---
-map({ "n", "v" }, "gP", function() search.open_plugin_repo() end, { desc = "Open Plugin Repository" })
---
 -- [[ Search on diagnostic ]]
 --
 map({ "n", "v" }, "gq", function() search.search_diagnostic_under_cursor() end, { desc = "Search diagnostic under cursor" })
@@ -117,6 +117,12 @@ map({ "n", "v" }, "gq", function() search.search_diagnostic_under_cursor() end, 
 --
 map({ "v" }, "gs", function() search.search_selected_text() end, { desc = "Search selected text" })
 --
--- [[Set register for system clipboard]]
+-- [[ Github repo ]]
 --
-map({"n", "v"}, ",", "\"+", get_opts("Set register for system clipboard"))
+-- Show keymap only in lua file
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "lua",
+  callback = function()
+    map("n", "gP", function() search.open_plugin_repo()  end, { desc = "Open Plugin Repository", buffer = true })
+  end,
+})
