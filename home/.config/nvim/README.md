@@ -22,10 +22,6 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 
 ## Plugins
 
-### ai
-
-- [supermaven-inc/supermaven-nvim](https://dotfyle.com/plugins/supermaven-inc/supermaven-nvim)
-
 ### autocomplete
 
 - [saghen/blink.cmp](https://github.com/saghen/blink.cmp)
@@ -121,16 +117,18 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 
 ## Installed Language Servers, Formatters, and Linters
 
-| Language Server | Linter  | Formatter    |
-| --------------- | ------- | ------------ |
-| bashls          | ruff    | beautysh     |
-| clangd          | verible | latexindent  |
-| cmake           | vsg     | markdown-toc |
-| ltex            |         | prettier     |
-| lua_ls          |         | ruff         |
-| marksman        |         | shfmt        |
-| pyright         |         | stylua       |
-| ruff            |         | verible      |
-| svlangserver    |         | vsg          |
-| verible         |         | yamlfmt      |
-| vhdl_ls         |         |              |
+| Language Server         | Linter  | Formatter    |
+| ----------------------- | ------- | ------------ |
+| arduino-language-server | ruff    | beautysh     |
+| bashls                  | verible | latexindent  |
+| clangd                  |         | markdown-toc |
+| cmake                   |         | prettier     |
+| ltex                    |         | ruff         |
+| lua_ls                  |         | rustfmt      |
+| marksman                |         | shfmt        |
+| pyright                 |         | stylua       |
+| ruff                    |         | verible      |
+| rust_analyzer           |         | yamlfmt      |
+| svlangserver            |         |              |
+| verible                 |         |              |
+| vhdl_ls                 |         |              |
