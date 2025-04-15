@@ -7,6 +7,14 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "edit_predictions": {
+    "mode": "subtle",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null
+    },
+    "enabled_in_assistant": false
+  },
   "assistant": {
     "default_model": {
       "provider": "zed.dev",
@@ -46,6 +54,7 @@
   "auto_install_extensions": {
     "Catppuccin Themes": true,
     "Catppuccin Icons": true,
+    "Git Firefly": true,
     "Make": true,
     "NeoCMake": true,
     "Verilog": true,
@@ -95,6 +104,15 @@
     "YAML": {
       "prettier": {
         "allowed": true
+      }
+    }
+  },
+  "lsp": {
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": {
+          "command": "clippy"
+        }
       }
     }
   }
