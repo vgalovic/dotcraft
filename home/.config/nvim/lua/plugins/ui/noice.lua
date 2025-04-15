@@ -4,7 +4,7 @@ return {
 	"folke/noice.nvim",
 	lazy = false, -- Load this plugin immediately
 	priority = 1000, -- High priority to ensure it loads first
-	requires = {
+	dependencies = {
 		{ "MunifTanjim/nui.nvim" }, -- UI component library required by noice.nvim
 	},
 	opts = {

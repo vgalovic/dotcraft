@@ -13,7 +13,7 @@ return {
 			nerd_font_variant = "mono",
 		},
 
-		cmdline = { enabled = true },
+		cmdline = { enabled = true, completion = { ghost_text = { enabled = true } } },
 
 		completion = {
 			ghost_text = { enabled = true },

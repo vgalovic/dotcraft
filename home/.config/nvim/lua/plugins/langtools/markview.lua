@@ -2,6 +2,7 @@ return {
 	"OXY2DEV/markview.nvim",
 	-- lazy = false,
 	ft = { "markdown", "markdown_inline", "latex" },
+	keys = { { "<leader>mm", ft = "markdown", "<cmd>Markview toggle<cr>", desc = "Toggle Markview" } },
 
 	config = function()
 		local presets = require("markview.presets")
@@ -18,11 +19,5 @@ return {
 				},
 			},
 		})
-		vim.keymap.set(
-			"n",
-			"<leader>tm",
-			"<cmd>Markview toggle<cr>",
-			{ noremap = true, silent = true, desc = "Toggle Markview" }
-		)
 	end,
 }

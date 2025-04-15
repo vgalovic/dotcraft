@@ -18,7 +18,7 @@ return { -- Collection of various small independent plugins/modules
 			})
 		end
 
-		-- require("mini.tabline").setup()
+		-- require("mini.tabline").setup({ use_icons = vim.g.have_nerd_font })
 		--
 		-- local statusline = require("mini.statusline")
 		-- statusline.setup({ use_icons = vim.g.have_nerd_font })

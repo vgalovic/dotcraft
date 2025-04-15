@@ -22,7 +22,7 @@ return {
 		latexindent = {},
 		["markdown-toc"] = {},
 		prettier = {},
-		rustfmt = {},
+		-- rustfmt = {}, -- install with `rustup component add rustfmt`
 		stylua = {},
 		yamlfmt = {},
 	},

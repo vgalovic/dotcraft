@@ -14,6 +14,7 @@ return {
 			{ "<leader>d", group = "Find and Delete", mode = { "n", "v" } },
 			{ "<leader>c", group = "Code" },
 			{ "<leader>g", group = "Git", mode = { "n" } },
+			{ "<leader>m", group = "Markdown", mode = { "n" } },
 			{ "<leader>r", group = "Find and Replace", mode = { "n", "v" } },
 			{ "<leader>p", group = "Package Manager", mode = { "n" } },
 			{ "<leader>s", group = "Search", mode = { "n", "v" } },
