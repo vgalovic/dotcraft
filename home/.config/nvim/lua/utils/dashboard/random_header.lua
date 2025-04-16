@@ -1,4 +1,4 @@
----@class headers
+---@class utils.dashboard.headers
 
 local M = {}
 

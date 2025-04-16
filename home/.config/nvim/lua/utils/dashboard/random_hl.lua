@@ -1,3 +1,5 @@
+---@class utils.dashboard.hrandom_hl
+
 local M = {}
 
 -- Shuffle a table in-place using Fisher-Yates algorithm

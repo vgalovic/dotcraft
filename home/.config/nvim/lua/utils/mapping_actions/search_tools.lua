@@ -1,3 +1,5 @@
+---@class utils.mapping_actions.search_tools
+
 -- Commands that you can be run in commnadline: Search, SearchWith, Wikipedia, StackOverflow, YouTube, SetSearchEngine
 -- Functions than you can be set with keybind: search_diagnostic_under_cursor, search_selected_text, open_plugin_repo
 
