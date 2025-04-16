@@ -53,17 +53,18 @@ return {
 					align = "center",
 					padding = 2,
 					text = {
-						{ "  Update ", hl = random_hls[2] },
-						{ "  Sessions ", hl = random_hls[3] },
-						{ "  Config ", hl = random_hls[3] },
-						{ "  New File ", hl = random_hls[5] },
-						{ "  Files ", hl = random_hls[6] },
-						{ "  Recent ", hl = random_hls[7] },
-						{ "  Quit", hl = random_hls[8] },
+						{ " " .. Icons.snacks.keys_update .. "Update ", hl = random_hls[2] },
+						{ " " .. Icons.snacks.keys_session .. "Sessions ", hl = random_hls[3] },
+						{ " " .. Icons.snacks.keys_config .. "Config ", hl = random_hls[3] },
+						{ " " .. Icons.snacks.keys_new_file .. "New File ", hl = random_hls[5] },
+						{ " " .. Icons.snacks.keys_files .. "Files ", hl = random_hls[6] },
+						{ " " .. Icons.snacks.keys_recent .. "Recent ", hl = random_hls[7] },
+						{ " " .. Icons.snacks.keys_quit .. "Quit", hl = random_hls[8] },
 					},
 				},
-				{ icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-				{ icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
+        -- stylua: ignore
+				{ icon = Icons.snacks.files, title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+				{ icon = Icons.snacks.files, title = "Projects", section = "projects", indent = 2, padding = 1 },
 
 				{ text = "", action = ":Lazy update", key = "u" },
 				{ text = "", section = "session", key = "s" },
@@ -115,10 +116,10 @@ return {
 			},
 			icons = {
 				diagnostics = {
-					Error = " ",
-					Warn = " ",
-					Info = " ",
-					Hint = " ",
+					Error = Icons.diagnostics.error,
+					Warn = Icons.diagnostics.warn,
+					Info = Icons.diagnostics.info,
+					Hint = Icons.diagnostics.hint,
 				},
 			},
 			sources = {

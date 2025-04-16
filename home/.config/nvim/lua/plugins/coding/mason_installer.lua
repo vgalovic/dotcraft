@@ -10,9 +10,9 @@ return {
     config = {
       ui = {
         icons = {
-          package_installed = "",
-          package_pending = "",
-          package_uninstalled = "",
+          package_installed = Icons.mason.package_installed,
+          package_pending = Icons.mason.package_pending,
+          package_uninstalled = Icons.mason.package_uninstalled,
         },
       },
     },

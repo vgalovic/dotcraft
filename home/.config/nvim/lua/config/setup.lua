@@ -10,6 +10,9 @@ vim.g.have_nerd_font = true
 -- Setup color scheme
 vim.g.colorscheme = "catppuccin"
 
+-- Load Icons from utils.icons
+_G.Icons = require("utils.icons")
+
 -- Enable expandtab for spaces instead of tabs
 vim.cmd("set expandtab")
 -- Set the number of spaces that a <Tab> counts for
