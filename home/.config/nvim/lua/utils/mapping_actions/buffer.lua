@@ -1,5 +1,5 @@
 ---@diagnostic disable: param-type-mismatch
----@class buffer
+---@class utils.mapping_actions.buffer
 
 local M = {}
 
@@ -42,6 +42,15 @@ local SaveAs = function()
 	end
 end
 
+-- Save on open empty buffer
+vim.api.nvim_create_user_command("NewFile", function()
+	vim.cmd("enew")
+	SaveAs()
+end, {
+	nargs = 0,
+	desc = "Creates new file and prompt a popup to save it",
+})
+
 -- Save the current buffer
 M.save = function()
 	-- Check if the current mode is insert mode
@@ -54,12 +63,6 @@ M.save = function()
 		-- Just save
 		SaveAs()
 	end
-end
-
--- Save on open empty buffer
-M.new_file = function()
-	vim.cmd("enew")
-	SaveAs()
 end
 
 -- Delete all buffers except the current one

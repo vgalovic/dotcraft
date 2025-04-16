@@ -19,7 +19,6 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 
 local header = require("utils.dashboard.random_header").get_random_header()
 local random_hls = require("utils.dashboard.random_hl").get_random_hl()
-local buffer = require("utils.mapping_actions.buffer")
 
 return {
 	"folke/snacks.nvim",
@@ -74,10 +73,10 @@ return {
 					key = "c",
 				},
 				-- stylua: ignore
-			{ text = "", action = function() buffer.new_file() end, key = "n", },
-				{ text = "", action = ":lua Snacks.dashboard.pick('files')", key = "f" },
-				{ text = "", action = ":lua Snacks.dashboard.pick('oldfiles')", key = "r" },
-				{ text = "", action = ":qa", key = "q" },
+			  { text = "", action = "<cmd>NewFile<cr>", key = "n", },
+				{ text = "", action = "<cmd>lua Snacks.dashboard.pick('files')<cr>", key = "f" },
+				{ text = "", action = "<cmd>lua Snacks.dashboard.pick('oldfiles')<cr>", key = "r" },
+				{ text = "", action = "<cmd>qa<cr>", key = "q" },
 
 				{ section = "startup", padding = 1 },
 			},

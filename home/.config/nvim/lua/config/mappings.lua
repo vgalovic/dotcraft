@@ -97,7 +97,7 @@ map({ "n", "v", "i" }, "<C-s>", function() buffer.save() end, get_opts("Save"))
 --
 -- [[ New File ]]
 --
-map("n", "<leader>+", function() buffer.new_file() end, { desc = "New file" })
+map("n", "<leader>+", "<cmd>new_file<cr>", { desc = "New file" })
 --
 -- [[ Find and replace ]]
 --
