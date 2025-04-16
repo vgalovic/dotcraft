@@ -9,7 +9,7 @@ local SaveAs = function()
 	if current_file ~= "" then
 		vim.cmd("write") -- If a file already exists, just save it
 	else
-		vim.ui.input({ prompt = " Save As: " }, function(new_file)
+		vim.ui.input({ prompt = "Save As: " }, function(new_file)
 			if not new_file or new_file == "" then
 				vim.notify("No filename provided. Save canceled.", vim.log.levels.WARN, { title = "Save" })
 				return
@@ -17,7 +17,7 @@ local SaveAs = function()
 
 			-- Check if the file exists
 			if vim.fn.filereadable(new_file) == 1 then
-				vim.ui.input({ prompt = "󰽂 File exists. Overwrite? (y/N): " }, function(confirm)
+				vim.ui.input({ prompt = "File exists. Overwrite? (y/N): " }, function(confirm)
 					if confirm and confirm:lower() == "y" then
 						local ok, err = pcall(vim.cmd, "write! " .. vim.fn.fnameescape(new_file))
 						if not ok then
