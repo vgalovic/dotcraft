@@ -40,14 +40,10 @@ return {
 		default_integrations = true,
 		integrations = {
 			blink_cmp = true,
-			treesitter = true,
 			mason = true,
-			noice = true,
+			mini = { enabled = true, indentscope_color = "" },
 			snacks = true,
-			mini = {
-				enabled = true,
-				indentscope_color = "",
-			},
+			treesitter = true,
 			which_key = true,
 			-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
 		},
