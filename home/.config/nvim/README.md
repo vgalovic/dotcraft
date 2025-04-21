@@ -59,6 +59,10 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
   - [williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
   - [WhoIsSethDaniel/mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim)
 
+### log files
+
+- [mtdl9/vim-log-highlighting](https://github.com/mtdl9/vim-log-highlighting)
+
 ### markdown-and-latex
 
 - [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
@@ -87,10 +91,6 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 
 - [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
 
-### winbar
-
-- [Bekaboo/dropbar.nvim](https://dotfyle.com/plugins/Bekaboo/dropbar.nvim)
-
 ### navigation
 
 - [knubie/vim-kitty-navigator](https://github.com/knubie/vim-kitty-navigator)
@@ -111,8 +111,7 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
   - [mini.sessions](https://github.com/echasnovski/mini.sessions)
   <!-- - [mini.statusline](https://github.com/echasnovski/mini.statusline) -->
   - [mini.surround](https://github.com/echasnovski/mini.surround)
-  <!-- - [mini.tabline](https://github.com/echasnovski/mini.tabline) -->
-- [folke/noice.nvim](https://dotfyle.com/plugins/folke/noice.nvim)
+  - [mini.tabline](https://github.com/echasnovski/mini.tabline)
 - [folke/snacks.nvim](https://dotfyle.com/plugins/folke/snacks.nvim)
 
 ## Installed Language Servers, Formatters, and Linters
