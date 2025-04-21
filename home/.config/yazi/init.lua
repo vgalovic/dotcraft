@@ -1,3 +1,5 @@
+--- @diagnostic disable: undefined-global
+
 require("starship"):setup({ config_file = "$HOME/.config/yazi/starship_yazi.toml" })
 require("git"):setup()
 require("full-border"):setup({
