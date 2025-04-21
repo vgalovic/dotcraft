@@ -1,24 +1,30 @@
 ---@class utils.icons
-return {
+
+local icons = {
 	diagnostics = {
 		prefix = "●",
 		error = " ",
 		warn = " ",
 		hint = " ",
 		info = " ",
+		debug = " ",
+		trace = "󰴽 ",
 	},
 	git = {
-		add = "▕▏",
-		change = "▕▏",
-		delete = "▁▁",
+		branch = "",
 
-		-- add = "+",
-		-- change = "~",
-		-- delete = "-",
+		line_add = "▕▏",
+		line_change = "▕▏",
+		line_delete = "▁▁",
+
+		status_add = "+",
+		status_change = "~",
+		status_delete = "-",
 	},
-	lualine = {
-		left_separator = "",
-		right_separator = "",
+	lsp = {
+		done = "✓",
+		icon = "",
+		spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
 	},
 	mason = {
 		package_installed = "",
@@ -36,4 +42,24 @@ return {
 		files = " ",
 		projects = " ",
 	},
+	statusline = {
+		-- section_separators = { left = "", right = "" },
+		-- section_separators = { left = "", right = "" },
+		section_separators = { left = "", right = "" },
+
+		component_separators = "",
+
+		modeicon = "",
+
+		modified = "●",
+		readonly = "",
+		newfile = "",
+		alternate_file = "# ",
+		directory = "",
+
+		unix = "",
+		dos = "",
+		mac = "",
+	},
 }
+return icons

@@ -11,7 +11,7 @@ function M.setup_lsp_autocommands()
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = augroup_lsp_attach,
 		callback = function(event)
-			local lsp_keymap = require("plugins.coding.lspconfig")
+			local lsp_keymap = require("lsp.keymaps")
 			lsp_keymap.setup_lsp_keymaps(event.buf)
 
 			local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -77,12 +77,12 @@ function M.setup_lsp_progress()
 				return table.insert(msg, v.msg) or not v.done
 			end, p)
 
-			local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+			local spinner = Icons.lsp.spinner
 			vim.notify(table.concat(msg, "\n"), "info", {
 				id = "lsp_progress",
 				title = client.name,
 				opts = function(notif)
-					notif.icon = #progress[client.id] == 0 and " "
+					notif.icon = #progress[client.id] == 0 and Icons.lsp.done
 						or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
 				end,
 			})

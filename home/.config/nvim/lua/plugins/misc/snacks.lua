@@ -2,21 +2,6 @@
 ---@diagnostic disable: undefined-global
 ---@diagnostic disable: undefined-field
 
--- Disable winbar for floating windows
-vim.api.nvim_create_autocmd("BufWinEnter", {
-	callback = function()
-		local win = vim.api.nvim_get_current_win()
-		local config = vim.api.nvim_win_get_config(win)
-
-		-- Check if the current window is floating
-		if config.relative ~= "" then
-			-- Disable winbar for any floating window
-			vim.wo[win].winbar = ""
-			vim.w[win].winbar_no_attach = true
-		end
-	end,
-})
-
 local header = require("utils.dashboard.random_header").get_random_header()
 local random_hls = require("utils.dashboard.random_hl").get_random_hl()
 
@@ -63,7 +48,7 @@ return {
 				},
         -- stylua: ignore
 				{ icon = Icons.snacks.files, title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-				{ icon = Icons.snacks.files, title = "Projects", section = "projects", indent = 2, padding = 1 },
+				{ icon = Icons.snacks.projects, title = "Projects", section = "projects", indent = 2, padding = 1 },
 
 				{ text = "", action = ":Lazy update", key = "u" },
 				{ text = "", section = "session", key = "s" },
@@ -139,17 +124,18 @@ return {
 				projects = {
 					dev = { "~/Documents/", "~/Projects", "~/.dotfiles" },
 					patterns = {
-						".git",
-						"_darcs",
-						".hg",
 						".bzr",
+						".git",
+						".hg",
 						".svn",
 						".vscode",
-						"pyvenv.cfg",
-						"pyproject.toml",
-						"package.json",
-						"compile_commands.json",
 						"Makefile",
+						"_darcs",
+						"compile_commands.json",
+						"package.json",
+						"pyproject.toml",
+						"pyvenv.cfg",
+						"Cargo.toml",
 					},
 					recent = false,
 				},
@@ -171,9 +157,16 @@ return {
 			--- @default "compact"
 			--- @options [ "compact", "fancy", "minimal" ]
 			style = "compact",
-			top_down = true,
-
-			lsp_utils = require("lsp.autocommands").setup_lsp_progress(),
+			top_down = false,
+			margin = { top = 0, right = 1, bottom = 2 },
+			icons = {
+				error = Icons.diagnostics.error,
+				warn = Icons.diagnostics.warn,
+				info = Icons.diagnostics.hint,
+				debug = Icons.diagnostics.debug,
+				trace = Icons.diagnostics.trace,
+			},
+			-- lsp_utils = require("lsp.autocommands").setup_lsp_progress(),
 		},
 		statuscolumn = {
 			left = { "mark", "sign" },
@@ -211,7 +204,7 @@ return {
 		{ "<leader>gl", function() Snacks.lazygit.log({ cwd = vim.fn.expand("%:p:h") }) end, desc = "Lazygit Log (cwd)" },
 
 		-- Notification history
-		{ "<leader>sn", function() Snacks.notifier.show_history() end, desc = "Notification History" },
+		{ "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification History" },
 
 		-- Picker
 		{ "<C-;>", function() Snacks.picker.commands() end, desc = "Command List" },
