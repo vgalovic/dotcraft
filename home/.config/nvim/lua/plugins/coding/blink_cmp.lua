@@ -3,6 +3,7 @@ return {
 	event = { "InsertEnter", "CmdlineEnter", "CmdlineEnter /,?" },
 	dependencies = {
 		{ "rafamadriz/friendly-snippets" },
+		{ "mikavilpas/blink-ripgrep.nvim" },
 	},
 
 	version = "*",
@@ -135,7 +136,7 @@ return {
 			default = function()
 				local success, node = pcall(vim.treesitter.get_node)
 				if vim.bo.filetype == "lua" then
-					return { "lazydev", "lsp", "path" }
+					return { "lazydev", "lsp", "path", "ripgrep" }
 				elseif
 					success
 					and node
@@ -143,7 +144,7 @@ return {
 				then
 					return { "buffer" }
 				else
-					return { "lsp", "path", "snippets" } --, 'buffer' }
+					return { "lsp", "path", "snippets", "ripgrep" }
 				end
 			end,
 
@@ -160,6 +161,19 @@ return {
 					module = "lazydev.integrations.blink",
 					-- make lazydev completions top priority (see `:h blink.cmp`)
 					score_offset = 100,
+				},
+				ripgrep = {
+					module = "blink-ripgrep",
+					name = "Ripgrep",
+					transform_items = function(_, items)
+						for _, item in ipairs(items) do
+							-- example: append a description to easily distinguish rg results
+							item.labelDetails = {
+								description = "(rg)",
+							}
+						end
+						return items
+					end,
 				},
 			},
 		},
