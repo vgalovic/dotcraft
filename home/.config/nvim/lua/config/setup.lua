@@ -4,9 +4,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Set this to true if you're using Nerd Font, otherwise false
-vim.g.have_nerd_font = true
-
 -- Setup color scheme
 vim.g.colorscheme = "catppuccin"
 
