@@ -70,7 +70,7 @@ map({ "n", "v" }, ",", '"+', get_opts("Set register for system clipboard"))
 -- [[ Select all ]]
 --
 -- stylua: ignore
-vim.keymap.set("n", "<C-a>", function() vim.cmd("normal! ggVG") end, { noremap = true, silent = true, desc = "Select all" })
+vim.keymap.set("n", "<C-a>", function() vim.cmd("normal! ggVG") end, get_opts("Select all" ))
 --
 -- [[ Increment and decrement numbers ]]
 --
@@ -89,7 +89,7 @@ map("n", "<C-m>", "<cmd>delmarks!<CR>", { desc = "Delete marks for current buffe
 --
 -- stylua: ignore start
 map("n", "<C-q>", function() vim.diagnostic.setloclist() end, { desc = "Open diagnostic Quickfix list" })
-map("n", "Q", function ()  vim.diagnostic.open_float() end, { noremap = true, silent = true, desc = "Open diagnostic Float under cursor" })
+map("n", "Q", function ()  vim.diagnostic.open_float() end, get_opts("Open diagnostic Float under cursor"))
 --
 -- [[ Save ]]
 --
@@ -97,7 +97,7 @@ map({ "n", "v", "i" }, "<C-s>", function() buffer.save() end, get_opts("Save"))
 --
 -- [[ New File ]]
 --
-map("n", "<leader>+", "<cmd>new_file<cr>", { desc = "New file" })
+map("n", "<leader>+", "<cmd>NewFile<cr>", { desc = "New file" })
 --
 -- [[ Find and replace ]]
 --
