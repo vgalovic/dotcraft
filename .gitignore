@@ -16,7 +16,7 @@ home/.config/mpv/fonts/
 home/.config/mpv/script-opts/
 home/.config/mpv/subtitles/
 home/.config/nvim/lazy-lock.json
-home/.config/yazi/theme.toml
 home/.config/yazi/package.toml
 home/.config/yazi/plugins/
+home/.config/yazi/flavors/
 home/.config/zathura/catppuccin-mocha
