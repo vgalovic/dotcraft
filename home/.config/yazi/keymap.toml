@@ -18,7 +18,7 @@ prepend_keymap = [
   # lazygit
   { on = ["g", "i"], run = "plugin lazygit", desc = "run lazygit" },
 
-  # Max-preview
-  { on = ["T"], run  = "plugin max-preview", desc = "Maximize or restore preview" },
+  # Toggle-pane
+  { on = "T", run  = "plugin toggle-pane max-preview", desc = "Show or hide the preview pane" },
 ]
 
