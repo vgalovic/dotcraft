@@ -10,6 +10,7 @@ return {
 			theme = vim.g.colorscheme or "auto",
 			component_separators = Icons.statusline.component_separators,
 			section_separators = Icons.statusline.section_separators,
+			globalstatus = true,
 			disabled_filetypes = {
 				statusline = { "snacks_dashboard", "dashboard" },
 				winbar = {},
@@ -34,7 +35,6 @@ return {
 					},
 				},
 			},
-
 			lualine_c = {
 				{
 					"filetype",
@@ -110,6 +110,11 @@ return {
 
 		tabline = {},
 		winbar = {},
-		extensions = { "lazy", "mason" },
+		extensions = {
+			"lazy",
+			"man",
+			"mason",
+			"quickfix",
+		},
 	},
 }
