@@ -12,10 +12,9 @@ vim.opt.relativenumber = true
 vim.opt.cursorline = true
 
 -- Cmdline
-vim.opt.cmdheight = 1 -- Hide the command line when not in use
+vim.opt.cmdheight = 1 -- Hide(0) or show(1) the command line when not in use
 vim.opt.showmode = false -- Disable mode display
 vim.opt.ruler = false -- Remove "All" and line/column info
--- vim.opt.shortmess:append("c") -- Suppress unnecessary messages
 
 -- Sync clipboard between OS and Neovim
 -- vim.opt.clipboard = "unnamedplus"
@@ -51,7 +50,7 @@ vim.opt.splitbelow = true
 
 -- Configure listchars for displaying whitespace
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = Icons.listchars
 
 -- Enable live substitution previews
 vim.opt.inccommand = "split"

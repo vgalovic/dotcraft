@@ -21,6 +21,7 @@ local icons = {
 		status_change = "~",
 		status_delete = "-",
 	},
+	listchars = { tab = "» ", trail = "·", nbsp = "␣" },
 	lsp = {
 		done = "✓",
 		icon = "",
