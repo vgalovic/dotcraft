@@ -5,7 +5,7 @@ return { -- Collection of various small independent plugins/modules
 	version = false,
 	lazy = false,
 	keys = {
-		{ "<leader>z", "<cmd>mksession<CR>", desc = "Save Session" },
+		{ "<leader>S", "<cmd>mksession<CR>", desc = "Save Session" },
 		{
 			"<leader>gt",
 			function()
@@ -91,7 +91,7 @@ return { -- Collection of various small independent plugins/modules
 			},
 		})
 
-		require("mini.git").setup()
+		-- require("mini.git").setup()
 
 		require("mini.hipatterns").setup({
 			highlighters = {
