@@ -10,14 +10,14 @@ if [ -f "$HOME/.config/yazi/package.toml" ]; then
     rm "$HOME/.config/yazi/package.toml" || print_error "Failed to remove old pace.toml file."
 fi
 
-if [ -f "$HOME/.config/yazi/theme.toml" ]; then
-    print_msg "theme.toml already exists. Removing old file..."
-    rm "$HOME/.config/yazi/theme.toml" || print_error "Failed to remove old theme.toml file."
-fi
-
 if [ -d "$HOME/.config/yazi/plugins" ]; then
     print_msg "plugins directory already exists. Removing old directory..."
     rm -rf "$HOME/.config/yazi/plugins" || print_error "Failed to remove old plugins directory."
+fi
+
+if [ -d "$HOME/.config/yazi/flavors" ]; then
+    print_msg "flavors directory already exists. Removing old directory..."
+    rm -rf "$HOME/.config/yazi/flavors" || print_error "Failed to remove old flavors directory."
 fi
 
 # Function to check and install APT packages required for Yazi
@@ -73,9 +73,10 @@ install_yazi_plugins() {
         "Reledia/glow" # [[ glow.yazi ]]
         "Reledia/hexyl" # [[ hexyl.yazi ]]
         "Lil-Dank/lazygit" # [[ lazygit.yazi ]]
-        "yazi-rs/plugins:max-preview" # [[ max-preview.yazi ]]
+        "tkapias/moonfly" # [[ moonfly.yazi ]]
         "AnirudhG07/rich-preview" # [[ rich-preview.yazi ]]
         "Rolv-Apneseth/starship" # [[ starship.yazi ]]
+        "yazi-rs/plugins:toggle-pane" # [[ toggle-pane.yazi ]]
     )
 
     # Install each GitHub plugin
@@ -110,11 +111,26 @@ install_yazi_plugins() {
 }
 
 # Yazi cattpuccin theme
-download_catppuccin_theme() {
-    print_msg "Downloading catppuccin-mocha-blue.toml theme..."
+download_catppuccin_mocha_flavor() {
+    print_msg "Downloading catppuccin-mocha theme..."
     cd "$yazi_dir" || print_error "Failed to change to $yazi_dir directory."
-    wget https://raw.githubusercontent.com/catppuccin/yazi/refs/heads/main/themes/mocha/catppuccin-mocha-blue.toml || print_error "Failed to download catppuccin-mocha-blue.toml theme."
-    mv catppuccin-mocha-blue.toml theme.toml || print_error "Failed to move catppuccin-mocha-mauve.toml theme."
+    mkdir -p "flavors/catppuccin-mocha.yazi" || print_error "Failed to create catppuccin-mocha.yazi directory"
+    cd "flavors/catppuccin-mocha.yazi" || print_error "Faild to cahnge to catppuccin-mocha.yazi directory"
+    wget https://raw.githubusercontent.com/catppuccin/yazi/refs/heads/main/themes/mocha/catppuccin-mocha-blue.toml || print_error "Failed to download catppuccin-mocha theme."
+    wget https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme || print_error "Failed to download catppuccin-mocha syntax highlighting."
+    mv catppuccin-mocha-blue.toml flavor.toml || print_error "Failed to move catppuccin-mocha theme."
+    mv 'Catppuccin Mocha.tmTheme' tmtheme.xml || print_error "Failed to move catppuccin-mocha syntax highlighting."
+}
+
+download_catppuccin_latte_flavor() {
+    print_msg "Downloading catppuccin-latte theme..."
+    cd "$yazi_dir" || print_error "Failed to change to $yazi_dir directory."
+    mkdir -p "flavors/catppuccin-latte.yazi" || print_error "Failed to create catppuccin-latte.yazi directory"
+    cd "flavors/catppuccin-latte.yazi" || print_error "Faild to cahnge to catppuccin-latte.yazi directory"
+    wget https://github.com/catppuccin/yazi/raw/refs/heads/main/themes/latte/catppuccin-latte-blue.toml || print_error "Failed to download catppuccin-latte theme."
+    wget https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Latte.tmTheme || print_error "Failed to download catppuccin-latte syntax highlighting."
+    mv catppuccin-latte-blue.toml flavor.toml || print_error "Failed to move catppuccin-latte theme."
+    mv 'Catppuccin Latte.tmTheme' tmtheme.xml || print_error "Failed to move catpcatppuccin-lattepuccin syntax highlighting."
 }
 
 # If Yazi APT packages are needed
@@ -124,7 +140,8 @@ install_yazi_app_required
 install_yazi_plugins
 
 # Install Yazi catppuccin theme
-download_catppuccin_theme
+download_catppuccin_mocha_flavor
+download_catppuccin_latte_flavor
 
 print_msg "Yazi plugins installation complete!"
 

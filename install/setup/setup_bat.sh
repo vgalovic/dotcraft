@@ -22,6 +22,12 @@ downloading_catppuccin_theme_file() {
     wget -P "$(bat --config-dir)/themes" https://github.com/catppuccin/bat/raw/main/themes/Catppuccin%20Mocha.tmTheme || print_error "Failed to download Catppuccin Mocha theme file."
 }
 
+downloading_moonfly_theme_file() {
+  print_msg "Downloading Moonfly theme file..."
+    wget -P "$(bat --config-dir)/themes" https://github.com/bluz71/fly16-bat/raw/refs/heads/master/fly16.tmTheme || print_error "Failed to download Moonfly theme file."
+
+}
+
 downloading_syntax_files() {
     cd "$(bat --config-dir)/syntaxes" || print_error "Failed to change to bat syntaxes directory."
 
@@ -37,6 +43,7 @@ downloading_syntax_files() {
 
 removing_old_and_creating_new_directories
 downloading_catppuccin_theme_file
+downloading_moonfly_theme_file
 downloading_syntax_files
 
 print_msg "Building bat cache..."
