@@ -9,7 +9,9 @@ home/.config/bat/syntaxes/
 home/.config/btop/btop.log
 home/.config/fastanime/user_data.json
 home/.config/fastanime/watch_history.json
-home/.config/kitty/kitty_navigator/
+home/.config/kitty/neighboring_window.py
+home/.config/kitty/relative_resize.py
+home/.config/kitty/split_window.py
 home/.config/mpv/scripts/uosc/
 home/.config/mpv/scripts/thumbfast.lua
 home/.config/mpv/fonts/
