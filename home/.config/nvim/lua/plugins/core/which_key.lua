@@ -19,6 +19,7 @@ return {
 			{ "<leader>p", group = "Package Manager", mode = { "n" } },
 			{ "<leader>s", group = "Search", mode = { "n", "v" } },
 			{ "<leader>t", group = "Toggle", mode = { "n" } },
+			{ "<leader>w", group = "Window", mode = { "n" } },
 		},
 	},
 	keys = {
