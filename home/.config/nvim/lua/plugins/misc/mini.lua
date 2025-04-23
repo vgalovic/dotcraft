@@ -13,16 +13,6 @@ return { -- Collection of various small independent plugins/modules
 			end,
 			desc = "Toggle Diff Overlay",
 		},
-		{
-			"\\",
-			function()
-				local files = require("mini.files")
-				if not files.close() then
-					files.open(vim.fn.expand("%:p:h"), true)
-				end
-			end,
-			desc = "Open Mini Files",
-		},
 	},
 
 	config = function()
@@ -91,31 +81,10 @@ return { -- Collection of various small independent plugins/modules
 			},
 		})
 
-		-- require("mini.git").setup()
-
 		require("mini.hipatterns").setup({
 			highlighters = {
 				-- Highlight hex color strings (`#rrggbb`) using that color
 				hex_color = require("mini.hipatterns").gen_highlighter.hex_color(),
-			},
-		})
-
-		local files = require("mini.files")
-		files.setup({
-			mappings = {
-				close = "q",
-				go_in = "l",
-				go_in_plus = "<CR>",
-				go_out = "h",
-				go_out_plus = "H",
-				mark_goto = "'",
-				mark_set = "m",
-				reset = "<BS>",
-				reveal_cwd = ".",
-				show_celp = "g?",
-				synchronize = "=",
-				trim_left = "<",
-				trim_right = ">",
 			},
 		})
 	end,
