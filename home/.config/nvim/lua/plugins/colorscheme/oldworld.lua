@@ -1,6 +1,6 @@
 return {
 	"dgox16/oldworld.nvim",
-	enabled = false,
+	enabled = vim.g.colorscheme == "oldworld",
 	lazy = false,
 	priority = 1000,
 	opts = {

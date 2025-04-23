@@ -1,6 +1,6 @@
 return {
 	"folke/tokyonight.nvim",
-	enabled = false,
+	enabled = vim.g.colorscheme == "tokyonight",
 	lazy = false,
 	priority = 1000,
 	opts = {

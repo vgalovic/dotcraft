@@ -1,13 +1,11 @@
 -- Set <space> as the leader key
 -- See `:help mapleader`
--- NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Setup color scheme
 -- Change the name of the theme to the one you prefer.
 -- Available colorschemes in this config can be found in plugins/colorschemes.
--- NOTE: Don't forget to enable the colorscheme you want to use, as all except Catppuccin are disabled in the config.
 vim.g.colorscheme = "catppuccin"
 
 -- Load Icons from utils.icons

@@ -1,7 +1,7 @@
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",
-	enabled = true,
+	enabled = vim.g.colorscheme == "catppuccin",
 	lazy = false,
 	priority = 1000,
 	opts = {
