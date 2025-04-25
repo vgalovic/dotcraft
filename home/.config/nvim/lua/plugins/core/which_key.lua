@@ -1,6 +1,6 @@
 return {
 	"folke/which-key.nvim",
-	event = "VimEnter", -- Ensures the plugin loads when Vim starts
+	event = "VeryLazy",
 	opts = {
 		--- @default "classic"
 		--- @options ["classic", "modern", "helix"]

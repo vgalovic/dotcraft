@@ -1,10 +1,21 @@
 return {
 	"stevearc/oil.nvim",
-	lazy = false,
+	lazy = true,
+	cmd = { "Oil" },
 	keys = {
 		{ "\\", "<cmd>Oil --float<cr>", desc = "Open parent directory" },
 	},
+	init = function()
+		-- Detect if Neovim was started with a directory, and load Oil
+		local function is_directory(path)
+			return vim.fn.isdirectory(path) == 1
+		end
 
+		local arg = vim.fn.argv()[1]
+		if arg and is_directory(arg) then
+			require("lazy").load({ plugins = { "oil.nvim" } })
+		end
+	end,
 	opts = {
 		keymaps = {
 			["g?"] = { "actions.show_help", mode = "n" },
@@ -34,9 +45,6 @@ return {
 					end
 				end,
 			},
-		},
-		preview = {
-			enabled = true,
 		},
 	},
 }

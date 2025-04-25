@@ -8,7 +8,7 @@ return {
 	},
 	dependencies = {
 		"williamboman/mason.nvim",
-		config = {
+		opts = {
 			ui = {
 				icons = {
 					package_installed = Icons.mason.package_installed,
