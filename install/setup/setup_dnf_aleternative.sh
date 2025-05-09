@@ -19,7 +19,6 @@ done
 # Install packages via DNF
 apps=(
     arduino-cli
-    atuin
     bat
     bear
     btop

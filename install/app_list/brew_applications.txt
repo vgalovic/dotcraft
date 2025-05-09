@@ -1,5 +1,4 @@
 arduino-cli
-atuin
 bat
 bear
 btop
