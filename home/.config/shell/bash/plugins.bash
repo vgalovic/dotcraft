@@ -4,11 +4,11 @@ eval "$(starship init bash)"
 # Bash Preexec
 source ~/.bash-preexec.sh
 
-# Atuin (History manager)
-eval "$(atuin init bash)"
-
 # FZF (Fuzzy Finder)
-eval "$(fzf --bash)"
+# eval "$(fzf --bash)"
+
+# FZF and history prompt
+eval "$(tv init bash)"
 
 # Bat (Improved cat)
 alias cat="bat --plain"
@@ -25,9 +25,3 @@ eval "$(zoxide init bash)" && alias cd="z"
 alias ls="eza --color=always --icons=always --hyperlink"
 alias la="eza --color=always --icons=always --hyperlink --all"
 alias ll="eza --color=always --long --git --icons=always --hyperlink --all"
-
-# Thefuck (Fix previous commands)
-eval "$(thefuck --alias tf)"
-
-# TV
-eval "$(tv init bash)"

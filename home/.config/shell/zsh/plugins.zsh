@@ -12,11 +12,11 @@ export KEYTIMEOUT=1
 async_start_worker plugin_async
 
 async_job plugin_load() {
-  # Atuin - Shell history management
-  eval "$(atuin init zsh)"
-
   # Starship - Prompt theme
   eval "$(starship init zsh)"
+
+  # FZF and history prompt
+  eval "$(tv init zsh)"
 
   # Zoxide - Directory jumping
   eval "$(zoxide init zsh)"
@@ -33,9 +33,7 @@ async_job plugin_load() {
   alias ll="eza --color=always --long --git --icons=always --hyperlink --all"
 
   # FZF - Command-line fuzzy finder
-  eval "$(fzf --zsh)"
-
-  eval "$(tv init zsh)"
+  # eval "$(fzf --zsh)"
 }
 
 # Asynchronous job to load plugins

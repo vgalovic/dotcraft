@@ -1,4 +1,4 @@
-for file in ~/.config/shell/*.sh; do
+for file in ~/.config/shell/shared/*.sh; do
     source "$file"
 done
 
