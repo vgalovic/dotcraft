@@ -1,8 +1,16 @@
 [core]
     pager = delta
+    compression = 9
+    whitespace = error
+    preloadindex = true
 
 [interactive]
     diffFilter = delta --color-only
+
+[advice]
+    addEmptyPathSpec = false
+    pushNonFastForward = false
+    statusHints = false
 
 [delta]
     navigate = true
@@ -12,12 +20,42 @@
     conflictstyle = diff3
 
 [diff]
-    colorMoved = default
+   colorMoved = default
+   context = 3
+   renames = copies
+   interHunkContext = 10
+
+[init]
+    defaultBranch = main
+
+[status]
+    branch = true
+    short = true
+    showStash = true
+    showUntrackedFiles = all
+
+[pager]
+    branch = false
+    diff = delta | $PAGER
+
+[push]
+    autoSetupRemote = true
+    default = current
+    followTags = true
+    gpgSign = false
+
+[pull]
+    rebase = true
+
+[submodule]
+    fetchJobs = 16
+
+[rebase]
+    autoStash = true
 
 [user]
-	name = Vladimir Galović
-	email = vgalovic99@gmail.com
+    name = Vladimir Galović
+    email = vgalovic99@gmail.com
 
 [credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+    helper = !/usr/bin/gh auth git-credential
