@@ -1,4 +1,4 @@
----@diagnostic disable: missing-fields, duplicate-set-field
+---@diagnostic disable: duplicate-set-field
 
 return {
 	"neovim/nvim-lspconfig",
@@ -8,30 +8,12 @@ return {
 	},
 
 	dependencies = {
-		"williamboman/mason-lspconfig.nvim",
 		"saghen/blink.cmp",
 	},
 
 	config = function()
-		local lspconfig = require("lspconfig")
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		local servers = require("lsp.ensure_installed").lsp
-
-		-- Setup LSP autocommands (optimized version)
+		-- Setup LSP autocommands
 		require("lsp.autocommands").setup_lsp_autocommands()
-
-		-- Configure Mason to ensure servers are installed
-		require("mason-lspconfig").setup({
-			ensure_installed = vim.tbl_keys(servers),
-			automatic_installation = false,
-			handlers = {
-				function(server_name)
-					local server = servers[server_name] or {}
-					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-					lspconfig[server_name].setup(server)
-				end,
-			},
-		})
 
 		require("lsp").setup()
 
