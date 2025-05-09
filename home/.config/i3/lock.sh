@@ -1,30 +1,22 @@
-#!/bin/bash
+#!/bin/sh
 
-# Get the currently focused window
-focused_win=$(xdotool getwindowfocus)
-
-# Check if the window is fullscreen
-is_fullscreen=$(xprop -id "$focused_win" | grep -q '_NET_WM_STATE_FULLSCREEN' && echo 1 || echo 0)
-
-# Check if media is playing
-is_playing=$(playerctl status 2>/dev/null | grep -q 'Playing' && echo 1 || echo 0)
-
-# Suspend lock **only** if BOTH fullscreen and video playing
-if [[ "$is_fullscreen" -eq 1 && "$is_playing" -eq 1 ]]; then
-  # Likely watching a video in fullscreen → skip lock
-  exit 0
-fi
+# Set TMP_DIR to the user's runtime directory (a RAM-backed temporary folder)
+TMP_DIR="/run/user/$(id -u)"
 
 # Take a screenshot
-scrot /tmp/screenshot.png
+scrot "$TMP_DIR/screenshot.png"
 
 # Blur it (choose ffmpeg OR imagemagick)
-ffmpeg -i /tmp/screenshot.png -vf "gblur=sigma=8" -frames:v 1 -update 1 /tmp/blurred.png -y
-# convert /tmp/screenshot.png -blur 0x8 /tmp/blurred.png  # Alternative method
+ffmpeg -i "$TMP_DIR/screenshot.png" -vf "gblur=sigma=8" -frames:v 1 -update 1 "$TMP_DIR/blurred.png" -y
+# convert "$TMP_DIR/screenshot.png" -blur 0x8 "$TMP_DIR/blurred.png"
 
 # Lock the screen with blurred background
-i3lock -i /tmp/blurred.png --nofork
+i3lock -i "$TMP_DIR/blurred.png" \
+    --nofork \
+    --color=24273a  \
+    --ignore-empty-password \
+    --show-failed-attempts \
+
 
 # Clean up
-rm -f /tmp/screenshot.png /tmp/blurred.png
-
+rm -f "$TMP_DIR/screenshot.png" "$TMP_DIR/blurred.png"
