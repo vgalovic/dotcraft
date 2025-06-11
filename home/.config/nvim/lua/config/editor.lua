@@ -69,8 +69,9 @@ vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- Tree-sitter's fold expression
 vim.o.foldtext = ""
 
 -- Optional: Start with all folds closed
-vim.o.foldenable = true
+vim.o.foldenable = false
 vim.o.foldlevel = 99 -- Open most folds by default (set to lower for fewer open folds)
+vim.o.foldlevelstart = 99
 
 -- Enable color scheme
 vim.cmd.colorscheme(vim.g.colorscheme)
