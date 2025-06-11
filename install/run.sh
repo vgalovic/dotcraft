@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # This script automates the setup of environment tools and applications.
 # It will prompt for sudo access if not run with root permissions.
 
@@ -11,16 +12,24 @@ if [ ! -d "$SETUP_DIR" ]; then
     exit 1
 fi
 
+pm=""
+
 # Run essential setup scripts without prompting
 if command -v apt >/dev/null; then
-    must_execute_script "setup_apt"
+  pm="apt"
+  must_execute_script "setup_apt"
 elif command -v dnf >/dev/null; then
-    must_execute_script "setup_dnf"
+  pm="dnf"
+  must_execute_script "setup_dnf"
+  execute_script "setup_nvidia_470xx_driver"
 elif command -v pacman >/dev/null; then
-    execute_script "setup_yay"
+  pm="pacman"
+  must_execute_script "setup_pacman"
+  execute_script "setup_yay"
+else 
+  print_error "Unsupported os!"
+  exit 1;
 fi
-
-execute_script "setup_nvidia_470xx_driver"
 
 must_execute_script "setup_kvantum_papirus"
 
@@ -31,18 +40,18 @@ done
 
 execute_script "setup_flatpak"
 
-if command -v dnf >/dev/null; then
-    echo "There are packages that are seted up to be installed via Homebrew, but you are using Fedora which already has moust of packages to the latest version in its repos."
+if [[ -n "$pm" ]]; then
+    echo "There are packages that are set up to be installed via Homebrew, but you are using Fedora which already has most of these packages up to date in its repos."
     PS3="Do you want to install applications via: "
-    options=("dnf (recommended)" "Homebrew" "Skip")
+    options=("$pm (recommended)" "Homebrew" "Skip")
     select opt in "${options[@]}"; do
         case "$opt" in
-            "dnf (recommended)")
-                print_msg "Installing packages via dnf..."
-                must_execute_script "setup_dnf_alternative"
+            "$pm (recommended)")
+                print_msg "Installing packages via $pm..."
+                must_execute_script "setup_${pm}_apps"
                 break
                 ;;
-            "HomeBrew")
+            "Homebrew")
                 print_msg "Installing packages via Homebrew..."
                 must_execute_script "setup_brew"
                 break
@@ -60,8 +69,9 @@ else
     execute_script "setup_brew"
 fi
 
+
 # Execute other setup scripts with user prompts
-for script in setup_terminal_and_prompt setup_fonts setup_mega_sync setup_latex ; do
+for script in setup_terminal_and_prompt setup_shell setup_fonts setup_mega_sync setup_latex ; do
     execute_script "$script"
 done
 
@@ -73,12 +83,6 @@ download_file() {
     local dest="$2"
     curl -fsSL "$url" -o "$dest" || print_error "Failed to download from $url"
 }
-
-if command -v bash >/dev/null; then
-    # Download and install bash-preexec script
-    print_msg "Downloading bash-preexec script..."
-    download_file "https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh" "$HOME/.bash-preexec.sh"
-fi
 
 # Install Zen Browser
 if prompt_yes_default "Do you want to install Zen browser?"; then

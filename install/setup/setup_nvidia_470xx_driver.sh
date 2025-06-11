@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 source $HOME/.dotfiles/install/setup/print_and_log.sh

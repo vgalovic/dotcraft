@@ -7,7 +7,6 @@ declare -A copr_repos=(
     ["bat"]="sharkdp/bat"
     ["fzf"]="nforro/fzf"
     ["ripgrep"]="zicklag/ripgrep"
-    ["zoxide"]="atim/zoxide"
 )
 
 print_msg "Enabling COPR repositories..."
@@ -39,9 +38,7 @@ apps=(
     poppler-utils
     ripgrep
     p7zip
-    thefuck
     tlrc
-    zoxide
 )
 
 print_msg "Installing packages via DNF..."
@@ -62,21 +59,23 @@ fi
 
 # Install yazi and television via cargo
 if ! command -v cargo &>/dev/null; then
-    echo "Cargo is not installed. Installing Rust (required for yazi and television)..."
+    echo "Cargo is not installed. Installing Rust..."
     must_execute_script "setup_rust"
 fi
 
-print_msg "Installing yazi..."
-if cargo install yazi-fm yazi-cli; then
-    print_msg "yazi installed successfully."
-else
-    print_error "Failed to install yazi."
-fi
+cargo_apps=(
+    television
+    yazi-cli
+    yazi-fm
+)
 
-if cargo install --locked television; then
-    print_msg "television installed successfully."
-else
-    print_error "Failed to install television."
-fi
+for app in "${cargo_apps[@]}"; do
+    print_msg "Installing $app via cargo with --locked..."
+    if cargo install --locked "$app"; then
+        print_msg "$app installed successfully."
+    else
+        print_error "Failed to install $app."
+    fi
+done
 
 print_msg "DNF setup of applications completed!"
