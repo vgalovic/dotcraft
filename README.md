@@ -3,7 +3,7 @@
 This is my _dotfiles repository_, which includes all my configuration files
 located in the `config` folder. The repository also contains installation
 scripts in the `install` folder to help you configure your system, meant for
-_Ubuntu_ (or _Linux Mint_).
+_Ubuntu_ (or _Linux Mint_), _Fedora_ or _Arch_.
 
 ## Prerequisites
 
