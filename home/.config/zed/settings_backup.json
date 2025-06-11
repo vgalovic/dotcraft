@@ -13,9 +13,9 @@
       "proxy": null,
       "proxy_no_verify": null
     },
-    "enabled_in_text_threads": false
+    "enabled_in_assistant": false
   },
-  "agent": {
+  "assistant": {
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-3-5-sonnet-latest"
@@ -43,10 +43,10 @@
   "restore_on_startup": "none",
   "theme": {
     "mode": "dark",
-    "light": "Tomorrow Min",
-    "dark": "Ayu Dark"
+    "light": "Catppuccin Latte",
+    "dark": "Tomorrow Night Min"
   },
-  "icon_theme": "Zed (Default)",
+  "icon_theme": "Catppuccin Mocha",
   "journal": {
     "path": "~/Documents/Zed",
     "hour_format": "hour24"
@@ -54,8 +54,6 @@
   "auto_install_extensions": {
     "Catppuccin Themes": true,
     "Catppuccin Icons": true,
-    "Tomorrow Minimal Theme": true,
-    "Material Icon Theme": true,
     "Git Firefly": true,
     "Make": true,
     "NeoCMake": true,
