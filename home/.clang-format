@@ -1,8 +1,8 @@
 BasedOnStyle: Google
 
 # Indentation settings
-IndentWidth: 4
-TabWidth: 4
+IndentWidth: 2
+TabWidth: 2
 UseTab: Never
 IndentCaseLabels: true
 BreakBeforeBraces: Attach
@@ -21,7 +21,7 @@ AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
 
 # Comment formatting
-CommentPragmas: '^.*$'
+CommentPragmas: "^.*$"
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 
