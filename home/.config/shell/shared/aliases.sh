@@ -55,7 +55,7 @@ alias yt-dlp-audio-playlist='yt-dlp --format bestaudio --extract-audio --audio-f
 
 #--------------------------------------------------------------------------------------
 
-alias zen-update="bash <(curl https://updates.zen-browser.app/appimage.sh)"
+alias zenupdate="bash <(curl https://updates.zen-browser.app/appimage.sh)"
 
 #--------------------------------------------------------------------------------------
 
@@ -67,8 +67,13 @@ alias ff="fastfetch"
 
 #--------------------------------------------------------------------------------------
 
+alias lg="lazygit"
+
+#--------------------------------------------------------------------------------------
+
 alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
 alias yazi_plugin_update="$HOME/.dotfiles/install/setup/setup_yazi_plugin.sh"
+alias neovimupdate="$HOME/.dotfiles/install/setup/setup_neovim.sh"
 
 #--------------------------------------------------------------------------------------
 

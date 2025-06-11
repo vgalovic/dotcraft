@@ -15,12 +15,8 @@ async_job plugin_load() {
   # Starship - Prompt theme
   eval "$(starship init zsh)"
 
-  # FZF and history prompt
+  # Television -  general purpose fuzzy finder TUI
   eval "$(tv init zsh)"
-
-  # Zoxide - Directory jumping
-  eval "$(zoxide init zsh)"
-  alias cd="z"
 
   # Bat - Improved cat with syntax highlighting
   alias cat="bat"
@@ -31,9 +27,6 @@ async_job plugin_load() {
   alias ls="eza --color=always --icons=always --hyperlink"
   alias la="eza --color=always --icons=always --hyperlink --all"
   alias ll="eza --color=always --long --git --icons=always --hyperlink --all"
-
-  # FZF - Command-line fuzzy finder
-  # eval "$(fzf --zsh)"
 }
 
 # Asynchronous job to load plugins
