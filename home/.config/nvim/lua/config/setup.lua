@@ -6,7 +6,7 @@ vim.g.maplocalleader = " "
 -- Setup color scheme
 -- Change the name of the theme to the one you prefer.
 -- Available colorschemes in this config can be found in plugins/colorschemes.
-vim.g.colorscheme = "catppuccin"
+vim.g.colorscheme = "oldworld"
 
 -- Load Icons from utils.icons
 _G.Icons = require("utils.icons")
@@ -22,3 +22,9 @@ vim.cmd("set shiftwidth=2")
 
 -- Disable swap files
 vim.opt.swapfile = false
+
+-- Disable unused providers
+vim.g.loaded_python_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0

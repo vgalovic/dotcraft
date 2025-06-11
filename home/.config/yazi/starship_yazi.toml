@@ -5,7 +5,7 @@
 add_newline = false
 
 # Color pallet for the prompt
-palette = "catppuccin_mocha"
+palette = "oldworld"
 
 # Use custom format
 format = """
@@ -14,34 +14,6 @@ $directory$c$custom$java$lua$python$rust$package$git_branch$battery$cmd_duration
 
 # Wait 10 milliseconds for starship to check files under the current directory.
 scan_timeout = 10
-
-[palettes.catppuccin_mocha]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
 
 # Directory indicator
 [directory]
@@ -76,7 +48,7 @@ format = "via [${symbol}${version}]($style) "
 # Lua language settings
 [lua]
 symbol = "🌙 "
-style = "peach bold"
+style = "bright_yellow bold"
 format = "via [${symbol}Lua ${version}]($style) "
 
 # Python settings
@@ -90,8 +62,14 @@ python_binary = "python3"
 # Rust language settings
 [rust]
 symbol = "🦀 "
-style = "maroon bold"
+style = "bright_red bold"
 format = "via [${symbol}Rust ${version}]($style) "
+
+# Package Version Config
+[package]
+symbol = "🎁 "
+style = "bright_yellow bold"
+format = "in [${symbol}$version]($style) "
 
 # Package Version Config
 [package]
@@ -105,3 +83,49 @@ symbol = "🌱 "
 truncation_length = 4
 truncation_symbol = ""
 
+[palettes.catppuccin_mocha]
+  rosewater  = "#f5e0dc"
+  flamingo   = "#f2cdcd"
+  pink       = "#f5c2e7"
+  mauve      = "#cba6f7"
+  red        = "#f38ba8"
+  maroon     = "#eba0ac"
+  peach      = "#fab387"
+  yellow     = "#f9e2af"
+  green      = "#a6e3a1"
+  teal       = "#94e2d5"
+  sky        = "#89dceb"
+  sapphire   = "#74c7ec"
+  blue       = "#89b4fa"
+  lavender   = "#b4befe"
+  text       = "#cdd6f4"
+  subtext1   = "#bac2de"
+  subtext0   = "#a6adc8"
+  overlay2   = "#9399b2"
+  overlay1   = "#7f849c"
+  overlay0   = "#6c7086"
+  surface2   = "#585b70"
+  surface1   = "#45475a"
+  surface0   = "#313244"
+  base       = "#1e1e2e"
+  mantle     = "#181825"
+  crust      = "#11111b"
+
+[palettes.oldworld]
+  black         = "#27272a"
+  red           = "#ea83a5"
+  green         = "#90b99f"
+  yellow        = "#e6b99d"
+  blue          = "#9ca2cf"
+  purple        = "#aca1cf"
+  cyan          = "#85b5ba"
+  white         = "#c9c7cd"
+
+  bright_black  = "#353539"
+  bright_red    = "#ED96B3"
+  bright_green  = "#a7c8b3"
+  bright_yellow = "#eac5ae"
+  bright_blue   = "#acb1d7"
+  bright_purple = "#b7aed5"
+  bright_cyan   = "#97c0c4"
+  bright_white  = "#d3d1d7"

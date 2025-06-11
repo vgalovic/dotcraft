@@ -1,12 +1,12 @@
 # ---------------------------------------
 # colorscheme
 
-include catppuccin-mocha
+include oldworld
 
 # ---------------------------------------
 # general
 
-set guioptions none
+# set guioptions none
 
 set font "JetBrainsMono Nerd Font 11"
 

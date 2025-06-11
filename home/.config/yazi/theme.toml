@@ -1,8 +1,9 @@
 [flavor]
 
 # cattpuccin theme
-dark = "catppuccin-mocha"
-light = "catppuccin-latte"
+# dark = "catppuccin-mocha"
+# light = "catppuccin-latte"
 
 # Moonfly theme
 # dark = "moonfly"
+# light = "moonfly"
