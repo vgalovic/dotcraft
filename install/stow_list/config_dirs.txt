@@ -5,6 +5,7 @@ conky
 dunst
 fastanime
 fastfetch
+fish
 flameshot
 i3
 kitty
