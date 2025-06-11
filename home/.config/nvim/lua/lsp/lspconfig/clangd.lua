@@ -33,11 +33,15 @@ return function()
 			usePlaceholders = true, -- Use placeholders in code completions
 			completeUnimported = true, -- Complete symbols from unimported files
 			semanticHighlighting = true, -- Enable semantic highlighting
-			fallbackFlags = clangd_flags[vim.bo.filetype] -- Use flags based on the current file type or empty if not specified
-				or {},
-			clangdFile = vim.fn.filereadable(vim.fn.getcwd() .. "/.clang-format") == 1
-					and vim.fn.getcwd() .. "/.clang-format" -- Use .clang-format in the current directory if it exists
-				or vim.fn.expand("~") .. "/.clang-format", -- Otherwise, fallback to .clang-format in the home directory
+			fallbackFlags = clangd_flags[vim.bo.filetype] or {}, -- Use flags based on the current file type or empty if not specified
+
+			-- Check for both .clangd and .clang-format
+			clangdFile = vim.fn.filereadable(vim.fn.getcwd() .. "/.clangd") == 1 and vim.fn.getcwd() .. "/.clangd" -- Check for .clangd file in the project root
+				or vim.fn.expand("~") .. "/.clangd", -- Fall back to .clangd in the home directory
+
+			clangFormatFile = vim.fn.filereadable(vim.fn.getcwd() .. "/.clang-format") == 1
+					and vim.fn.getcwd() .. "/.clang-format" -- Check for .clang-format file in the project root
+				or vim.fn.expand("~") .. "/.clang-format", -- Fall back to .clang-format in the home directory
 		},
 		filetypes = { "c", "cpp" },
 	})
