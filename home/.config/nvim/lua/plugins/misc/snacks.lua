@@ -237,7 +237,6 @@ return {
 		{ "<leader>sc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Search Neovim Config" },
 		{ "<leader>st", function() Snacks.picker.todo_comments({cwd = vim.fn.expand("%:p:h")}) end, desc = "Search Todos" },
 		{ "<leader>sp", function() Snacks.picker.projects() end, desc = "Search Project" },
-        { "<leader>sz", function() Snacks.picker.zoxide() end, desc = "Search last used directory" },
 		{ "<leader>s/", function() Snacks.picker.grep_buffers() end, desc = "Search in Open Files" },
 
 		-- Terminal
