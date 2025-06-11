@@ -23,4 +23,3 @@ sevenzip
 television
 tlrc
 yazi
-zoxide
