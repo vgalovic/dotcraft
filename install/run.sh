@@ -21,7 +21,6 @@ if command -v apt >/dev/null; then
 elif command -v dnf >/dev/null; then
   pm="dnf"
   must_execute_script "setup_dnf"
-  execute_script "setup_nvidia_470xx_driver"
 elif command -v pacman >/dev/null; then
   pm="pacman"
   must_execute_script "setup_pacman"
