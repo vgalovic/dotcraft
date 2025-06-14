@@ -5,5 +5,5 @@
 # light = "catppuccin-latte"
 
 # Moonfly theme
-# dark = "moonfly"
-# light = "moonfly"
+dark = "moonfly"
+light = "moonfly"

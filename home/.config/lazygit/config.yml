@@ -1,29 +1,55 @@
 os:
-  editPreset: 'nvim'
-
-theme:
-  activeBorderColor:
-    - '#a6e3a1'
-    - bold
-  inactiveBorderColor:
-    - '#a6adc8'
-  optionsTextColor:
-    - '#89b4fa'
-  selectedLineBgColor:
-    - '#313244'
-  cherryPickedCommitBgColor:
-    - '#45475a'
-  cherryPickedCommitFgColor:
-    - '#a6e3a1'
-  unstagedChangesColor:
-    - '#f38ba8'
-  defaultFgColor:
-    - '#cdd6f4'
-  searchingActiveBorderColor:
-    - '#f9e2af'
-
-authorColors:
-  '*': '#b4befe'
+  editPreset: "nvim"
 
 gui:
   nerdFontsVersion: "3"
+
+# Catppuccin Mocha
+# theme:
+#   activeBorderColor:
+#     - "#a6e3a1"
+#     - bold
+#   inactiveBorderColor:
+#     - "#a6adc8"
+#   optionsTextColor:
+#     - "#89b4fa"
+#   selectedLineBgColor:
+#     - "#313244"
+#   cherryPickedCommitBgColor:
+#     - "#45475a"
+#   cherryPickedCommitFgColor:
+#     - "#a6e3a1"
+#   unstagedChangesColor:
+#     - "#f38ba8"
+#   defaultFgColor:
+#     - "#cdd6f4"
+#   searchingActiveBorderColor:
+#     - "#f9e2af"
+#
+# authorColors:
+#   "*": "#b4befe"
+
+# Moonfly
+theme:
+  activeBorderColor:
+    - "#8cc85f"
+    - bold
+  inactiveBorderColor:
+    - "#bdbdbd"
+  optionsTextColor:
+    - "#80a0ff"
+  selectedLineBgColor:
+    - "#323437"
+  cherryPickedCommitBgColor:
+    - "#949494"
+  cherryPickedCommitFgColor:
+    - "#87d787"
+  unstagedChangesColor:
+    - "#f07496"
+  defaultFgColor:
+    - "#bdbdbd"
+  searchingActiveBorderColor:
+    - "#e3c78a"
+
+authorColors:
+  "*": "#cf87e8"

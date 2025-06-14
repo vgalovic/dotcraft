@@ -8,23 +8,22 @@
   # --multi"
 
 # [ Moonfly Theme ]
-# export FZF_DEFAULT_OPTS="
-#   --color=bg:#080808,fg:#bdbdbd
-#   --color=prompt:#cf87e8,border:#74b2ff
-#   --color=spinner:#79dac8,header:#8cc85f
-#   --color=info:#36c692,marker:#ff5d5d
-#   --color=pointer:#ff5189,selected-bg:#b2ceee,selected-fg:#080808
-#   --color=hl:#80a0ff,hl+:#74b2ff
-# "
+export FZF_DEFAULT_OPTS="
+  --color=bg:#080808,fg:#bdbdbd
+  --color=prompt:#cf87e8,border:#74b2ff
+  --color=spinner:#79dac8,header:#8cc85f
+  --color=info:#36c692,marker:#ff5d5d
+  --color=pointer:#ff5189,selected-bg:#b2ceee,selected-fg:#080808
+  --color=hl:#80a0ff,hl+:#74b2ff
+"
 
 # [ oldworld Theme ]
-
-export FZF_DEFAULT_OPTS="
-  --color=bg:#161617,bg+:#3C3B3E,fg:#c9c7cd,fg+:#d3d1d7 \
-  --color=hl:#ea83a5,hl+:#ED96B3 \
-  --color=info:#90b99f,prompt:#aca1cf,header:#85b5ba \
-  --color=pointer:#9ca2cf,marker:#acb1d7,spinner:#b7aed5 \
-  --color=selected-bg:#3C3B3E,selected-fg:#c9c7cd \
-  --multi
-"
+# export FZF_DEFAULT_OPTS="
+#   --color=bg:#161617,bg+:#3C3B3E,fg:#c9c7cd,fg+:#d3d1d7 \
+#   --color=hl:#ea83a5,hl+:#ED96B3 \
+#   --color=info:#90b99f,prompt:#aca1cf,header:#85b5ba \
+#   --color=pointer:#9ca2cf,marker:#acb1d7,spinner:#b7aed5 \
+#   --color=selected-bg:#3C3B3E,selected-fg:#c9c7cd \
+#   --multi
+# "
 

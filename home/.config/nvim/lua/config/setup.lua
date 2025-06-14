@@ -6,7 +6,7 @@ vim.g.maplocalleader = " "
 -- Setup color scheme
 -- Change the name of the theme to the one you prefer.
 -- Available colorschemes in this config can be found in plugins/colorschemes.
-vim.g.colorscheme = "oldworld"
+vim.g.colorscheme = "moonfly"
 
 -- Load Icons from utils.icons
 _G.Icons = require("utils.icons")
