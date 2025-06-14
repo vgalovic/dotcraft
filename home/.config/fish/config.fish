@@ -1,25 +1,18 @@
-# Set SYSTEMC path
-set -gx SYSTEMC /usr/local/systemc
-set -gx LD_LIBRARY_PATH /usr/local/systemc/lib $LD_LIBRARY_PATH
+# Disable greeting messages on start
+set -g fish_greeting
 
-# Editor and pager
-set -gx EDITOR (which nvim)
-set -gx MANPAGER "nvim +Man!"
-
+# Set fzf theme
 fzf_theme moonfly
 
 # Only run interactively
-if status is-interactive
+if status is-interactive  
   # Starship Prompt
   starship init fish | source
 
-  # Television -  general purpose fuzzy finder TUI
+  # Television - general purpose fuzzy finder TUI
   tv init fish | source
 
-  # Bat
+  # Bat abbreviations
   abbr -a --position anywhere -- --help '--help | bat -plhelp'
   abbr -a --position anywhere -- -h '-h | bat -plhelp'
 end
-
-functions --erase fish_greeting
-function fish_greeting; end
