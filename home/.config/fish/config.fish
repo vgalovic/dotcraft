@@ -6,10 +6,7 @@ set -gx LD_LIBRARY_PATH /usr/local/systemc/lib $LD_LIBRARY_PATH
 set -gx EDITOR (which nvim)
 set -gx MANPAGER "nvim +Man!"
 
-# Load aliases from ~/.config/fish/aliases.fish
-if test -f ~/.config/fish/aliases.fish
-    source ~/.config/fish/aliases.fish
-end
+fzf_theme moonfly
 
 # Only run interactively
 if status is-interactive
