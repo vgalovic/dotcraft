@@ -39,6 +39,10 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 
 - [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
 
+### editing-enhancements
+
+- [AndrewRadev/switch.vim](https://github.com/AndrewRadev/switch.vim)
+
 ### formatting
 
 - [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
@@ -74,7 +78,6 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 
 ### nvim-dev
 
-- [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
 - [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
 - [folke/lazydev.nvim](https://dotfyle.com/plugins/folke/lazydev.nvim)
 - [Bilal2453/luvit-meta](https://github.com/Bilal2453/luvit-meta)
@@ -90,10 +93,6 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 ### split-and-window
 
 - [mrjones2014/smart-splits.nvim](https://dotfyle.com/plugins/mrjones2014/smart-splits.nvim)
-
-### statusline
-
-- [nvim-lualine/lualine.nvim](https://dotfyle.com/plugins/nvim-lualine/lualine.nvim)
 
 ### syntax
 
@@ -113,7 +112,7 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
   - [mini.jump](https://dotfyle.com/plugins/echasnovski/mini.jump)
   - [mini.pairs](https://dotfyle.com/plugins/echasnovski/mini.pairs)
   - [mini.sessions](https://dotfyle.com/plugins/echasnovski/mini.sessions)
-  <!-- - [mini.statusline](https://dotfyle.com/plugins/echasnovski/mini.statusline) -->
+  - [mini.statusline](https://dotfyle.com/plugins/echasnovski/mini.statusline)
   - [mini.surround](https://dotfyle.com/plugins/echasnovski/mini.surround)
   - [mini.tabline](https://dotfyle.com/plugins/echasnovski/mini.tabline)
 - [folke/snacks.nvim](https://dotfyle.com/plugins/folke/snacks.nvim)
