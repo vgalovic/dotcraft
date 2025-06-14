@@ -27,6 +27,11 @@ map({ "n", "v" }, ";", ":")
 map({ "n", "v" }, "č", ":")
 map({ "n", "v" }, "Č", ":")
 --
+-- [[ Quit without saving ]]
+--
+map("n", "q1", ":q!", default_opts)
+--
+--
 -- [[ Navigation ]]
 --
 -- map({ "n", "t" }, "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
@@ -115,7 +120,7 @@ map({ "n", "v" }, "gq", function() search.search_diagnostic_under_cursor() end, 
 --
 -- [[ Search selected text ]]
 --
-map({ "v" }, "gs", function() search.search_selected_text() end, { desc = "Search selected text" })
+map({ "v" }, "g<leader>", function() search.search_selected_text() end, { desc = "Search selected text" })
 --
 -- [[ Github repo ]]
 --
@@ -126,3 +131,11 @@ vim.api.nvim_create_autocmd("FileType", {
     map("n", "gP", function() search.open_plugin_repo()  end, { desc = "Open Plugin Repository", buffer = true })
   end,
 })
+--
+-- [[ xxd ]]
+--
+-- Hex dump the entire buffer and set filetype to xxd for custom highlight
+map("n", "<leader>xv", ":%!xxd -g 1<CR>:setfiletype xxd<CR>", get_opts( "Hex view of current file"))
+--
+-- Revert hex dump (xxd -r) and clear filetype to plain text
+map("n", "<leader>xr", ":%!xxd -r<CR>:setfiletype NONE<CR>", get_opts("Revert hex view of current file"))
