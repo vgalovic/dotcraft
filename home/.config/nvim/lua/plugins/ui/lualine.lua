@@ -2,6 +2,7 @@
 
 return {
 	"nvim-lualine/lualine.nvim",
+	enabled = false,
 	event = "VeryLazy",
 	dependencies = { { require("mini.icons").mock_nvim_web_devicons() } },
 

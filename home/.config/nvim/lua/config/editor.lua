@@ -16,6 +16,10 @@ vim.opt.cmdheight = 1 -- Hide(0) or show(1) the command line when not in use
 vim.opt.showmode = false -- Disable mode display
 vim.opt.ruler = false -- Remove "All" and line/column info
 
+-- Statusline
+vim.o.laststatus = 3
+-- vim.o.statusline = "%f %h%m%r%=%-14.(%l,%c%V%) %P"
+
 -- Sync clipboard between OS and Neovim
 -- vim.opt.clipboard = "unnamedplus"
 

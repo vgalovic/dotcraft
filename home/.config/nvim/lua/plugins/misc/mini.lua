@@ -22,11 +22,11 @@ return { -- Collection of various small independent plugins/modules
 
 		require("mini.tabline").setup()
 
-		-- local statusline = require("mini.statusline")
-		-- statusline.setup()
-		-- statusline.section_location = function()
-		-- 	return "%2l:%-2v"
-		-- end
+		local statusline = require("mini.statusline")
+		statusline.setup()
+		statusline.section_location = function()
+			return "%2l:%-2v"
+		end
 
 		-- Better Around/Inside textobjects
 		--

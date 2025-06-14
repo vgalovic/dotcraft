@@ -167,7 +167,7 @@ return {
 				debug = Icons.diagnostics.debug,
 				trace = Icons.diagnostics.trace,
 			},
-			-- lsp_utils = require("lsp.autocommands").setup_lsp_progress(),
+			lsp_utils = require("lsp.autocommands").setup_lsp_progress(),
 		},
 		statuscolumn = {
 			left = { "mark", "sign" },
