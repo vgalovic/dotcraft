@@ -1,6 +1,3 @@
--- Enable color scheme
-vim.cmd.colorscheme(vim.g.colorscheme)
-
 -- Enable mouse mode
 vim.opt.mouse = "a"
 

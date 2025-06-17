@@ -13,9 +13,9 @@
 vim.loader.enable()
 
 require("config.setup")
-require("config.lazy")
 require("config.editor")
 require("config.diagnostic")
 require("config.autocommands")
 require("config.keymaps")
 require("config.neovide")
+require("config.lazy")
