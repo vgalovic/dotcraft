@@ -6,10 +6,6 @@ local default_opts = { noremap = true, silent = true }
 local function get_opts(desc)
 	return vim.tbl_extend("force", default_opts, { desc = desc })
 end
-
-local buffer = require("utils.mapping_actions.buffer")
-local find = require("utils.mapping_actions.find")
-local search = require("utils.mapping_actions.search_tools")
 --
 -- [[ Disable arrow keys ] ]
 --
@@ -50,9 +46,6 @@ map({ "n", "v" }, "<M-[>", "<CMD>bprevious<CR>", { desc = "Go to previous buffer
 map({ "n", "v" }, "<M-]>", "<CMD>bnext<CR>", { desc = "Go to next buffer" })
 map({ "n", "v" }, "<M-'>", "<cmd>b#<cr>", { desc = "Go to last active buffer" })
 map({ "n", "v" }, "<M-q>", "<Cmd>bd<CR>", { desc = "Quit current buffer" })
---
--- stylua: ignore
-map({ "n", "v" }, "<M-Q>", function() buffer.delete_other_buffers() end, { desc = 'Delete all buffers except the current one' })
 --
 -- [[ Highlights ]]
 --
@@ -95,47 +88,3 @@ map("n", "<C-m>", "<cmd>delmarks!<CR>", { desc = "Delete marks for current buffe
 -- stylua: ignore start
 map("n", "<C-q>", function() vim.diagnostic.setloclist() end, { desc = "Open diagnostic Quickfix list" })
 map("n", "Q", function ()  vim.diagnostic.open_float() end, get_opts("Open diagnostic Float under cursor"))
---
--- [[ Save ]]
---
-map({ "n", "v", "i" }, "<C-s>", function() buffer.save() end, get_opts("Save"))
---
--- [[ New File ]]
---
-map("n", "<leader>+", "<cmd>NewFile<cr>", { desc = "New file" })
---
--- [[ Find and replace ]]
---
-map({ "n", "v" }, "<leader>ra", function() find.FindAndReplaceAll() end, { desc = "Find and replace all occurrences" })
-map({ "n", "v" }, "<leader>rc", function() find.FindAndReplaceConfirm() end, { desc = "Find and rename occurrences with confirmation" })
---
--- [[ Find and delete ]]
---
-map({ "n", "v" }, "<leader>da", function() find.FindAndDeleteAll() end, { desc = "Find and delete all occurrences" })
-map({ "n", "v" }, "<leader>dc", function() find.FindAndDeleteConfirm() end, { desc = "Find and delete occurrences with confirmation" })
---
--- [[ Search on diagnostic ]]
---
-map({ "n", "v" }, "gq", function() search.search_diagnostic_under_cursor() end, { desc = "Search diagnostic under cursor" })
---
--- [[ Search selected text ]]
---
-map({ "v" }, "g<leader>", function() search.search_selected_text() end, { desc = "Search selected text" })
---
--- [[ Github repo ]]
---
--- Show keymap only in lua file
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "lua",
-  callback = function()
-    map("n", "gP", function() search.open_plugin_repo()  end, { desc = "Open Plugin Repository", buffer = true })
-  end,
-})
---
--- [[ xxd ]]
---
--- Hex dump the entire buffer and set filetype to xxd for custom highlight
-map("n", "<leader>xv", ":%!xxd -g 1<CR>:setfiletype xxd<CR>", get_opts( "Hex view of current file"))
---
--- Revert hex dump (xxd -r) and clear filetype to plain text
-map("n", "<leader>xr", ":%!xxd -r<CR>:setfiletype NONE<CR>", get_opts("Revert hex view of current file"))
