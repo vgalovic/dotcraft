@@ -12,7 +12,6 @@ return {
 
 	opts = {
 		bigfile = { enabled = true },
-		scroll = { enabled = true },
 		input = { enabled = true },
 		scope = { enabled = true },
 		lazygit = { configure = false },
@@ -191,6 +190,17 @@ return {
 					winbar = "",
 				},
 			},
+		},
+		scroll = {
+			enabled = true,
+			-- FIX: for bug https://github.com/folke/snacks.nvim/issues/1687
+			-- Workaround found in https://github.com/Saghen/blink.cmp/issues/1446#issuecomment-2728738325
+			filter = function(buf)
+				return vim.g.snacks_scroll ~= false
+					and vim.b[buf].snacks_scroll ~= false
+					and vim.bo[buf].buftype ~= "terminal"
+					and vim.bo[buf].filetype ~= "blink-cmp-menu"
+			end,
 		},
 		zen = {
 			toggles = {
