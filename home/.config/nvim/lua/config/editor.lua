@@ -1,5 +1,5 @@
--- Append characters to fillchars for a cleaner look
-vim.opt.fillchars:append({ eob = " " })
+-- Enable color scheme
+vim.cmd.colorscheme(vim.g.colorscheme)
 
 -- Enable mouse mode
 vim.opt.mouse = "a"
@@ -62,10 +62,7 @@ vim.opt.inccommand = "split"
 -- Minimal lines to keep above and below the cursor
 vim.opt.scrolloff = 10
 
---- Removes the ••• part.
-vim.o.fillchars = "fold: "
-
--- enabele folding:
+-- Enabele folding:
 vim.o.foldmethod = "expr" -- Use expression folding
 vim.o.foldexpr = "nvim_treesitter#foldexpr()" -- Tree-sitter's fold expression
 
@@ -77,5 +74,8 @@ vim.o.foldenable = false
 vim.o.foldlevel = 99 -- Open most folds by default (set to lower for fewer open folds)
 vim.o.foldlevelstart = 99
 
--- Enable color scheme
-vim.cmd.colorscheme(vim.g.colorscheme)
+-- Append characters to fillchars for a cleaner look
+local fillchars = vim.opt.fillchars:get() -- Get current fillchars
+fillchars.eob = " " -- Hide ~ at buffer end
+fillchars.fold = " " -- Hide fold dots (•••)
+vim.opt.fillchars = fillchars -- Set updated fillchars
