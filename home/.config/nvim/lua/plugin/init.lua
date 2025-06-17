@@ -10,11 +10,11 @@
 ------------------------------------------------------------------
 
 return {
-	{ import = "plugins.coding" },
-	{ import = "plugins.colorscheme" },
-	{ import = "plugins.core" },
-	{ import = "plugins.games" },
-	{ import = "plugins.langtools" },
-	{ import = "plugins.misc" },
-	{ import = "plugins.ui" },
+	{ import = "plugin.coding" },
+	{ import = "plugin.colorscheme" },
+	{ import = "plugin.core" },
+	{ import = "plugin.games" },
+	{ import = "plugin.langtools" },
+	{ import = "plugin.misc" },
+	{ import = "plugin.ui" },
 }

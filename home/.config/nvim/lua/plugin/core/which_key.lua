@@ -20,6 +20,7 @@ return {
 			{ "<leader>s", group = "Search", mode = { "n", "v" } },
 			{ "<leader>t", group = "Toggle", mode = { "n" } },
 			{ "<leader>w", group = "Window", mode = { "n" } },
+			{ "<leader>x", group = "Hex View", mode = { "n" } },
 		},
 	},
 	keys = {

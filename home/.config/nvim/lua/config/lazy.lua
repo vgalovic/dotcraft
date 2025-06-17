@@ -48,7 +48,7 @@ require("lazy").setup({
 			},
 		},
 		-- import your plugins
-		{ import = "plugins" },
+		{ import = "plugin" },
 	},
 
 	-- Configure any other settings here. See the documentation for more details.
