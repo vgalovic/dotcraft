@@ -14,6 +14,7 @@ return {
 		vim.g["switch_custom_definitions"] = {
 			-- Boolean toggles
 			vim.fn["switch#NormalizedCase"]({ "true", "false" }),
+			{ "1", "0" },
 
 			-- Enable/disable toggle
 			vim.fn["switch#NormalizedCase"]({ "enable", "disable" }),
