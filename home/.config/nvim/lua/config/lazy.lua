@@ -1,9 +1,13 @@
--- Bootstrap lazy.nvim
+-- [[ Bootstrap lazy.nvim ]]
+-- Ensure that lazy.nvim is installed by cloning it if not present
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 ---@diagnostic disable: undefined-field
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+
+	-- Handle clone failure gracefully
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
@@ -14,73 +18,52 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 		os.exit(1)
 	end
 end
+
+-- Prepend lazy.nvim path to runtime path
 vim.opt.rtp:prepend(lazypath)
 
--- Setup lazy.nvim
+-- [[ Setup lazy.nvim ]]
 require("lazy").setup({
-	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-
-	-- NOTE: Plugins can also be added by using a table,
-	-- with the first argument being the link and the following
-	-- keys can be used to configure plugin behavior/loading/etc.
-	--
-	-- Use `opts = {}` to force a plugin to be loaded.
-	--
-
-	-- Here is a more advanced example where we pass configuration
-	-- options to `lazy.nvim`. This is equivalent to the following Lua:
-	--    require('lazy').setup({ ... })
-	--
-	-- See `:help lazy.nvim` to understand what the configuration keys do
-
 	spec = {
+		-- Load metadata support for luvit APIs (used by lazydev)
 		{ "Bilal2453/luvit-meta", lazy = true },
+
+		-- Setup lazydev to improve Lua LSP experience for Neovim development
 		{
-			-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-			-- used for completion, annotations and signatures of Neovim apis
 			"folke/lazydev.nvim",
-			ft = "lua",
+			ft = "lua", -- Only load for Lua files
 			opts = {
 				library = {
-					-- Load luvit types when the `vim.uv` word is found
+					-- Load luvit types when `vim.uv` is found
 					{ path = "luvit-meta/library", words = { "vim%.uv" } },
 				},
 			},
 		},
-		-- import your plugins
+
+		-- Import all plugins from the `lua/plugin` directory
 		{ import = "plugin" },
 	},
 
-	-- Configure any other settings here. See the documentation for more details.
-	-- colorscheme that will be used when installing plugins.
-	install = { colorscheme = { "default" } },
-	-- automatically check for plugin updates
+	-- [[ Lazy.nvim options ]]
+	install = {
+		-- Fallback colorscheme used during initial install
+		colorscheme = { "default" },
+	},
+
+	-- Enable automatic plugin update checks
 	checker = { enabled = true },
 })
 
--- keymap to open lazy plugin menu
-vim.keymap.set("n", "<leader>pl", "<cmd>Lazy<cr>", { noremap = true, silent = true, desc = "Lazy" })
+-- [[ Apply colorscheme after plugins have loaded ]]
+-- Colorscheme should be set in `lua/config/setup.lua`
+local ok = pcall(vim.cmd.colorscheme, vim.g.colorscheme)
+if not ok then
+	vim.notify('Colorscheme "' .. vim.g.colorscheme .. '" not found!', vim.log.levels.WARN, { title = "Colorscheme" })
+end
 
--- NOTE: Plugins can also be configured to run Lua code when they are loaded.
---
--- This is often very useful to both group configuration, as well as handle
--- lazy loading plugins that don't need to be loaded immediately at startup.
---
--- For example, in the following configuration, we use:
---  event = 'VimEnter'
---
--- which loads which-key before all the UI elements are loaded. Events can be
--- normal autocommands events (`:help autocmd-events`).
---
--- Then, because we use the `config` key, the configuration only runs
--- after the plugin has been loaded:
---  config = function() ... end
---
---
-
--- NOTE: Plugins can specify dependencies.
---
--- The dependencies are proper plugin specifications as well - anything
--- you do for a plugin at the top level, you can do for a dependency.
---
--- Use the `dependencies` key to specify the dependencies of a particular plugin
+-- [[ Keymap to open Lazy plugin manager ]]
+vim.keymap.set("n", "<leader>pl", "<cmd>Lazy<cr>", {
+	noremap = true,
+	silent = true,
+	desc = "Lazy",
+})
