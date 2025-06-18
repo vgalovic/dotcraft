@@ -7,7 +7,7 @@ return {
 	config = function()
 		local presets = require("markview.presets")
 
-		require("home.config.nvim.lua.plugin.ftplugin.markview").setup({
+		require("markview").setup({
 			markdown = {
 				headings = presets.headings.marker,
 				tables = presets.tables.rounded,
