@@ -42,7 +42,6 @@ return {
 			"svlangserver",
 			"verible",
 			"vhdl_ls",
-			"yamlfmt",
 		},
 	},
 }
