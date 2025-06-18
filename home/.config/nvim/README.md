@@ -130,7 +130,7 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 | marksman                |         | shfmt        |
 | pyright                 |         | stylua       |
 | ruff                    |         | verible      |
-| rust_analyzer           |         | yamlfmt      |
+| rust_analyzer           |         |              |
 | svlangserver            |         |              |
 | verible                 |         |              |
 | vhdl_ls                 |         |              |
