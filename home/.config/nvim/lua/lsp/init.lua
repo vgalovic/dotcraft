@@ -13,11 +13,11 @@ local M = {}
 
 -- Setup LSP configurations
 M.setup = function()
-	require("lsp.lspconfig.clangd")()
-	require("lsp.lspconfig.ltex")()
-	require("lsp.lspconfig.lua_ls")()
-	require("lsp.lspconfig.rust_analyzer")()
-	require("lsp.lspconfig.verible")()
+	require("lsp.servers.clangd")()
+	require("lsp.servers.ltex")()
+	require("lsp.servers.lua_ls")()
+	require("lsp.servers.rust_analyzer")()
+	require("lsp.servers.verible")()
 end
 
 return M
