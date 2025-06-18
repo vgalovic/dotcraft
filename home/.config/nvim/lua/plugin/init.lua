@@ -13,8 +13,7 @@ return {
 	{ import = "plugin.coding" },
 	{ import = "plugin.colorscheme" },
 	{ import = "plugin.core" },
-	{ import = "plugin.games" },
 	{ import = "plugin.ftplugin" },
+	{ import = "plugin.games" },
 	{ import = "plugin.misc" },
-	{ import = "plugin.ui" },
 }
