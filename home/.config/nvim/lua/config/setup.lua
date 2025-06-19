@@ -3,6 +3,9 @@
 -- Available colorschemes in this config can be found in plugins/colorschemes.
 vim.g.colorscheme = "moonfly"
 
+-- [[ Kitty Terminal Behavior ]]
+vim.g.kitty_solid = true -- Enable solid background in Kitty when using Neovim
+
 -- [[ Define local tab size variable ]]
 local tab_size = 2
 
