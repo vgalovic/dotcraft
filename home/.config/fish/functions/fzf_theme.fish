@@ -8,13 +8,12 @@ function fzf_theme
 
     switch $theme
         case moonfly
-            set -x FZF_DEFAULT_OPTS "
-                --color=bg:#080808,fg:#bdbdbd
-                --color=prompt:#cf87e8,border:#74b2ff
-                --color=spinner:#79dac8,header:#8cc85f
-                --color=info:#36c692,marker:#ff5d5d
-                --color=pointer:#ff5189,selected-bg:#b2ceee,selected-fg:#080808
-                --color=hl:#80a0ff,hl+:#74b2ff
+            set -x FZF_DEFAULT_OPTS "\
+              --color=bg:#080808,bg+:#262626,fg:#b2b2b2,fg+:#e4e4e4 \
+              --color=border:#2e2e2e,gutter:#262626,spinner:#36c692,hl:#f09479 \
+              --color=header:#80a0ff,info:#cfcfb0,pointer:#ff5189 \
+              --color=marker:#f09479,prompt:#80a0ff,hl+:#f09479 \
+              --multi
             "
         case catppuccin
             set -x FZF_DEFAULT_OPTS "
