@@ -3,6 +3,7 @@ bat
 btop
 conky
 dunst
+eza
 fastanime
 fastfetch
 fish
