@@ -1,3 +1,5 @@
+-- THEMES_AVAILABLE:
+-- tokyonight
 return {
 	"folke/tokyonight.nvim",
 	enabled = vim.g.colorscheme == "tokyonight",

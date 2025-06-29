@@ -1,3 +1,5 @@
+-- THEMES_AVAILABLE:
+-- catppuccin
 return {
 	"catppuccin/nvim",
 	name = "catppuccin",

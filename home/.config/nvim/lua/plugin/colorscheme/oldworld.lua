@@ -1,3 +1,5 @@
+-- THEMES_AVAILABLE:
+-- oldworld
 return {
 	"dgox16/oldworld.nvim",
 	enabled = vim.g.colorscheme == "oldworld",
