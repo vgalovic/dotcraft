@@ -5,51 +5,72 @@ gui:
   nerdFontsVersion: "3"
 
 # Catppuccin Mocha
-# theme:
-#   activeBorderColor:
-#     - "#a6e3a1"
-#     - bold
-#   inactiveBorderColor:
-#     - "#a6adc8"
-#   optionsTextColor:
-#     - "#89b4fa"
-#   selectedLineBgColor:
-#     - "#313244"
-#   cherryPickedCommitBgColor:
-#     - "#45475a"
-#   cherryPickedCommitFgColor:
-#     - "#a6e3a1"
-#   unstagedChangesColor:
-#     - "#f38ba8"
-#   defaultFgColor:
-#     - "#cdd6f4"
-#   searchingActiveBorderColor:
-#     - "#f9e2af"
-#
-# authorColors:
-#   "*": "#b4befe"
-
-# Moonfly
 theme:
   activeBorderColor:
-    - "#8cc85f"
+    - "#a6e3a1"
     - bold
   inactiveBorderColor:
-    - "#bdbdbd"
+    - "#a6adc8"
   optionsTextColor:
-    - "#80a0ff"
+    - "#89b4fa"
   selectedLineBgColor:
-    - "#323437"
+    - "#313244"
   cherryPickedCommitBgColor:
-    - "#949494"
+    - "#45475a"
   cherryPickedCommitFgColor:
-    - "#87d787"
+    - "#a6e3a1"
   unstagedChangesColor:
-    - "#f07496"
+    - "#f38ba8"
   defaultFgColor:
-    - "#bdbdbd"
+    - "#cdd6f4"
   searchingActiveBorderColor:
-    - "#e3c78a"
+    - "#f9e2af"
 
 authorColors:
-  "*": "#cf87e8"
+  "*": "#b4befe"
+# Moonfly
+# theme:
+#   activeBorderColor:
+#     - "#8cc85f"
+#     - bold
+#   inactiveBorderColor:
+#     - "#bdbdbd"
+#   optionsTextColor:
+#     - "#80a0ff"
+#   selectedLineBgColor:
+#     - "#323437"
+#   cherryPickedCommitBgColor:
+#     - "#949494"
+#   cherryPickedCommitFgColor:
+#     - "#87d787"
+#   unstagedChangesColor:
+#     - "#f07496"
+#   defaultFgColor:
+#     - "#bdbdbd"
+#   searchingActiveBorderColor:
+#     - "#e3c78a"
+#
+# authorColors:
+#   "*": "#cf87e8"
+
+# GitHub Dark Tritanopia
+# heme:
+#   activeBorderColor:
+#     - "#1f6feb"
+#     - bold
+#   inactiveBorderColor:
+#     - "#30363d"
+#   optionsTextColor:
+#     - "#8b949e"
+#   selectedLineBgColor:
+#     - "0x1e4273"
+#   cherryPickedCommitBgColor:
+#     - "#161b22"
+#   cherryPickedCommitFgColor:
+#     - "#1f6feb"
+#   unstagedChangesColor:
+#     - "#da3633"
+#   defaultFgColor:
+#     - "#c9d1d9"
+#   searchingActiveBorderColor:
+#     - "#9e6a03"

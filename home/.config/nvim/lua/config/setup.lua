@@ -1,7 +1,8 @@
 -- [[ Setup color scheme ]]
 -- Change the name of the theme to the one you prefer.
+-- To find names of available themes run :ThemesAvailable
 -- Available colorschemes in this config can be found in plugins/colorschemes.
-vim.g.colorscheme = "moonfly"
+vim.g.colorscheme = "catppuccin"
 
 -- [[ Kitty Terminal Behavior ]]
 vim.g.kitty_solid = true -- Enable solid background in Kitty when using Neovim

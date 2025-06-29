@@ -1,0 +1,26 @@
+# name: 'Github Dark Tritanopia'
+# url: 'https://github.com/projekt0n/github-theme-contrib/blob/main/themes/fish'
+# preferred_background: 0d1117
+
+# --- Core colors ---
+fish_color_normal brwhite                          # Default text
+fish_color_command brwhite                         # Commands like 'cd', 'ls', 'echo'
+# fish_color_keyword red                           # 'if', etc. (defaults to fish_color_command)
+fish_color_quote green                             # Quoted text
+# fish_color_redirection magenta                   # '>/dev/null' (default magenta)
+# fish_color_end blue                              # Command separator (;)
+# fish_color_error red                             # Errors (e.g. non-existent command)
+fish_color_param blue                              # Arguments like --all
+fish_color_comment 8b949e                          # Comments
+fish_color_operator red                            # Operators like *
+
+# fish_color_escape cyan                           # Escape sequences (defaults to cyan)
+fish_color_autosuggestion 8b949e                   # Autosuggestions
+# fish_color_search_match --background=30363d      # Search highlight background
+
+# --- Pager colors ---
+fish_pager_color_completion blue                   # Completion list text
+fish_pager_color_description green                 # Description in completions
+fish_pager_color_prefix red --underline            # Prefix match in completions
+fish_pager_color_progress brwhite                  # Progress bar text
+fish_pager_color_selected_background --background=30363d  # Selected completion background

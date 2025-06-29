@@ -5,7 +5,7 @@
 add_newline = false
 
 # Color pallet for the prompt
-palette = "moonfly"
+palette = "catppuccin_mocha"
 
 # Use custom format
 format = """
@@ -48,7 +48,8 @@ format = "via [${symbol}${version}]($style) "
 # Lua language settings
 [lua]
 symbol = "🌙 "
-style = "bright_yellow bold"
+# style = "bright_yellow bold"
+style = "peach bold"
 format = "via [${symbol}Lua ${version}]($style) "
 
 # Python settings
@@ -62,13 +63,15 @@ python_binary = "python3"
 # Rust language settings
 [rust]
 symbol = "🦀 "
-style = "bright_red bold"
+# style = "bright_red bold"
+style = "maroon bold"
 format = "via [${symbol}Rust ${version}]($style) "
 
 # Package Version Config
 [package]
 symbol = "🎁 "
-style = "bright_yellow bold"
+# style = "bright_yellow bold"
+style = "peach bold"
 format = "in [${symbol}$version]($style) "
 
 # Package Version Config
@@ -110,6 +113,23 @@ truncation_symbol = ""
   base          = "#1e1e2e"
   mantle        = "#181825"
   crust         = "#11111b"
+
+[palettes.github_dark_tritanopia]
+  blue =          "#58a6ff"
+  red =           "#ff7b72"
+  green =         "#58a6ff"
+  yellow =        "#d29922"
+  purple =        "#bc8cff"
+  cyan =          "#39c5cf"
+  white =         "#b1bac4"
+  black =         "#484f58"
+  bright-black =  "#6e7681"
+  bright-red =    "#ffa198"
+  bright-green =  "#79c0ff"
+  bright-yellow = "#e3b341"
+  bright-blue =   "#79c0ff"
+  bright-purple = "#d2a8ff"
+  bright-cyan =   "#56d4dd"
 
 [palettes.oldworld]
   black         = "#27272a"

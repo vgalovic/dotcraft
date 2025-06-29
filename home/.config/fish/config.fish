@@ -2,10 +2,10 @@
 set -g fish_greeting
 
 # Set fzf theme
-fzf_theme moonfly
+fzf_theme catppuccin
 
 # Only run interactively
-if status is-interactive  
+if status is-interactive
   # Starship Prompt
   starship init fish | source
 
