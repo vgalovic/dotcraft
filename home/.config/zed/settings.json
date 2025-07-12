@@ -43,10 +43,10 @@
   "restore_on_startup": "none",
   "theme": {
     "mode": "dark",
-    "light": "Tomorrow Min",
-    "dark": "Ayu Dark"
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Macchiato"
   },
-  "icon_theme": "Zed (Default)",
+  "icon_theme": "Catppuccin Mocha",
   "journal": {
     "path": "~/Documents/Zed",
     "hour_format": "hour24"
