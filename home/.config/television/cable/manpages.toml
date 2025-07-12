@@ -1,0 +1,19 @@
+[metadata]
+name = "manpages"
+description = "A channel to select from manpages"
+requirements = ["bat"]
+
+[source]
+command = ["man -k ."]
+display = "{split: :0..2}"
+output = "{split: :0}"
+
+[preview]
+command = "man {0} | bat --language=man -p --color=always"
+
+[ui.preview_panel]
+size = 75
+header = "{split:-:1..}"
+
+[keybindings]
+shortcut = "f10"

@@ -1,9 +1,0 @@
-[[cable_channel]]
-name = "config"
-source_command = 'fd -t f . $HOME/.config'
-preview_command = ':files:'
-
-[[cable_channel]]
-name = "dotfiles"
-source_command = 'fd -H -t f -E .git . $HOME/.dotfiles'
-preview_command = ':files:'

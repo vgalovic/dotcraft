@@ -1,5 +1,0 @@
-[[cable_channel]]
-name = "manpages"
-source_command = "man -k . | awk \"{print \\$1}\""
-preview_command = "man {0} | sed -u -e 's/\\x1B\\[[0-9;]*m//g; s/.\\x08//g' | bat --language=man -p --color=always"
-
