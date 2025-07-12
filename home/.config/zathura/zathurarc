@@ -1,7 +1,7 @@
 # ---------------------------------------
 # colorscheme
 
-include oldworld
+include catppuccin-mocha
 
 # ---------------------------------------
 # general
