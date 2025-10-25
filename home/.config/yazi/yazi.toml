@@ -1,53 +1,68 @@
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
 [mgr]
-linemode    = "size"
-show_hidden = false
-sort_by     = "natural"
+linemode     = "size"
+show_hidden  = false
+sort_by      = "natural"
+ratio        = [2, 4, 4]
+show_symlink = false
 
 [preview]
 tab_size   = 4
 max_width  = 1000
 max_height = 1000
 
+# ========================
+# OPENERS
+# ========================
 [opener]
-edit = [
-	{ run = 'nvim "$@"', desc = "nvim", block = true },
-]
-play = [
-	{ run = 'mpv --force-window "$@"' , desc = "mpv"},
-]
-open = [
-	{ run = 'xdg-open "$@"', desc = "Open" },
-]
+
+[[opener.edit]]
+run = 'nvim "$@"'
+desc = "nvim"
+block = true
+
+[[opener.play]]
+run = 'mpv --force-window "$@"'
+desc = "mpv"
+
+[[opener.open]]
+run = 'xdg-open "$@"'
+desc = "Open"
+
+# --- Rules for which opener to use ---
 [open]
-rules = [
-	{ name = "*/", use = [ "open", "edit"] },
-
-	{ mime = "text/*",  use = [ "edit", "reveal" ] },
-	{ mime = "image/*", use = [ "open", "reveal" ] },
-	{ mime = "video/*", use = [ "play", "reveal" ] },
-	{ mime = "audio/*", use = [ "play", "reveal" ] },
-	{ mime = "inode/x-empty", use = [ "edit", "reveal" ] },
-
-	{ name = "*", use = [ "open", "reveal" ] },
+prepend_rules = [
+  { name = "*/", use = ["open", "edit"] },
+  { mime = "text/*", use = ["edit", "reveal"] },
+  { mime = "image/*", use = ["open", "reveal"] },
+  { mime = "video/*", use = ["play", "reveal"] },
+  { mime = "audio/*", use = ["play", "reveal"] },
+  { mime = "inode/x-empty", use = ["edit", "reveal"] },
+]
+append_rules = [
+  { name = "*", use = ["open", "reveal"] },
 ]
 
+# ========================
+# PLUGINS
+# ========================
 [plugin]
+
+# --- Previewers ---
 prepend_previewers = [
-	{ mime = "audio/*", run = "exifaudio" },
-	{ name = "*/", run = "eza-preview" },
-	{ name = "*.md", run = "rich-preview"}, # for markdown files
-        { name = "*.csv", run = "rich-preview"}, # for csv files
-	{ name = "*.rst", run = "rich-preview"}, # for restructured text (.rst) files
-	{ name = "*.ipynb", run = "rich-preview"}, # for jupyter notebooks (.ipynb)
-	{ name = "*.json", run = "rich-preview"}, # for json (.json) files
+  { mime = "audio/*", run = "exifaudio" },
+  { name = "*/", run = "eza-preview" },
+  { name = "*.md", run = "rich-preview" },
+  { name = "*.csv", run = "rich-preview" },
+  { name = "*.rst", run = "rich-preview" },
+  { name = "*.ipynb", run = "rich-preview" },
+  { name = "*.json", run = "rich-preview" },
 ]
 
-append_previewers = [
-  { name = "*", run = "hexyl" },
-]
+append_previewers = []
 
+# --- Fetchers ---
 [[plugin.prepend_fetchers]]
 id   = "git"
 name = "*"
