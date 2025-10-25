@@ -72,8 +72,8 @@ alias lg="lazygit"
 #--------------------------------------------------------------------------------------
 
 alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
-alias yazi_plugin_update="$HOME/.dotfiles/install/setup/setup_yazi_plugin.sh"
 alias neovimupdate="$HOME/.dotfiles/install/setup/setup_neovim.sh"
+alias lazygitupdate="$HOME/.dotfiles/install/setup/setup_lazygit.sh"
 
 #--------------------------------------------------------------------------------------
 

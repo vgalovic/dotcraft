@@ -51,9 +51,9 @@ alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
 alias linutil="curl -fsSL https://christitus.com/linux | sh"
 
 alias kittyupdate="curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin"
+alias lazygitupdate="$HOME/.dotfiles/install/setup/setup_lazygit.sh"
 alias zenupdate='bash -c "(curl https://updates.zen-browser.app/appimage.sh)"'
 alias neovimupdate="$HOME/.dotfiles/install/setup/setup_neovim.sh"
-alias yazi_plugin_update="$HOME/.dotfiles/install/setup/setup_yazi_plugin.sh"
 
 alias vi="nvim"
 alias vim="nvim"
