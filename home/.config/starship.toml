@@ -5,7 +5,7 @@
 add_newline = false
 
 # Color pallet for the prompt
-palette = "catppuccin_mocha"
+palette = "oldworld"
 
 # Use custom format
 format = """

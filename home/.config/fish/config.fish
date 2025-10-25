@@ -2,7 +2,7 @@
 set -g fish_greeting
 
 # Set fzf theme
-fzf_theme catppuccin
+fzf_theme oldworld
 
 # Only run interactively
 if status is-interactive

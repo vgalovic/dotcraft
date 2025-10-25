@@ -5,29 +5,30 @@ gui:
   nerdFontsVersion: "3"
 
 # Catppuccin Mocha
-theme:
-  activeBorderColor:
-    - "#a6e3a1"
-    - bold
-  inactiveBorderColor:
-    - "#a6adc8"
-  optionsTextColor:
-    - "#89b4fa"
-  selectedLineBgColor:
-    - "#313244"
-  cherryPickedCommitBgColor:
-    - "#45475a"
-  cherryPickedCommitFgColor:
-    - "#a6e3a1"
-  unstagedChangesColor:
-    - "#f38ba8"
-  defaultFgColor:
-    - "#cdd6f4"
-  searchingActiveBorderColor:
-    - "#f9e2af"
+# theme:
+#   activeBorderColor:
+#     - "#a6e3a1"
+#     - bold
+#   inactiveBorderColor:
+#     - "#a6adc8"
+#   optionsTextColor:
+#     - "#89b4fa"
+#   selectedLineBgColor:
+#     - "#313244"
+#   cherryPickedCommitBgColor:
+#     - "#45475a"
+#   cherryPickedCommitFgColor:
+#     - "#a6e3a1"
+#   unstagedChangesColor:
+#     - "#f38ba8"
+#   defaultFgColor:
+#     - "#cdd6f4"
+#   searchingActiveBorderColor:
+#     - "#f9e2af"
+#
+# authorColors:
+#   "*": "#b4befe"
 
-authorColors:
-  "*": "#b4befe"
 # Moonfly
 # theme:
 #   activeBorderColor:
@@ -54,7 +55,7 @@ authorColors:
 #   "*": "#cf87e8"
 
 # GitHub Dark Tritanopia
-# heme:
+# theme:
 #   activeBorderColor:
 #     - "#1f6feb"
 #     - bold
@@ -74,3 +75,28 @@ authorColors:
 #     - "#c9d1d9"
 #   searchingActiveBorderColor:
 #     - "#9e6a03"
+
+# Oldworld
+theme:
+  activeBorderColor:
+    - "#90b99f"   # soft green
+    - bold
+  inactiveBorderColor:
+    - "#aca1cf"   # muted purple
+  optionsTextColor:
+    - "#9ca2cf"   # soft blue
+  selectedLineBgColor:
+    - "#3C3B3E"   # selection gray
+  cherryPickedCommitBgColor:
+    - "#353539"   # dark gray
+  cherryPickedCommitFgColor:
+    - "#90b99f"   # soft green
+  unstagedChangesColor:
+    - "#ea83a5"   # red
+  defaultFgColor:
+    - "#c9c7cd"   # foreground
+  searchingActiveBorderColor:
+    - "#e6b99d"   # warm yellow
+
+authorColors:
+  "*": "#b7aed5"  # soft purple

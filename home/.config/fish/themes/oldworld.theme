@@ -1,0 +1,63 @@
+# Name: oldworld
+# Description: A subtle, moody dark theme with muted pastel accents
+
+set -l foreground         "#c9c7cd"
+set -l background         "#161617"
+set -l selection_fg       "#c9c7cd"
+set -l selection_bg       "#3C3B3E"
+
+# Basic 16 colors
+set -l color0  "#27272a"  # Black
+set -l color1  "#ea83a5"  # Red
+set -l color2  "#90b99f"  # Green
+set -l color3  "#e6b99d"  # Yellow
+set -l color4  "#9ca2cf"  # Blue
+set -l color5  "#aca1cf"  # Purple
+set -l color6  "#85b5ba"  # Cyan
+set -l color7  "#c9c7cd"  # White
+set -l color8  "#353539"  # Bright Black
+set -l color9  "#ED96B3"  # Bright Red
+set -l color10 "#a7c8b3"  # Bright Green
+set -l color11 "#eac5ae"  # Bright Yellow
+set -l color12 "#acb1d7"  # Bright Blue
+set -l color13 "#b7aed5"  # Bright Purple
+set -l color14 "#97c0c4"  # Bright Cyan
+set -l color15 "#d3d1d7"  # Bright White
+
+# Tab & border colors (for tools like WezTerm or Kitty)
+set -l active_tab_fg   "#c9c7cd"
+set -l active_tab_bg   "#353539"
+set -l inactive_tab_fg "#57575f"
+set -l inactive_tab_bg "#1b1b1d"
+set -l active_border   "#57575f"
+set -l inactive_border "#2a2a2d"
+
+# Apply Fish syntax highlighting
+set -g fish_color_normal              $foreground
+set -g fish_color_command             $color4
+set -g fish_color_keyword             $color5
+set -g fish_color_quote               $color3
+set -g fish_color_redirection         $color6
+set -g fish_color_end                 $color2
+set -g fish_color_error               $color1
+set -g fish_color_param               $color7
+set -g fish_color_comment             $color8
+set -g fish_color_selection           "--background=$selection_bg"
+set -g fish_color_search_match        "--background=$selection_bg"
+set -g fish_color_operator            $color6
+set -g fish_color_escape              $color10
+set -g fish_color_autosuggestion      $inactive_tab_fg
+set -g fish_color_cwd                 $color10
+set -g fish_color_cwd_root            $color1
+set -g fish_color_valid_path          $color10
+set -g fish_pager_color_completion    $color7
+set -g fish_pager_color_description   $color8
+set -g fish_pager_color_prefix        $color4
+set -g fish_pager_color_progress      $color8
+
+# Cursor and background info
+set -g fish_color_host                $color5
+set -g fish_color_user                $color2
+set -g fish_color_cancel              $color1
+set -g fish_color_background          $background
+set -g fish_color_foreground          $foreground
