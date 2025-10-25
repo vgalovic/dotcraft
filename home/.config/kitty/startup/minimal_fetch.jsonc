@@ -16,7 +16,7 @@
         {
             "key": "{icon} distro",
             "type": "os",
-            "keycolor": "31"
+            "keyColor": "31"
         },
         {
             "key": "{icon} kernel",
@@ -26,30 +26,30 @@
         {
             "key": "{icon} uptime",
             "type": "uptime",
-            "keycolor": "33"
+            "keyColor": "33"
         },
         {
             "key": "{icon} packages",
             "type": "packages",
-            "keycolor": "34"
+            "keyColor": "34"
         },
         {
             "key": "{icon} disk",
             "type": "disk",
             "folders": "/",
-            "keycolor": "35"
+            "keyColor": "35"
         },
         {
             "key": "{icon} network",
             "type": "localip",
             "format": "{ipv4} ({ifname})",
-            "keycolor": "36"
+            "keyColor": "36"
         },
         {
             "key": "{icon} colors",
             "type": "colors",
             "symbol": "circle",
-            "keycolor": "39"
+            "keyColor": "39"
         },
     ]
 }
