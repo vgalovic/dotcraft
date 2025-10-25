@@ -3,7 +3,7 @@ return {
 	lazy = true,
 	cmd = { "Oil" },
 	keys = {
-		{ "\\", "<cmd>Oil --float<cr>", desc = "Open parent directory" },
+		{ "\\", "<cmd>Oil<cr>", desc = "Open parent directory" },
 	},
 	init = function()
 		-- Detect if Neovim was started with a directory, and load Oil
