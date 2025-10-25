@@ -21,32 +21,18 @@ return {
 			["json"] = { "prettier" },
 			["latex"] = { "latexindent" },
 			["lua"] = { "stylua" },
-			["markdown"] = { "prettier", "markdown-toc" },
-			["markdown.mdx"] = { "prettier", "markdown-toc" },
+			["markdown"] = { "mdformat" },
+			["markdown.mdx"] = { "mdformat" },
 			["python"] = { "ruff" },
 			["rust"] = { "rustfmt" },
 			["sh"] = { "beautysh" },
 			["SystemVerilog"] = { "verible" },
 			["verilog"] = { "verible" },
-			["yaml"] = { "prettier" },
 			["zsh"] = { "beautysh" },
 		},
 
-		---@diagnostic disable: missing-return
-		formatters = {
-			["markdown-toc"] = {
-				condition = function(_, ctx)
-					for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
-						if line:find("<!%-%- toc %-%->") then
-							return true
-						end
-					end
-				end,
-			},
-		},
+		vim.keymap.set("n", "<leader>f", function()
+			require("conform").format({ async = true, lsp_format = "fallback" })
+		end, { desc = "Format buffer" }),
 	},
-
-	vim.keymap.set("n", "<leader>f", function()
-		require("conform").format({ async = true, lsp_format = "fallback" })
-	end, { desc = "Format buffer" }),
 }

@@ -1,5 +1,6 @@
 return {
 	"WhoIsSethDaniel/mason-tool-installer.nvim",
+	event = "VeryLazy",
 	build = ":MasonUpdate",
 	dependencies = {
 		{ "mason-org/mason-lspconfig.nvim" },
@@ -31,9 +32,8 @@ return {
 			"latexindent",
 			"ltex",
 			"lua_ls",
-			"markdown-toc",
+			-- "mdformat", -- install it with `pipx install mdformat && pipx inject mdformat mdformat-myst`
 			"marksman",
-			"prettier",
 			"pyright",
 			"ruff",
 			"rust_analyzer",
