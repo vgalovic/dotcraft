@@ -18,9 +18,7 @@ map({ "n", "v", "i" }, "<Left>", "<cmd>echo 'Use H key!'<CR>", { noremap = true 
 map({ "n", "v", "i" }, "<Right>", "<cmd>echo 'Use L key!'<CR>", { noremap = true })
 
 -- [[ Command mode with ";" key ]]
-map({ "n", "v" }, ";", ":")
-map({ "n", "v" }, "č", ":") -- Serbian layout
-map({ "n", "v" }, "Č", ":")
+map({ "n", "v" }, "Č", ":") -- Serbian layout
 
 -- [[ Quick quit ]]
 map("n", "q1", ":q!", default_opts)
