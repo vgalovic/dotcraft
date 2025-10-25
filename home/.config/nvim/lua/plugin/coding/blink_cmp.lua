@@ -3,7 +3,7 @@ return {
 	event = { "InsertEnter", "CmdlineEnter", "CmdlineEnter /,?" },
 	dependencies = {
 		{ "rafamadriz/friendly-snippets" },
-		{ "mikavilpas/blink-ripgrep.nvim" },
+		{ "mikavilpas/blink-ripgrep.nvim", version = "*" },
 	},
 
 	version = "*",
@@ -47,6 +47,10 @@ return {
 						--Recipes: Select Nth item from the list
 						item_idx = {
 							text = function(ctx)
+								local cmd_type = vim.fn.getcmdtype()
+								if ctx.item.source_id == "cmdline" or cmd_type == "/" or cmd_type == "?" then
+									return ""
+								end
 								return ctx.idx == 10 and "0" or ctx.idx >= 10 and " " or tostring(ctx.idx)
 							end,
 						},
@@ -166,12 +170,6 @@ return {
 					module = "blink-ripgrep",
 					name = "Ripgrep",
 					transform_items = function(_, items)
-						for _, item in ipairs(items) do
-							-- example: append a description to easily distinguish rg results
-							item.labelDetails = {
-								description = "(rg)",
-							}
-						end
 						return items
 					end,
 				},

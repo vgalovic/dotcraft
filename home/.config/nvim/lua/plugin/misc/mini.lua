@@ -1,7 +1,7 @@
 ---@diagnostic disable: duplicate-set-field
 
 return { -- Collection of various small independent plugins/modules
-	"echasnovski/mini.nvim",
+	"nvim-mini/mini.nvim",
 	version = false,
 	lazy = false,
 	keys = {
@@ -18,12 +18,53 @@ return { -- Collection of various small independent plugins/modules
 	config = function()
 		require("mini.comment").setup()
 
-		require("mini.icons").setup()
+		require("mini.icons").setup({
+			lsp = {
+				["ripgrep"] = { glyph = "", "MiniIconsGreen" },
+			},
+			filetype = {
+				["snacks_terminal"] = { glyph = "", hl = "MiniIconsGrey" },
+				["snacks_dashboard"] = { glyph = "󰕮", hl = "MiniIconsAzure" },
+				["snacks_picker_input"] = { glyph = "", hl = "MiniIconsCyan" },
+				["snacks_picker_list"] = { glyph = "󰙅", hl = "MiniIconsCyan" },
+				["kitty"] = { glyph = "󰄛", hl = "MiniIconosGrey" },
+			},
+			file = {
+				["kitty.conf"] = { glyph = "󰄛", hl = "MiniIconosGrey" },
+				["config"] = { glyph = "", hl = "MiniIconsGrey" },
+			},
+		})
 
 		require("mini.tabline").setup()
 
 		local statusline = require("mini.statusline")
 		statusline.setup()
+
+		-- Custom display names
+		local ft_names = {
+			snacks_terminal = "Snacks Terminal",
+			snacks_dashboard = "Snacks Dashboard",
+			snacks_picker_input = "Snacks Picker",
+			snacks_picker_list = "Snacks Explorer",
+		}
+
+		-- Override section_fileinfo but keep the rest of its logic
+		local orig = statusline.section_fileinfo
+		statusline.section_fileinfo = function(...)
+			-- Get original section output
+			local info = orig(...)
+
+			-- Replace filetype name inside it
+			local ft = vim.bo.filetype
+			local new_name = ft_names[ft]
+			if new_name then
+				-- Replace only the filetype text (keep encoding, format, etc.)
+				info = info:gsub(ft, new_name)
+			end
+
+			return info
+		end
+
 		statusline.section_location = function()
 			return "%2l:%-2v"
 		end
@@ -45,11 +86,7 @@ return { -- Collection of various small independent plugins/modules
 
 		require("mini.pairs").setup()
 
-		require("mini.jump").setup({
-			mappings = {
-				repeat_jump = "<C-.>",
-			},
-		})
+		require("mini.jump").setup({})
 
 		require("mini.jump2d").setup({
 			hooks = {
