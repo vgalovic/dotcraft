@@ -15,8 +15,6 @@ return {
 		-- Setup LSP autocommands
 		require("lsp.autocommands").setup_lsp_autocommands()
 
-		require("lsp").setup()
-
 		local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 
 		function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
