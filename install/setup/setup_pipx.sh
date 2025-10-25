@@ -24,6 +24,12 @@ pipx_apps() {
         pipx install pylatexenc || { print_error "Failed to install pylatexenc."; }
         print_msg "pylatexenc is installed"
     fi
+
+    if prompt_yes_default "Do you want to install markdown formater?"
+      pipx install mdformat || { print_error "Failed to install mdformat."; return 1; }
+      pipx inject mdformat mdformat-myst || { print_error "Failed to inject mdformat-myst plugin."; }
+      print_msg "mdformat is installed"
+    fi
 }
 
 install_pipx

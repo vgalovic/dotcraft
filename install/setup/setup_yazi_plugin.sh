@@ -65,15 +65,17 @@ install_yazi_plugins() {
 
     # List of Ya plugins to install
     declare -a ya_plugins=(
+        "yazi-rs/flavors:catppuccin-mocha" # [[ catppuccin-mocha.yazi ]]
+        "yazi-rs/flavors:catppuccin-latte" # [[ catppuccin-latte.yazi ]]
         "yazi-rs/plugins:chmod" # [[ chmod.yazi ]]
         "Sonico98/exifaudio" # [[ exifaudio.yazi ]]
         "ahkohd/eza-preview" # [[ eza-preview.yazi ]]
         "yazi-rs/plugins:full-border" # [[ full-border.yazi ]]
         "yazi-rs/plugins:git" # [[ git.yazi ]]
         "Reledia/glow" # [[ glow.yazi ]]
-        "Reledia/hexyl" # [[ hexyl.yazi ]]
         "Lil-Dank/lazygit" # [[ lazygit.yazi ]]
         "tkapias/moonfly" # [[ moonfly.yazi ]]
+        "yazi-rs/plugins:no-status" # [[ no-status.yazi ]]
         "AnirudhG07/rich-preview" # [[ rich-preview.yazi ]]
         "Rolv-Apneseth/starship" # [[ starship.yazi ]]
         "yazi-rs/plugins:toggle-pane" # [[ toggle-pane.yazi ]]
@@ -140,8 +142,8 @@ install_yazi_app_required
 install_yazi_plugins
 
 # Install Yazi catppuccin theme
-download_catppuccin_mocha_flavor
-download_catppuccin_latte_flavor
+# download_catppuccin_mocha_flavor
+# download_catppuccin_latte_flavor
 
 print_msg "Yazi plugins installation complete!"
 
