@@ -20,7 +20,7 @@ fi
 # Update package list after adding sources
 sudo apt update
 
-# APT installable packages (removed neovim and lazygit)
+# APT installable packages
 apps=(
     bear
     btop
@@ -60,7 +60,7 @@ if ! command -v cargo &>/dev/null; then
     must_execute_script "setup_rust"
 fi
 
-# Cargo-based tools excluding lazygit and bat (bat can stay if you want, else remove here)
+# Cargo-based tools
 cargo_apps=(
     bat
     eza
@@ -81,23 +81,14 @@ for app in "${cargo_apps[@]}"; do
     fi
 done
 
+# Install Github cli
+execute_script "setup_github_cli"
+
+# Install latest Neovim from GitHub releases
+must_execute_script "setup_neovim"
+
 # Install latest lazygit from GitHub releases
-print_msg "Installing latest lazygit from GitHub releases..."
-
-LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": *"v\K[^"]*')
-
-if [[ -z "$LAZYGIT_VERSION" ]]; then
-    print_error "Failed to fetch latest lazygit version."
-else
-    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-    tar xf lazygit.tar.gz lazygit
-    if sudo install lazygit -D -t /usr/local/bin/; then
-        print_msg "lazygit v${LAZYGIT_VERSION} installed successfully."
-    else
-        print_error "Failed to install lazygit."
-    fi
-    rm -f lazygit lazygit.tar.gz
-fi
+must_execute_script "setup_lazygit"
 
 # Install arduino-cli to ~/local/bin
 print_msg "Installing arduino-cli..."

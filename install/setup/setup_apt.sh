@@ -46,7 +46,7 @@ install_basic_apt() {
         "hub"
         "curl"
         "wget"
-   )
+    )
 
     for app in "${apt_applications[@]}"; do
         print_msg "Installing APT application: $app..."
@@ -55,7 +55,7 @@ install_basic_apt() {
 }
 
 install_developer_apps() {
-     local apt_developer_tools=(
+    local apt_developer_tools=(
         "build-essential"
         "libc6"
         "libgcc-s1"
@@ -77,23 +77,17 @@ install_developer_apps() {
 
 install_avr() {
     local apt_avr_tools=(
-     "gcc-avr"
-     "avr-libc"
-     "avrdude"
-     "gdb-avr"
-     "simulavr"
+        "gcc-avr"
+        "avr-libc"
+        "avrdude"
+        "gdb-avr"
+        "simavr"
     )
 
     for app in "${apt_avr_tools[@]}"; do
         print_msg "Installing APT avr tool: $app..."
         sudo apt install -y "$app" || print_error "Failed to install $app via APT"
     done
-}
-
-install_github_cli() {
-    print_msg "Installing GitHub CLI..."
-    sudo apt install gh || { print_error "Failed to install GitHub CLI."; }
-    print_msg "GitHub CLI installed"
 }
 
 set_kvantum_paths() {
@@ -115,14 +109,14 @@ set_kvantum_paths() {
 }
 
 install_copyq () {
-     print_msg "Installing CopyQ..."
+    print_msg "Installing CopyQ..."
     sudo apt install -y copyq || print_error "Failed to install CopyQ."
     print_msg "CopuQ installation completed!"
 
 }
 
 install_conky () {
-     print_msg "Installing conky..."
+    print_msg "Installing conky..."
     sudo apt install -y conky-all || print_error "Failed to install conky."
     print_msg "conky installation completed!"
 }
@@ -155,16 +149,6 @@ fi
 # Install avr tools
 if prompt_yes_default "Do you want to install avr tools?"; then
     install_avr
-fi
-
-# Install Github CLI
-if prompt_yes_default "Do you want to install GitHub CLI?"; then
-    install_github_cli
-fi
-
-# Install ZSH
-if prompt_yes_default "Do you want to install ZSH?"; then
-    install_zsh
 fi
 
 # Check if running on KDE desktop environment

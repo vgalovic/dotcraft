@@ -68,12 +68,6 @@ else
     execute_script "setup_brew"
 fi
 
-if [$pm == "apt" ]; then
-  for script in setup_neovim setup_lazygit; do
-      execute_script "$script"
-  done
-fi
-
 # Execute other setup scripts with user prompts
 for script in setup_terminal_and_prompt setup_shell setup_fonts setup_mega_sync setup_latex ; do
     execute_script "$script"
