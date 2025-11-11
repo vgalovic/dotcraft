@@ -5,7 +5,7 @@
 add_newline = false
 
 # Color pallet for the prompt
-palette = "oldworld"
+palette = "github_dark_tritanopia"
 
 # Use custom format
 format = """

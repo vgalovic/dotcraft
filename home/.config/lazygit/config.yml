@@ -55,48 +55,48 @@ gui:
 #   "*": "#cf87e8"
 
 # GitHub Dark Tritanopia
-# theme:
-#   activeBorderColor:
-#     - "#1f6feb"
-#     - bold
-#   inactiveBorderColor:
-#     - "#30363d"
-#   optionsTextColor:
-#     - "#8b949e"
-#   selectedLineBgColor:
-#     - "0x1e4273"
-#   cherryPickedCommitBgColor:
-#     - "#161b22"
-#   cherryPickedCommitFgColor:
-#     - "#1f6feb"
-#   unstagedChangesColor:
-#     - "#da3633"
-#   defaultFgColor:
-#     - "#c9d1d9"
-#   searchingActiveBorderColor:
-#     - "#9e6a03"
-
-# Oldworld
 theme:
   activeBorderColor:
-    - "#90b99f"   # soft green
+    - "#1f6feb"
     - bold
   inactiveBorderColor:
-    - "#aca1cf"   # muted purple
+    - "#30363d"
   optionsTextColor:
-    - "#9ca2cf"   # soft blue
+    - "#8b949e"
   selectedLineBgColor:
-    - "#3C3B3E"   # selection gray
+    - "0x1e4273"
   cherryPickedCommitBgColor:
-    - "#353539"   # dark gray
+    - "#161b22"
   cherryPickedCommitFgColor:
-    - "#90b99f"   # soft green
+    - "#1f6feb"
   unstagedChangesColor:
-    - "#ea83a5"   # red
+    - "#da3633"
   defaultFgColor:
-    - "#c9c7cd"   # foreground
+    - "#c9d1d9"
   searchingActiveBorderColor:
-    - "#e6b99d"   # warm yellow
+    - "#9e6a03"
 
-authorColors:
-  "*": "#b7aed5"  # soft purple
+# Oldworld
+# theme:
+#   activeBorderColor:
+#     - "#90b99f"   # soft green
+#     - bold
+#   inactiveBorderColor:
+#     - "#aca1cf"   # muted purple
+#   optionsTextColor:
+#     - "#9ca2cf"   # soft blue
+#   selectedLineBgColor:
+#     - "#3C3B3E"   # selection gray
+#   cherryPickedCommitBgColor:
+#     - "#353539"   # dark gray
+#   cherryPickedCommitFgColor:
+#     - "#90b99f"   # soft green
+#   unstagedChangesColor:
+#     - "#ea83a5"   # red
+#   defaultFgColor:
+#     - "#c9c7cd"   # foreground
+#   searchingActiveBorderColor:
+#     - "#e6b99d"   # warm yellow
+#
+# authorColors:
+#   "*": "#b7aed5"  # soft purple

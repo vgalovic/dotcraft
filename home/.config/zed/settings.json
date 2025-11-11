@@ -41,11 +41,15 @@
   "ui_font_family": "JetBrainsMono Nerd Font",
   "restore_on_startup": "none",
   "theme": {
-    "mode": "dark",
-    "light": "Tomorrow Min",
+    "mode": "system",
+    "light": "Tomorrow Night Min",
     "dark": "Tomorrow Night Out Min"
   },
-  "icon_theme": "Material Icon Theme",
+  "icon_theme": {
+    "mode": "system",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme"
+  },
   "journal": {
     "path": "~/Documents/Zed",
     "hour_format": "hour24"

@@ -1,10 +1,10 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3800
-SETUVAR fish_color_autosuggestion:\x1d
+SETUVAR fish_color_autosuggestion:8b949e
 SETUVAR fish_color_cancel:\x1d
-SETUVAR fish_color_command:\x1d
-SETUVAR fish_color_comment:\x1d
+SETUVAR fish_color_command:brwhite
+SETUVAR fish_color_comment:8b949e
 SETUVAR fish_color_cwd:\x1d
 SETUVAR fish_color_cwd_root:ff5189
 SETUVAR fish_color_end:\x1d
@@ -16,11 +16,11 @@ SETUVAR fish_color_host:\x1d
 SETUVAR fish_color_host_remote:\x1d
 SETUVAR fish_color_keyword:\x1d
 SETUVAR fish_color_match:c6c6c6\x1e\x2d\x2dbackground\x3d323437
-SETUVAR fish_color_normal:\x1d
-SETUVAR fish_color_operator:\x1d
+SETUVAR fish_color_normal:brwhite
+SETUVAR fish_color_operator:red
 SETUVAR fish_color_option:\x1d
-SETUVAR fish_color_param:\x1d
-SETUVAR fish_color_quote:\x1d
+SETUVAR fish_color_param:blue
+SETUVAR fish_color_quote:green
 SETUVAR fish_color_redirection:\x1d
 SETUVAR fish_color_search_match:\x1d
 SETUVAR fish_color_selection:\x1d
@@ -30,15 +30,15 @@ SETUVAR fish_color_valid_path:bdbdbd
 SETUVAR fish_greeting:\x1d
 SETUVAR fish_key_bindings:fish_default_key_bindings
 SETUVAR fish_pager_color_background:\x1d
-SETUVAR fish_pager_color_completion:\x1d
-SETUVAR fish_pager_color_description:\x1d
-SETUVAR fish_pager_color_prefix:\x1d
-SETUVAR fish_pager_color_progress:\x1d
+SETUVAR fish_pager_color_completion:blue
+SETUVAR fish_pager_color_description:green
+SETUVAR fish_pager_color_prefix:red\x1e\x2d\x2dunderline
+SETUVAR fish_pager_color_progress:brwhite
 SETUVAR fish_pager_color_secondary_background:\x1d
 SETUVAR fish_pager_color_secondary_completion:\x1d
 SETUVAR fish_pager_color_secondary_description:\x1d
 SETUVAR fish_pager_color_secondary_prefix:\x1d
-SETUVAR fish_pager_color_selected_background:\x1d
+SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3d30363d
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
