@@ -135,6 +135,7 @@ return {
 						"package.json",
 						"pyproject.toml",
 						"pyvenv.cfg",
+						"sketch.yaml",
 					},
 					recent = false,
 				},
