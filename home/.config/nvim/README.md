@@ -50,6 +50,7 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 ### file explorer
 
 - [stevearc/oil.nvim](https://dotfyle.com/plugins/stevearc/oil.nvim)
+  - [benomahony/oil-git.nvim](https://github.com/benomahony/oil-git.nvim)
 
 ### game
 
@@ -61,19 +62,18 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 
 ### lsp
 
-- [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
 - [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
 - [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
 
 ### lsp-installer
 
-- [williamboman/mason.nvim](https://dotfyle.com/plugins/williamboman/mason.nvim)
-  - [williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
+- [mason-org/mason.nvim](https://dotfyle.com/plugins/williamboman/mason.nvim)
+  - [mason-org/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
   - [WhoIsSethDaniel/mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim)
 
 ### markdown-and-latex
 
-- [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
+- [OXY2DEV/markview.nvim](https://dotfyle.com/plugins/OXY2DEV/markview.nvim)
 - [brianhuster/live-preview.nvim](iamcco/markdown-preview.nvim)
 
 ### nvim-dev
@@ -119,19 +119,22 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 
 ## Installed Language Servers, Formatters, and Linters
 
-| Language Server         | Linter  | Formatter    |
-| ----------------------- | ------- | ------------ |
-| arduino-language-server | ruff    | beautysh     |
-| bashls                  | verible | latexindent  |
-| clangd                  |         | markdown-toc |
-| cmake                   |         | prettier     |
-| lua_ls                  |         | ruff         |
-| pyright                 |         | rustfmt      |
-| ruff                    |         | shfmt        |
-| rust_analyzer           |         | stylua       |
-| rust_hdl                |         | verible      |
-| svlangserver            |         |              |
-| verible                 |         |              |
+| Language Server         | Formatter   |
+| ----------------------- | ----------- |
+| arduino-language-server | beautysh    |
+| bashls                  | latexindent |
+| clangd                  | mdformat    |
+| cmake                   | rustfmt     |
+| lua_ls                  | stylua      |
+| pyright                 |             |
+| ruff                    |             |
+| rust_analyzer           |             |
+| vhdl_ls                 |             |
+| svlangserver            |             |
+| verible                 |             |
+
+> [!NOTE] `rust_analyzer`, `rustfmt`, and `mdformat` are **not installed via Mason**. They must be installed independently.
+> In `nvim/lua/plugins/core/mason.lua`, there are commands provided to install these packages manually.
 
 ______________________________________________________________________
 
