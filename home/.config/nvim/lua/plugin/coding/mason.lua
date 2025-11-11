@@ -1,3 +1,27 @@
+local servers = {
+	"arduino_language_server",
+	-- "asm_lsp",
+	"bashls",
+	"clangd",
+	"cmake",
+	"lua_ls",
+	"pyright",
+	"ruff",
+	-- "rust_analyzer", -- install with rustup component add rust-analyzer
+	"vhdl_ls",
+	"svlangserver",
+	"verible",
+}
+
+local formaters = {
+	-- "asmfmt",
+	"beautysh",
+	"latexindent",
+	-- "mdformat", -- install it with pipx install mdformat && pipx inject mdformat mdformat-myst
+	-- "rustfmt", -- install with rustup component add rustfmt
+	"stylua",
+}
+
 return {
 	{
 		"mason-org/mason.nvim",
@@ -15,12 +39,23 @@ return {
 		},
 	},
 
-	-- Mason + LSP config
+	-- Mason installer
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		event = "VeryLazy",
+		build = ":MasonUpdate",
+		dependencies = { "mason-org/mason.nvim" },
+		opts = {
+			ensure_installed = vim.list_extend(servers, formaters),
+		},
+	},
+
+	-- LSP config
 	{
 		"mason-org/mason-lspconfig.nvim",
 		event = "VeryLazy",
 		dependencies = {
-			"mason-org/mason.nvim",
+			{ "mason-org/mason.nvim" },
 			{
 				"neovim/nvim-lspconfig",
 
@@ -28,44 +63,14 @@ return {
 					local lsp_utils = require("utils.lsp")
 					lsp_utils.setup_lsp_autocommands()
 					lsp_utils.setup_floating_preview()
+
+					vim.lsp.enable("rust_analyzer") -- added because rust_analyzer is not installed via Mason
 				end,
 			},
 		},
 		opts = {
-			ensure_installed = {
-				"arduino_language_server",
-				-- "asm_lsp",
-				"bashls",
-				"clangd",
-				"cmake",
-				"lua_ls",
-				"pyright",
-				"ruff",
-				-- "rust_analyzer", -- install with rustup component add rust-analyzer
-				"vhdl_ls",
-				"svlangserver",
-				"verible",
-			},
-		},
-	},
-
-	-- Mason installer for formatters/linters
-	{
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		event = "VeryLazy",
-		build = ":MasonUpdate",
-		opts = {
-			ensure_installed = {
-				-- "asmfmt",
-				"beautysh",
-				"latexindent",
-				-- "mdformat", -- install it with pipx install mdformat && pipx inject mdformat mdformat-myst
-				-- "rustfmt", -- install with rustup component add rustfmt
-				"stylua",
-			},
-		},
-		dependencies = {
-			"mason-org/mason.nvim",
+			ensure_installed = {},
+			automatic_enable = servers,
 		},
 	},
 }
