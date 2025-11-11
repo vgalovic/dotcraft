@@ -1,5 +1,4 @@
----@diagnostic disable: param-type-mismatch
----@diagnostic disable: undefined-field
+---@diagnostic disable: param-type-mismatch, undefined-field, duplicate-set-field
 
 local M = {}
 
@@ -91,6 +90,22 @@ function M.setup_lsp_progress()
 			})
 		end,
 	})
+end
+
+--========================================================================
+--                       Floating Preview
+--========================================================================
+
+function M.setup_floating_preview()
+	local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+
+	function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+		opts = opts or {}
+		opts.border = opts.border or "rounded"
+		opts.max_height = opts.max_height or 40
+		opts.max_width = opts.max_width or 100
+		return orig_util_open_floating_preview(contents, syntax, opts, ...)
+	end
 end
 
 --========================================================================
