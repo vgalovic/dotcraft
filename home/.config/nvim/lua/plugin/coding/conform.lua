@@ -3,6 +3,16 @@ return {
 
 	event = { "BufWritePre" },
 	cmd = { "ConformInfo" },
+	keys = {
+		{
+			"<leader>f",
+			function()
+				require("conform").format({ async = true, lsp_format = "fallback" })
+			end,
+			mode = "",
+			desc = "Format buffer",
+		},
+	},
 
 	-- Configure Conform plugin with formatter options
 	opts = {
@@ -29,9 +39,5 @@ return {
 			["verilog"] = { "verible" },
 			["zsh"] = { "beautysh" },
 		},
-
-		vim.keymap.set("n", "<leader>f", function()
-			require("conform").format({ async = true, lsp_format = "fallback" })
-		end, { desc = "Format buffer" }),
 	},
 }
