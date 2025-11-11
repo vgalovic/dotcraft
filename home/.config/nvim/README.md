@@ -132,9 +132,6 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 | rust_hdl                |         | verible      |
 | svlangserver            |         |              |
 | verible                 |         |              |
-|                         |         |              |
-|                         |         |              |
-|                         |         |              |
 
 ______________________________________________________________________
 
