@@ -30,18 +30,16 @@ return {
 			"clangd",
 			"cmake",
 			"latexindent",
-			"ltex",
 			"lua_ls",
 			-- "mdformat", -- install it with `pipx install mdformat && pipx inject mdformat mdformat-myst`
-			"marksman",
 			"pyright",
 			"ruff",
-			"rust_analyzer",
+			-- "rust_analyzer", -- install with `rustup component add rust-analyzer`
+			"rust_hdl",
 			-- "rustfmt", -- install with `rustup component add rustfmt`
 			"stylua",
 			"svlangserver",
 			"verible",
-			"vhdl_ls",
 		},
 	},
 }

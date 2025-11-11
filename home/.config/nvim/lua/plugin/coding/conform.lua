@@ -18,7 +18,6 @@ return {
 
 		formatters_by_ft = {
 			["bash"] = { "beautysh" },
-			["json"] = { "prettier" },
 			["latex"] = { "latexindent" },
 			["lua"] = { "stylua" },
 			["markdown"] = { "mdformat" },
