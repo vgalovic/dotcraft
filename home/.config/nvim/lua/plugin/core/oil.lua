@@ -2,6 +2,7 @@ return {
 	"stevearc/oil.nvim",
 	lazy = true,
 	cmd = { "Oil" },
+	dependencies = { "benomahony/oil-git.nvim" },
 	keys = {
 		{ "\\", "<cmd>Oil<cr>", desc = "Open parent directory" },
 	},
