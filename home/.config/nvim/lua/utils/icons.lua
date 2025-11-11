@@ -26,6 +26,8 @@ local icons = {
 		done = "✓",
 		icon = "",
 		spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+
+		ripgrep = "",
 	},
 	mason = {
 		package_installed = "",
@@ -61,6 +63,22 @@ local icons = {
 		unix = "",
 		dos = "",
 		mac = "",
+	},
+	file = {
+		config = "󱁻",
+		kitty = "󰄛",
+	},
+	filetype = {
+		log = "",
+		sh = "",
+		dashboard = "󰕮",
+		notification_history = "",
+		picker_input = "",
+		picker_list = "󰙅",
+		picker_preview = "",
+		terminal = "",
+		tmTheme = "",
+		verilog = "",
 	},
 }
 return icons
