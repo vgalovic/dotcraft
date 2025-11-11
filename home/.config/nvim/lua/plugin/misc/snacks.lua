@@ -2,8 +2,10 @@
 ---@diagnostic disable: undefined-global
 ---@diagnostic disable: undefined-field
 
-local header = require("utils.dashboard.random_header").get_random_header()
-local random_hls = require("utils.dashboard.random_hl").get_random_hl()
+local dashboard_utils = require("utils.dashboard")
+
+local random_header = dashboard_utils.get_random_header()
+local random_hl = dashboard_utils.get_random_hl()
 
 return {
 	"folke/snacks.nvim",
@@ -19,11 +21,11 @@ return {
 
 		dashboard = {
 			preset = {
-				header = header,
+				header = random_header,
 			},
 			width = 72,
 			formats = {
-				header = { hl = random_hls[1] },
+				header = { hl = random_hl[1] },
 
 				key = function(item)
 					return { { "(", hl = "special" }, { item.key, hl = "key" }, { ")", hl = "special" } }
@@ -36,28 +38,24 @@ return {
 					align = "center",
 					padding = 2,
 					text = {
-						{ " " .. Icons.snacks.keys_update .. "Update ", hl = random_hls[2] },
-						{ " " .. Icons.snacks.keys_session .. "Sessions ", hl = random_hls[3] },
-						{ " " .. Icons.snacks.keys_config .. "Config ", hl = random_hls[3] },
-						{ " " .. Icons.snacks.keys_new_file .. "New File ", hl = random_hls[5] },
-						{ " " .. Icons.snacks.keys_files .. "Files ", hl = random_hls[6] },
-						{ " " .. Icons.snacks.keys_recent .. "Recent ", hl = random_hls[7] },
-						{ " " .. Icons.snacks.keys_quit .. "Quit", hl = random_hls[8] },
+						{ " " .. Icons.snacks.keys_update .. "Update ", hl = random_hl[2] },
+						{ " " .. Icons.snacks.keys_session .. "Sessions ", hl = random_hl[3] },
+						{ " " .. Icons.snacks.keys_config .. "Config ", hl = random_hl[3] },
+						{ " " .. Icons.snacks.keys_new_file .. "New File ", hl = random_hl[5] },
+						{ " " .. Icons.snacks.keys_files .. "Files ", hl = random_hl[6] },
+						{ " " .. Icons.snacks.keys_recent .. "Recent ", hl = random_hl[7] },
+						{ " " .. Icons.snacks.keys_quit .. "Quit", hl = random_hl[8] },
 					},
 				},
-        -- stylua: ignore
-				{ icon = Icons.snacks.files, title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
+        --stylua: ignore
+				{ icon = Icons.snacks.files, title = "Recent Files", section = "recent_files", indent = 2, padding = 1, },
 				{ icon = Icons.snacks.projects, title = "Projects", section = "projects", indent = 2, padding = 1 },
 
 				{ text = "", action = ":Lazy update", key = "u" },
 				{ text = "", section = "session", key = "s" },
-				{
-					text = "",
-					action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
-					key = "c",
-				},
-				-- stylua: ignore
-			  { text = "", action = "<cmd>NewFile<cr>", key = "n", },
+        --stylua: ignore
+				{ text = "", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})", key = "c", },
+				{ text = "", action = "<cmd>NewFile<cr>", key = "n" },
 				{ text = "", action = "<cmd>lua Snacks.dashboard.pick('files')<cr>", key = "f" },
 				{ text = "", action = "<cmd>lua Snacks.dashboard.pick('oldfiles')<cr>", key = "r" },
 				{ text = "", action = "<cmd>qa<cr>", key = "q" },
@@ -76,14 +74,14 @@ return {
 		indent = {
 			scope = {
 				hl = {
-					random_hls[1],
-					random_hls[2],
-					random_hls[3],
-					random_hls[4],
-					random_hls[5],
-					random_hls[6],
-					random_hls[7],
-					random_hls[8],
+					random_hl[1],
+					random_hl[2],
+					random_hl[3],
+					random_hl[4],
+					random_hl[5],
+					random_hl[6],
+					random_hl[7],
+					random_hl[8],
 				},
 			},
 		},
@@ -112,10 +110,11 @@ return {
 				keymaps = {
 					layout = { preview = false, preset = "default" },
 				},
+				notifications = { layout = { preset = "ivy" } },
 				buffers = {
 					layout = {
 						preset = function()
-							return vim.o.columns >= 120 and "ivy" or "dropdown"
+							return vim.o.columns >= 120 and "ivy_split" or "dropdown"
 						end,
 					},
 				},
@@ -166,7 +165,7 @@ return {
 				debug = Icons.diagnostics.debug,
 				trace = Icons.diagnostics.trace,
 			},
-			lsp_utils = require("lsp.autocommands").setup_lsp_progress(),
+			lsp_utils = require("utils.lsp").setup_lsp_progress(),
 		},
 		statuscolumn = {
 			left = { "mark", "sign" },
@@ -221,17 +220,22 @@ return {
 		{ "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
 		{ "<leader>gg", function() Snacks.lazygit({ cwd = vim.fn.expand("%:p:h") }) end, desc = "Lazygit" },
 		{ "<leader>gl", function() Snacks.lazygit.log({ cwd = vim.fn.expand("%:p:h") }) end, desc = "Lazygit Log (cwd)" },
+    { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
+    { "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub Issues (all)" },
+    { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
+    { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub Pull Requests (all)" },
 
 		-- Notification history
-		{ "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification History" },
+		-- { "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification History" },
+		{ "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
 
 		-- Picker
 		{ "<C-;>", function() Snacks.picker.commands() end, desc = "Command List" },
 		{ "<M-;>", function() Snacks.picker.command_history() end, desc = "Command History" },
-		{ "<M-\\>", function() Snacks.explorer({cwd = vim.fn.expand("%:p:h")}) end, desc = "Snacks Explorer" },
+		{ "<M-\\>", function() Snacks.explorer({ cwd = vim.fn.expand("%:p:h"), auto_close = true }) end, desc = "Snacks Explorer" },
 		{ "<leader>u", function() Snacks.picker.undo() end, desc = "Undo History" },
 		{ "<leader>/", function() Snacks.picker.lines() end, desc = "Fuzzily search in current buffer" },
-        { "<leader>,", function() Snacks.picker.smart() end, desc = "Smart find files" },
+    { "<leader>,", function() Snacks.picker.smart() end, desc = "Smart find files" },
 		{ "<leader>.", function() Snacks.picker.recent() end, desc = "Search Recent Files" },
 		{ "<leader><leader>", function() Snacks.picker.buffers() end, desc = "Find existing buffers" },
 
@@ -257,7 +261,7 @@ return {
 		{ "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference" },
 
 		-- Zen mode
-	  { "<leader>Z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+    { "<leader>Z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
     { "<leader>z",  function() Snacks.zen.zoom() end, desc = "Toggle Zoom" },
 
 		--stylua: ignore end
