@@ -16,5 +16,13 @@ return {
 			variables = {}, -- style for variables
 			booleans = {}, -- style for booleans
 		},
+		highlight_overrides = {
+			MiniStatusLineInactive = { fg = "#c9c7cd" },
+			MiniStatuslineFilename = { fg = "#c9c7cd" },
+			MiniTablineModifiedHidden = { fg = "#ea83a5" },
+			ModeMsg = { fg = "#c9c7cd" },
+			SnacksPickerDimmed = { fg = "#57575f" },
+			StatusLineNC = { fg = "#c9c7cd" },
+		},
 	},
 }
