@@ -3,7 +3,7 @@ local map = vim.keymap.set
 local default_opts = { noremap = true, silent = true }
 
 -- [[ Helper: Generate keymap options with description ]]
-local function get_opts(desc)
+local function extend_opts(desc)
 	return vim.tbl_extend("force", default_opts, { desc = desc })
 end
 
@@ -19,9 +19,6 @@ map({ "n", "v", "i" }, "<Right>", "<cmd>echo 'Use L key!'<CR>", { noremap = true
 
 -- [[ Command mode with ";" key ]]
 map({ "n", "v" }, "Č", ":") -- Serbian layout
-
--- [[ Quick quit ]]
-map("n", "q1", ":q!", default_opts)
 
 -- [[ Window navigation ]]
 -- map({ "n", "t" }, "<C-h>", "<C-w>h", { desc = "Move focus to the left window" })
@@ -43,7 +40,7 @@ map({ "n", "v" }, "<M-q>", "<Cmd>bd<CR>", { desc = "Quit current buffer" })
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Stop search highlight" })
 
 -- [[ Open :messages ]]
-map("n", "gm", "<cmd>messages<cr>", get_opts("Open messages"))
+map("n", "gm", "<cmd>messages<cr>", extend_opts("Open messages"))
 
 -- [[ Visual mode utilities ]]
 map("v", "<M-s>", ":sort<CR>", { desc = "Sort highlighted text" })
@@ -51,16 +48,19 @@ map("v", "K", ":m '>-2<CR>gv=gv", { desc = "Move line up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
 
 -- [[ Clipboard integration ]]
-map({ "n", "v" }, ",", '"+', get_opts("Use system clipboard"))
+map({ "n", "v" }, ",", '"+', extend_opts("Use system clipboard"))
 
 -- [[ Select all ]]
 vim.keymap.set("n", "<C-a>", function()
 	vim.cmd("normal! ggVG")
-end, get_opts("Select all"))
+end, extend_opts("Select all"))
 
 -- [[ Increment/Decrement numbers ]]
 map("n", "+", "<C-a>", { noremap = true, silent = true, desc = "Increment number" })
 map("n", "-", "<C-x>", { noremap = true, silent = true, desc = "Decrement number" })
+
+-- [[ Insert mode escape ]]
+map("i", "jk", "<Esc>", default_opts)
 
 -- [[ Terminal mode escape ]]
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
@@ -75,4 +75,16 @@ end, { desc = "Open diagnostic Quickfix list" })
 
 map("n", "Q", function()
 	vim.diagnostic.open_float()
-end, get_opts("Open diagnostic float under cursor"))
+end, extend_opts("Open diagnostic float under cursor"))
+
+--[[ Change CWD to buffer directory ]]
+map("n", "gcd", function()
+	local path = vim.fn.expand("%:p:h")
+	if path == "" then
+		vim.notify("No file associated with this buffer", vim.log.levels.WARN, { title = "CWD Change" })
+		return
+	end
+
+	vim.cmd("cd " .. path)
+	vim.notify("CWD changed to: " .. path, vim.log.levels.INFO, { title = "CWD Change" })
+end, extend_opts("Change CWD to buffer directory"))
