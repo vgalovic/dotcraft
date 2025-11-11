@@ -45,6 +45,9 @@ alias yt-dlp-audio-playlist='yt-dlp --format bestaudio --extract-audio --audio-f
 alias top="btop"
 alias ff="fastfetch"
 alias lg="lazygit"
+alias lgd="lazygit --path ~/.dotfiles"
+
+alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 
 alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
 

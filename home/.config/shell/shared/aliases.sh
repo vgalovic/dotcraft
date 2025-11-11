@@ -68,12 +68,17 @@ alias ff="fastfetch"
 #--------------------------------------------------------------------------------------
 
 alias lg="lazygit"
+alias lgd="lazygit --path ~/.dotfiles"
 
 #--------------------------------------------------------------------------------------
 
 alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
 alias neovimupdate="$HOME/.dotfiles/install/setup/setup_neovim.sh"
 alias lazygitupdate="$HOME/.dotfiles/install/setup/setup_lazygit.sh"
+
+#--------------------------------------------------------------------------------------
+
+alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 
 #--------------------------------------------------------------------------------------
 
