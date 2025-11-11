@@ -1,6 +1,6 @@
 return {
 	"saghen/blink.cmp",
-	event = { "InsertEnter", "CmdlineEnter", "CmdlineEnter /,?" },
+	event = "VeryLazy",
 	dependencies = {
 		{ "rafamadriz/friendly-snippets" },
 		{ "mikavilpas/blink-ripgrep.nvim", version = "*" },

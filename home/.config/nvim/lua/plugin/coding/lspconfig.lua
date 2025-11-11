@@ -2,10 +2,7 @@
 
 return {
 	"neovim/nvim-lspconfig",
-	event = {
-		"BufReadPost",
-		"BufNewFile",
-	},
+	event = "VeryLazy",
 
 	dependencies = {
 		"saghen/blink.cmp",
@@ -13,7 +10,7 @@ return {
 
 	config = function()
 		-- Setup LSP autocommands
-		require("lsp.autocommands").setup_lsp_autocommands()
+		require("utils.lsp").setup_lsp_autocommands()
 
 		local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 

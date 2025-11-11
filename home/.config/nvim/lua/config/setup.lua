@@ -1,8 +1,11 @@
 -- [[ Setup color scheme ]]
--- Change the name of the theme to the one you prefer.
--- To find names of available themes run :ThemesAvailable
--- Available colorschemes in this config can be found in plugins/colorschemes.
-vim.g.colorscheme = "oldworld"
+-- Change the name of the theme by editing vim.g.colorscheme below.
+-- To see and choose available themes, run :ThemesAvailable.
+-- Selecting a theme will:
+--   1. Persist your choice in this file (vim.g.colorscheme)
+--   2. Ask you to restart Neovim to apply the new theme
+-- Available themes are defined in lua/plugin/colorscheme.
+vim.g.colorscheme = "github_dark_tritanopia"
 
 -- [[ Kitty Terminal Behavior ]]
 vim.g.kitty_solid = true -- Enable solid background in Kitty when using Neovim
@@ -14,10 +17,19 @@ local tab_size = 2
 _G.Icons = require("utils.icons")
 
 -- [[ Disable unused providers ]]
-vim.g.loaded_python_provider = 0
-vim.g.loaded_ruby_provider = 0
-vim.g.loaded_node_provider = 0
-vim.g.loaded_perl_provider = 0
+vim.g.loaded_python_provider = 0 -- disables Python provider (no `:python` or Python plugins)
+vim.g.loaded_ruby_provider = 0 -- disables Ruby provider (no `:ruby` or Ruby plugins)
+vim.g.loaded_node_provider = 0 -- disables Node.js provider (no `:node` or JS-based remote plugins)
+vim.g.loaded_perl_provider = 0 -- disables Perl provider (no `:perl` integration)
+
+-- [[ Disable unused runtime plugins ]]
+vim.g.loaded_matchparen = 1 -- disables the built-in matchparen plugin (which highlights matching parentheses)
+vim.g.loaded_matchit = 1 -- disables matchit (extends % to match HTML/XML tags, etc.)
+vim.g.loaded_netrwPlugin = 1 -- disables netrw file browser plugin (use oil.nvim)
+vim.g.loaded_tarPlugin = 1 -- disables built-in tar archive browsing support
+vim.g.loaded_zipPlugin = 1 -- disables built-in zip archive browsing support
+vim.g.loaded_gzip = 1 -- disables automatic decompression for .gz files
+vim.g.loaded_tutor_mode_plugin = 1 -- disables the built-in Vim tutor plugin
 
 -- [[ General settings ]]
 vim.opt.mouse = "a" -- Enable mouse mode
