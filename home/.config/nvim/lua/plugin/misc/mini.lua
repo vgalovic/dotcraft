@@ -134,6 +134,10 @@ return { -- Collection of various small independent plugins/modules
 		vim.api.nvim_create_autocmd("BufEnter", {
 			once = true, -- load only once
 			callback = function()
+				if not package.loaded["mini.cursorword"] then
+					require("mini.cursorword").setup()
+				end
+
 				if not package.loaded["mini.diff"] then
 					require("mini.diff").setup({
 						view = {
