@@ -58,3 +58,7 @@ fi
 if command -v kvantummanager >/dev/null 2>&1; then
     export QT_STYLE_OVERRIDE=kvantum
 fi
+
+if command -v npm >/dev/null 2>&1; then
+    export PATH="$HOME/.npm-global/bin:$PATH"
+fi
