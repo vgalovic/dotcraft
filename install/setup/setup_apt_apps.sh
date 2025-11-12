@@ -13,8 +13,8 @@ curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 
 # Fastfetch PPA
 if ! grep -q "^deb .*\zhangsongcui3371/fastfetch" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-    print_msg "Adding PPA for Fastfetch..."
-    sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
+  print_msg "Adding PPA for Fastfetch..."
+  sudo add-apt-repository -y ppa:zhangsongcui3371/fastfetch
 fi
 
 # Update package list after adding sources
@@ -22,20 +22,20 @@ sudo apt update
 
 # APT installable packages
 apps=(
-    bear
-    btop
-    delta
-    fastfetch
-    ffmpegthumbnailer
-    fzf
-    imagemagick
-    jq
-    luarocks
-    mercurial
-    nodejs
-    p7zip-full
-    poppler-utils
-    ripgrep
+  bear
+  btop
+  delta
+  fastfetch
+  ffmpegthumbnailer
+  fzf
+  imagemagick
+  jq
+  luarocks
+  mercurial
+  nodejs
+  p7zip-full
+  poppler-utils
+  ripgrep
 )
 
 print_msg "Installing packages via APT..."
@@ -43,42 +43,42 @@ sudo apt install -y "${apps[@]}"
 
 # Install pipx if not installed
 if ! command -v pipx &>/dev/null; then
-    print_msg "pipx is not installed. Installing pipx (required for rich-cli)..."
-    must_execute_script "setup_pipx"
+  print_msg "pipx is not installed. Installing pipx (required for rich-cli)..."
+  must_execute_script "setup_pipx"
 fi
 
 print_msg "Installing rich-cli via pipx..."
 if pipx install rich-cli; then
-    print_msg "rich-cli installed successfully."
+  print_msg "rich-cli installed successfully."
 else
-    print_error "Failed to install rich-cli."
+  print_error "Failed to install rich-cli."
 fi
 
 # Install cargo if missing (Rust toolchain)
 if ! command -v cargo &>/dev/null; then
-    print_msg "Cargo is not installed. Installing Rust (required for some packages)..."
-    must_execute_script "setup_rust"
+  print_msg "Cargo is not installed. Installing Rust (required for some packages)..."
+  must_execute_script "setup_rust"
 fi
 
 # Cargo-based tools
 cargo_apps=(
-    bat
-    eza
-    fd-find
-    onefetch
-    television
-    tlrc
-    yazi-cli
-    yazi-fm
+  bat
+  eza
+  fd-find
+  onefetch
+  television
+  tlrc
+  yazi-cli
+  yazi-fm
 )
 
 for app in "${cargo_apps[@]}"; do
-    print_msg "Installing $app via cargo with --locked..."
-    if cargo install --locked "$app"; then
-        print_msg "$app installed successfully."
-    else
-        print_error "Failed to install $app."
-    fi
+  print_msg "Installing $app via cargo with --locked..."
+  if cargo install --locked "$app"; then
+    print_msg "$app installed successfully."
+  else
+    print_error "Failed to install $app."
+  fi
 done
 
 # Install Github cli
@@ -94,9 +94,9 @@ must_execute_script "setup_lazygit"
 print_msg "Installing arduino-cli..."
 mkdir -p $HOME/.local/bin/
 if curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR="$HOME/.local/bin" sh; then
-    print_msg "arduino-cli installed successfully to ~/local/bin."
+  print_msg "arduino-cli installed successfully to ~/local/bin."
 else
-    print_error "Failed to install arduino-cli."
+  print_error "Failed to install arduino-cli."
 fi
 
 # Install latest Neovim from source using your setup script

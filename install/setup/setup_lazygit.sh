@@ -7,10 +7,10 @@ source "$HOME/.dotfiles/install/setup/print_and_log.sh"
 # Fetch latest version from GitHub
 print_msg "Fetching latest lazygit version..."
 LAZYGIT_VERSION=$(curl -sf "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" \
-  | grep -Po '"tag_name": *"v\K[^"]*') || {
-    print_error "Failed to fetch latest lazygit version"
-    exit 1
-  }
+    | grep -Po '"tag_name": *"v\K[^"]*') || {
+  print_error "Failed to fetch latest lazygit version"
+  exit 1
+}
 
 # Check if lazygit is already installed
 if command -v lazygit &> /dev/null; then

@@ -4,37 +4,37 @@ source "$HOME/.dotfiles/install/setup/print_and_log.sh"
 
 # Update system
 update_pacman() {
-    print_msg "Updating system packages..."
-    sudo pacman -Syu --noconfirm || { print_error "Failed to update system packages"; exit 1; }
+  print_msg "Updating system packages..."
+  sudo pacman -Syu --noconfirm || { print_error "Failed to update system packages"; exit 1; }
 }
 
 # Install clipboard utility depending on display server
 detect_compositor() {
-    if [ -n "$WAYLAND_DISPLAY" ]; then
-        echo "wayland"
-    elif [ -n "$DISPLAY" ]; then
-        echo "x11"
-    else
-        echo "unknown"
-    fi
+  if [ -n "$WAYLAND_DISPLAY" ]; then
+    echo "wayland"
+  elif [ -n "$DISPLAY" ]; then
+    echo "x11"
+  else
+    echo "unknown"
+  fi
 }
 
 install_clipboard() {
-    compositor=$(detect_compositor)
+  compositor=$(detect_compositor)
 
-    case $compositor in
-        wayland)
-            print_msg "Detected Wayland. Installing wl-clipboard..."
-            sudo pacman -S --noconfirm wl-clipboard || print_error "Failed to install wl-clipboard"
-            ;;
-        x11)
-            print_msg "Detected X11. Installing xclip..."
-            sudo pacman -S --noconfirm xclip || print_error "Failed to install xclip"
-            ;;
-        *)
-            print_error "Could not detect the compositor. Clipboard utility not installed."
-            ;;
-    esac
+  case $compositor in
+    wayland)
+      print_msg "Detected Wayland. Installing wl-clipboard..."
+      sudo pacman -S --noconfirm wl-clipboard || print_error "Failed to install wl-clipboard"
+      ;;
+    x11)
+      print_msg "Detected X11. Installing xclip..."
+      sudo pacman -S --noconfirm xclip || print_error "Failed to install xclip"
+      ;;
+    *)
+      print_error "Could not detect the compositor. Clipboard utility not installed."
+      ;;
+  esac
 }
 
 install_basic_pacman() {
