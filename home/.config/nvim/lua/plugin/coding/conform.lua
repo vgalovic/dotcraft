@@ -39,5 +39,11 @@ return {
 			["verilog"] = { "verible" },
 			["zsh"] = { "beautysh" },
 		},
+
+		formatters = {
+			beautysh = {
+				prepend_args = { "--indent-size", "2", "--force-function-style", "paronly" },
+			},
+		},
 	},
 }
