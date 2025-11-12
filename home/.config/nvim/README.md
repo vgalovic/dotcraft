@@ -105,6 +105,7 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 - [echasnovski/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
   - [mini.ai](https://dotfyle.com/plugins/echasnovski/mini.ai)
   - [mini.comment](https://dotfyle.com/plugins/echasnovski/mini.comment)
+  - [mini.cursorword](https://dotfyle.com/plugins/echasnovski/mini.cursorword)
   - [mini.diff](https://dotfyle.com/plugins/echasnovski/mini.diff)
   - [mini.hipatterns](https://dotfyle.com/plugins/echasnovski/mini.hipatterns)
   - [mini.icons](https://dotfyle.com/plugins/echasnovski/mini.icons)
