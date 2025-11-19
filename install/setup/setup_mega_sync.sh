@@ -38,6 +38,9 @@ which_os() {
     ubuntu)
       os="ubuntu"
       ;;
+    pop)
+      os="pop"
+      ;;
     raspbian)
       os="raspbian"
       ;;
@@ -135,7 +138,7 @@ download_megasync() {
       megasync_pkg="Fedora_${os_version}/x86_64/megasync-Fedora_${os_version}.x86_64.rpm"
       megasync_path="$download_path/megasync.rpm"
       ;;
-    linuxmint | ubuntu)
+    linuxmint | ubuntu | pop)
       if dpkg -l | grep -q megasync; then
         print_msg "MEGA sync is already installed. Skipping installation."
         return 0
@@ -198,7 +201,7 @@ install_megasync() {
     arch)
       sudo pacman -U "$megasync_path" && print_msg "$success" || print_error "$failure"
       ;;
-    linuxmint | ubuntu | debian | raspbian)
+    linuxmint | ubuntu | debian | raspbian | pop)
       sudo apt install -y "$megasync_path" && print_msg "$success" || print_error "$failure"
       ;;
     fedora)
@@ -251,7 +254,7 @@ download_file_manager_integration() {
       file_manager_integration_pkg="Fedora_${os_version}/x86_64/${file_manager}-megasync-Fedora_${os_version}.x86_64.rpm"
       file_manager_integration_path="$download_path/${file_manager}-megasync.rpm"
       ;;
-    linuxmint | ubuntu)
+    linuxmint | ubuntu | pop)
       if dpkg -l | grep -q "${file_manager}-megasync"; then
         print_msg "${file_manager}-megasync is already installed. Skipping installation."
         return 0
@@ -303,7 +306,7 @@ install_file_manager_integration() {
   local file_manager_integration_path="$2"
 
   case "$os" in
-    linuxmint | ubuntu | debian)
+    linuxmint | ubuntu | debian | pop)
       if sudo apt install -y "$file_manager_integration_path"; then
         print_msg "${file_manager}'s megasync integration installed."
       else
