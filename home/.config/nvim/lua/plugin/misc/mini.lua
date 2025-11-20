@@ -32,6 +32,7 @@ return { -- Collection of various small independent plugins/modules
 				["verilog"] = { glyph = Icons.filetype.verilog, hl = "MiniIconsGreen" },
 			},
 			file = {
+				["Brewfile"] = { glyph = Icons.file.brewfile, hl = "MiniIconsYellow" },
 				["config"] = { glyph = Icons.file.config, hl = "MiniIconsGrey" },
 				["kitty.conf"] = { glyph = Icons.file.kitty, hl = "MiniIconsOrange" },
 			},

@@ -65,6 +65,7 @@ local icons = {
 		mac = "",
 	},
 	file = {
+		brewfile = "",
 		config = "󱁻",
 		kitty = "󰄛",
 	},
