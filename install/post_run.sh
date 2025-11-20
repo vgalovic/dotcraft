@@ -37,7 +37,14 @@ if command -v cargo >/dev/null; then
 fi
 
 if command -v brew >/dev/null; then
-  must_execute_script "setup_brew_apps"
+  BREWFILE="$HOME/.dotfiles/install/app_list/Brewfile"
+
+  if [[ ! -f "$BREWFILE" ]]; then
+    print_warning "brew is detected but Brewfile is not found at $BREWFILE — skipping brew bundle"
+  else
+    print_msg "brew is detected, installing apps via brew"
+    brew bundle --file="$BREWFILE"
+  fi
 fi
 
 if command -v mpv >/dev/null; then
