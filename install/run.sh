@@ -69,7 +69,7 @@ for script in setup_terminal_and_prompt setup_shell setup_fonts setup_mega_sync 
   execute_script "$script"
 done
 
-must_execute_script "setup_stow"
+must_execute_script "setup_dotlinks"
 
 # Helper function for downloading files
 download_file() {

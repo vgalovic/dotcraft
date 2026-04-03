@@ -38,7 +38,6 @@ alias systemctl_list='systemctl list-unit-files'
 
 #--------------------------------------------------------------------------------------
 
-# alias systemc="g++ -I ${SYSTEMC}/include -L${SYSTEMC}/lib-linux64 -lsystemc -o"
 alias systemc-g="g++ -I ${SYSTEMC}/include -L${SYSTEMC}/lib-linux64 -lsystemc -o"
 alias systemc-cl="clang++ -I ${SYSTEMC}/include -L${SYSTEMC}/lib-linux64 -lsystemc -o"
 
@@ -72,7 +71,7 @@ alias lgd="lazygit --path ~/.dotfiles"
 
 #--------------------------------------------------------------------------------------
 
-alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
+alias dotlink="$HOME/.dotfiles/install/setup/setup_dotlinks.sh"
 alias neovimupdate="$HOME/.dotfiles/install/setup/setup_neovim.sh"
 alias lazygitupdate="$HOME/.dotfiles/install/setup/setup_lazygit.sh"
 
@@ -96,3 +95,10 @@ alias vim="nvim"
 #--------------------------------------------------------------------------------------
 
 alias neovide="$HOME/.local/share/AppImage/neovide.appimage"
+
+#--------------------------------------------------------------------------------------
+
+## Eza (Improved ls)
+alias ls="eza --color=always --icons=always --hyperlink"
+alias la="eza --color=always --icons=always --hyperlink --all"
+alias ll="eza --color=always --long --git --icons=always --hyperlink --all"

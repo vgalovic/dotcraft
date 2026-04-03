@@ -49,7 +49,7 @@ alias lgd="lazygit --path ~/.dotfiles"
 
 alias fzf="fzf --style full --preview 'fzf-preview.sh {}' --bind 'focus:transform-header:file --brief {}'"
 
-alias stow_dotfiles="$HOME/.dotfiles/install/setup/setup_stow.sh"
+alias dotlink="$HOME/.dotfiles/install/setup/setup_dotlinks.sh"
 
 alias linutil="curl -fsSL https://christitus.com/linux | sh"
 
