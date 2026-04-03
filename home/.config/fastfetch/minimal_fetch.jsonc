@@ -36,7 +36,6 @@
         {
             "key": "{icon} disk",
             "type": "disk",
-            "folders": "/",
             "keyColor": "35"
         },
         {
