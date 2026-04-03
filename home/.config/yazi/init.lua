@@ -6,7 +6,7 @@ require("starship"):setup({
 })
 
 -- Disable default status line (for a cleaner look)
-require("no-status"):setup()
+-- require("no-status"):setup()
 
 -- Git integration (e.g., shows git info in previews or files)
 require("git"):setup()
