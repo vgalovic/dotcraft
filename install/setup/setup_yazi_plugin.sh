@@ -68,6 +68,7 @@ install_yazi_plugins() {
     "yazi-rs/flavors:catppuccin-mocha" # [[ catppuccin-mocha.yazi ]]
     "yazi-rs/flavors:catppuccin-latte" # [[ catppuccin-latte.yazi ]]
     "yazi-rs/plugins:chmod" # [[ chmod.yazi ]]
+    "Chromium-3-Oxide/everforest-medium", # [[ everforest-medium. yazi ]]
     "Sonico98/exifaudio" # [[ exifaudio.yazi ]]
     "ahkohd/eza-preview" # [[ eza-preview.yazi ]]
     "yazi-rs/plugins:full-border" # [[ full-border.yazi ]]
@@ -103,7 +104,7 @@ install_yazi_plugins() {
     # Install each Ya plugin
     for ya_plugin in "${ya_plugins[@]}"; do
       print_msg "Installing ya plugin: $ya_plugin..."
-      if ! ya pack -a "$ya_plugin"; then
+      if ! ya pkg add "$ya_plugin"; then
         print_error "Failed to install ya plugin: $ya_plugin."
       else
         print_msg "$ya_plugin installed successfully."

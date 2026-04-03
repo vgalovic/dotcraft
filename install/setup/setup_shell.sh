@@ -26,7 +26,7 @@ install_zsh() {
     ZSH_PATH=$(command -v zsh)
     if [ -n "$ZSH_PATH" ]; then
       if [ "$SHELL" != "$ZSH_PATH" ]; then
-        sudo chsh -s "$ZSH_PATH" || { print_error "Failed to set ZSH as default shell."; return 1; }
+        sudo chsh -s "$ZSH_PATH" "$USER" || { print_error "Failed to set ZSH as default shell."; return 1; }
         print_msg "ZSH set as default shell."
       else
         print_msg "ZSH is already your default shell."
@@ -63,7 +63,7 @@ install_fish() {
     FISH_PATH=$(command -v fish)
     if [ -n "$FISH_PATH" ]; then
       if [ "$SHELL" != "$FISH_PATH" ]; then
-        sudo chsh -s "$FISH_PATH" || { print_error "Failed to set Fish as default shell."; return 1; }
+        sudo chsh -s "$FISH_PATH" "$USER" || { print_error "Failed to set Fish as default shell."; return 1; }
         print_msg "Fish set as default shell."
       else
         print_msg "Fish is already your default shell."

@@ -154,11 +154,6 @@ if prompt_yes_default "Do you want to install GitHub CLI?"; then
   install_github_cli
 fi
 
-# Install ZSH
-if prompt_yes_default "Do you want to install ZSH?"; then
-  install_zsh
-fi
-
 # Check if running on KDE desktop environment
 if [[ "$XDG_CURRENT_DESKTOP" != "KDE" ]]; then
   # Install CopyQ
