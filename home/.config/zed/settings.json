@@ -7,118 +7,120 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "session": {
+    "trust_all_worktrees": true,
+  },
   "edit_predictions": {
+    "provider": "zed",
     "mode": "subtle",
     "copilot": {
       "proxy": null,
-      "proxy_no_verify": null
+      "proxy_no_verify": null,
     },
-    "enabled_in_text_threads": false
+    "enabled_in_text_threads": false,
   },
   "agent": {
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-latest"
-    }
-  },
-  "features": {
-    "edit_prediction_provider": "zed"
+      "model": "claude-3-5-sonnet-latest",
+    },
   },
   "telemetry": {
-    "metrics": false
+    "diagnostics": false,
+    "metrics": false,
   },
   "vim_mode": true,
   "vim": {
     "toggle_relative_line_numbers": true,
     "use_system_clipboard": "always",
-    "use_multiline_find": false,
     "use_smartcase_find": false,
-    "custom_digraphs": {}
+    "custom_digraphs": {},
   },
   "ui_font_size": 14,
   "buffer_font_size": 14,
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "ui_font_family": "JetBrainsMono Nerd Font",
-  "restore_on_startup": "none",
+  "restore_on_startup": "launchpad",
   "theme": {
     "mode": "system",
-    "light": "Tomorrow Night Min",
-    "dark": "Tomorrow Night Out Min"
+    "light": "Everforest Light Medium (material)",
+    "dark": "Everforest Dark Medium (material)",
   },
   "icon_theme": {
     "mode": "system",
     "light": "Material Icon Theme",
-    "dark": "Material Icon Theme"
+    "dark": "Material Icon Theme",
   },
   "journal": {
     "path": "~/Documents/Zed",
-    "hour_format": "hour24"
+    "hour_format": "hour24",
   },
   "auto_install_extensions": {
-    "Catppuccin Themes": true,
-    "Catppuccin Icons": true,
-    "Tomorrow Minimal Theme": true,
-    "Material Icon Theme": true,
-    "Git Firefly": true,
-    "Make": true,
-    "NeoCMake": true,
-    "Verilog": true,
-    "VHDL": true
+    "catppuccin": false,
+    "catppuccin-icons": false,
+    "tomorrow-min-theme": false,
+    "everforest": true,
+    "material-icon-theme": true,
+    "git-firefly": true,
+    "make": true,
+    "neocmake": true,
+    "verilog": true,
+    "vhdl": true,
   },
   "tab_size": 2,
   "languages": {
     "C": {
       "format_on_save": "on",
-      "use_on_type_format": true
+      "use_on_type_format": true,
     },
     "C++": {
       "format_on_save": "on",
-      "use_on_type_format": true
+      "use_on_type_format": true,
     },
     "JSON": {
       "prettier": {
-        "allowed": true
-      }
+        "allowed": true,
+      },
     },
     "JSONC": {
       "prettier": {
-        "allowed": true
-      }
+        "allowed": true,
+      },
     },
     "Markdown": {
       "format_on_save": "on",
       "use_on_type_format": false,
       "prettier": {
-        "allowed": true
-      }
+        "allowed": true,
+      },
     },
     "VHDL": {
       "format_on_save": "on",
-      "use_on_type_format": true
+      "use_on_type_format": true,
     },
     "Verilog": {
       "format_on_save": "on",
-      "use_on_type_format": true
+      "use_on_type_format": true,
     },
     "XML": {
       "prettier": {
         "allowed": true,
-        "plugins": ["@prettier/plugin-xml"]
-      }
+        "plugins": ["@prettier/plugin-xml"],
+      },
     },
     "YAML": {
       "prettier": {
-        "allowed": true
-      }
-    }
+        "allowed": true,
+      },
+    },
   },
   "lsp": {
     "rust-analyzer": {
       "initialization_options": {
         "check": {
-          "command": "clippy"
-        }
-      }
-    }
-  }
+          "command": "clippy",
+        },
+      },
+    },
+  },
 }
