@@ -1,12 +1,8 @@
 # dotcraft/home/.config/nvim
 
-<a href="https://dotfyle.com/vgalovic/dotcraft-home-config-nvim"><img src="https://dotfyle.com/vgalovic/dotcraft-home-config-nvim/badges/plugins?style=flat" /></a>
-<a href="https://dotfyle.com/vgalovic/dotcraft-home-config-nvim"><img src="https://dotfyle.com/vgalovic/dotcraft-home-config-nvim/badges/leaderkey?style=flat" /></a>
-<a href="https://dotfyle.com/vgalovic/dotcraft-home-config-nvim"><img src="https://dotfyle.com/vgalovic/dotcraft-home-config-nvim/badges/plugin-manager?style=flat" /></a>
-
 ## Install Instructions
 
-> Install requires Neovim 0.9+. Always review the code before installing a configuration.
+> Install requires Neovim 0.12+. Always review the code before installing a configuration.
 
 Clone the repository and install the plugins:
 
@@ -20,19 +16,22 @@ Open Neovim with this config:
 NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 ```
 
+## Inspiration
+
+This config is **built on [MiniMax](https://github.com/echasnovski/minimax.nvim)**, a lightweight bootstrap for Neovim.
+It uses the `mini.nvim` plugin collection extensively and follows MiniMax’s approach to lazy-loading and sensible defaults.
+
+Most of the plugin setups, keymaps, and lazy-loading come from MiniMax, with a few **personal customizations** to fit my workflow.
+
 ## Plugins
 
-### autocomplete
-
-- [saghen/blink.cmp](https://dotfyle.com/plugins/Saghen/blink.cmp)
-  - [mikavilpas/blink-ripgrep.nvim](https://dotfyle.com/plugins/mikavilpas/blink-ripgrep.nvim)
+The setup uses Neovim’s new built-in package manager to handle plugins—keeps things simple and fast, no extra plugin managers needed.
 
 ### colorscheme
 
 - [bluz71/vim-moonfly-colors](https://dotfyle.com/plugins/bluz71/vim-moonfly-colors)
-- [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
 - [dgox16/oldworld.nvim](https://dotfyle.com/plugins/dgox16/oldworld.nvim)
-- [folke/tokyonight.nvim](https://dotfyle.com/plugins/folke/tokyonight.nvim)
+- [neanias/everforest-nvim](https://dotfyle.com/plugins/neanias/everforest-nvim)
 - [projekt0n/github-nvim-theme](https://dotfyle.com/plugins/projekt0n/github-nvim-theme)
 
 ### comment
@@ -47,18 +46,9 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 
 - [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
 
-### file explorer
-
-- [stevearc/oil.nvim](https://dotfyle.com/plugins/stevearc/oil.nvim)
-  - [benomahony/oil-git.nvim](https://github.com/benomahony/oil-git.nvim)
-
 ### game
 
 - [ThePrimeagen/vim-be-good](https://dotfyle.com/plugins/ThePrimeagen/vim-be-good)
-
-### keybinding
-
-- [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
 
 ### lsp
 
@@ -68,55 +58,30 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 ### lsp-installer
 
 - [mason-org/mason.nvim](https://dotfyle.com/plugins/williamboman/mason.nvim)
-  - [mason-org/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
   - [WhoIsSethDaniel/mason-tool-installer.nvim](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim)
 
 ### markdown-and-latex
 
 - [OXY2DEV/markview.nvim](https://dotfyle.com/plugins/OXY2DEV/markview.nvim)
-- [brianhuster/live-preview.nvim](iamcco/markdown-preview.nvim)
 
 ### nvim-dev
 
 - [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
-- [folke/lazydev.nvim](https://dotfyle.com/plugins/folke/lazydev.nvim)
-- [Bilal2453/luvit-meta](https://github.com/Bilal2453/luvit-meta)
-
-### plugin-manager
-
-- [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
 
 ### snippet
 
 - [rafamadriz/friendly-snippets](https://dotfyle.com/plugins/rafamadriz/friendly-snippets)
-
-### split-and-window
-
-- [mrjones2014/smart-splits.nvim](https://dotfyle.com/plugins/mrjones2014/smart-splits.nvim)
 
 ### syntax
 
 - [fladson/vim-kitty](https://github.com/fladson/vim-kitty)
 - [mtdl9/vim-log-highlighting](https://github.com/mtdl9/vim-log-highlighting)
 - [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
+- [shellRaining/hlchunk.nvim](https://github.com/shellRaining/hlchunk.nvim)
 
 ### utility
 
-- [echasnovski/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
-  - [mini.ai](https://dotfyle.com/plugins/echasnovski/mini.ai)
-  - [mini.comment](https://dotfyle.com/plugins/echasnovski/mini.comment)
-  - [mini.cursorword](https://dotfyle.com/plugins/echasnovski/mini.cursorword)
-  - [mini.diff](https://dotfyle.com/plugins/echasnovski/mini.diff)
-  - [mini.hipatterns](https://dotfyle.com/plugins/echasnovski/mini.hipatterns)
-  - [mini.icons](https://dotfyle.com/plugins/echasnovski/mini.icons)
-  - [mini.jump2d](https://dotfyle.com/plugins/echasnovski/mini.jump2d)
-  - [mini.jump](https://dotfyle.com/plugins/echasnovski/mini.jump)
-  - [mini.pairs](https://dotfyle.com/plugins/echasnovski/mini.pairs)
-  - [mini.sessions](https://dotfyle.com/plugins/echasnovski/mini.sessions)
-  - [mini.statusline](https://dotfyle.com/plugins/echasnovski/mini.statusline)
-  - [mini.surround](https://dotfyle.com/plugins/echasnovski/mini.surround)
-  - [mini.tabline](https://dotfyle.com/plugins/echasnovski/mini.tabline)
-- [folke/snacks.nvim](https://dotfyle.com/plugins/folke/snacks.nvim)
+- [nvim-mini/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
 
 ## Installed Language Servers, Formatters, and Linters
 
@@ -127,17 +92,17 @@ NVIM_APPNAME=vgalovic/dotcraft/home/.config/nvim nvim
 | clangd                  | mdformat    |
 | cmake                   | rustfmt     |
 | lua_ls                  | stylua      |
-| pyright                 |             |
-| ruff                    |             |
+| marksman                |             |
+| matlab_ls               |             |
 | rust_analyzer           |             |
 | vhdl_ls                 |             |
 | svlangserver            |             |
 | verible                 |             |
 
 > [!NOTE] `rust_analyzer`, `rustfmt`, and `mdformat` are **not installed via Mason**. They must be installed independently.
-> In `nvim/lua/plugins/core/mason.lua`, there are commands provided to install these packages manually.
+> In `nvim/plugins/60_lsp_treesitter.lua`, there are commands provided to install these packages manually.
 
 ______________________________________________________________________
 
-> This readme was generated by [Dotfyle](https://dotfyle.com)
+> The base of readme was generated by [Dotfyle](https://dotfyle.com)
 > For plugins not listed on Dotfyle, links will point directly to their respective GitHub repositories.
