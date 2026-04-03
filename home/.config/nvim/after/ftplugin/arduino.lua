@@ -255,6 +255,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- Keymaps
 -- =============================================================================
 
+table.insert(Config.leader_groups, { mode = { "n" }, keys = "<Leader>a", desc = "+Arduino" })
+
 vim.keymap.set("n", "<leader>ab", "<cmd>ArduinoBuild<CR>", { buffer = true, desc = "Build" })
 vim.keymap.set("n", "<leader>ac", "<cmd>ArduinoClean<CR>", { buffer = true, desc = "Clean" })
 vim.keymap.set("n", "<leader>am", "<cmd>ArduinoMonitor<CR>", { buffer = true, desc = "Monitor" })

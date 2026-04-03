@@ -80,7 +80,7 @@ require("vim._core.ui2").enable({
 			height = 0.5,
 			timeout = 1000,
 		},
-		pager = { height = 2 },
+		pager = { height = 4 },
 	},
 })
 

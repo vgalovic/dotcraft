@@ -83,7 +83,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 Config.leader_groups = {
-	{ mode = { "n" }, keys = "<Leader>a", desc = "+Arduino" },
 	{ mode = { "n" }, keys = "<Leader>b", desc = "+Buffer" },
 	{ mode = { "n" }, keys = "<Leader>e", desc = "+Explore/Edit" },
 	{ mode = { "n", "v" }, keys = "<Leader>f", desc = "+Find" },

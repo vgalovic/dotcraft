@@ -257,7 +257,7 @@ end)
 later(function()
 	require("mini.clue").setup({
 		clues = {
-			Config.leader_group,
+			Config.leader_groups,
 			require("mini.clue").gen_clues.builtin_completion(),
 			require("mini.clue").gen_clues.g(),
 			require("mini.clue").gen_clues.marks(),
