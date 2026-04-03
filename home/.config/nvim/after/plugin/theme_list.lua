@@ -2,7 +2,7 @@
 Shows a list of available color themes by scanning
 all files under <nvim_config>/lua/plugin/colorscheme for
 the marker `-- THEMES_AVAILABLE:`. Lets you persist a choice
-by editing lua/config/setup.lua (vim.g.colorscheme)
+by editing init.lua (vim.g.colorscheme)
 and then asks user to restart Neovim to apply the colorscheme.
 
 Usage:
@@ -19,22 +19,22 @@ local function show_themes_available()
 	-- Neovim config directory
 	local config_dir = vim.fn.stdpath("config")
 	-- Folder where theme files are located
-	local themes_dir = config_dir .. "/lua/plugin/colorscheme"
+	local themes_dir = config_dir .. "/plugin/70_colorscheme.lua"
 	-- File where the chosen theme is persisted
-	local setup_file = config_dir .. "/lua/config/setup.lua"
+	local init_file = config_dir .. "/init.lua"
 
 	-- Function to update vim.g.colorscheme in setup.lua
 	local function persist_theme_to_setup(theme)
 		-- Check if setup.lua exists
-		if vim.fn.filereadable(setup_file) == 0 then
-			vim.notify("setup.lua not found at: " .. setup_file, vim.log.levels.ERROR, { title = "Theme Persist" })
+		if vim.fn.filereadable(init_file) == 0 then
+			vim.notify("init.lua not found at: " .. init_file, vim.log.levels.ERROR, { title = "Theme Persist" })
 			return false
 		end
 
 		-- Read all lines from setup.lua
-		local lines = vim.fn.readfile(setup_file)
+		local lines = vim.fn.readfile(init_file)
 		if not lines then
-			vim.notify("Failed to read setup.lua", vim.log.levels.ERROR, { title = "Theme Persist" })
+			vim.notify("Failed to read init.lua", vim.log.levels.ERROR, { title = "Theme Persist" })
 			return false
 		end
 
@@ -59,10 +59,10 @@ local function show_themes_available()
 			table.insert(lines, replacement)
 		end
 
-		-- Write updated lines back to setup.lua
-		local ok, err = pcall(vim.fn.writefile, lines, setup_file)
+		-- Write updated lines back to init.lua
+		local ok, err = pcall(vim.fn.writefile, lines, init_file)
 		if not ok then
-			vim.notify("Failed to write setup.lua: " .. (err or ""), vim.log.levels.ERROR, { title = "Theme Persist" })
+			vim.notify("Failed to write init.lua: " .. (err or ""), vim.log.levels.ERROR, { title = "Theme Persist" })
 			return false
 		end
 
@@ -157,7 +157,9 @@ local function show_themes_available()
 
 	-- Persist theme on <CR> (Enter)
 	vim.keymap.set("n", "<CR>", function()
+		local old_theme = vim.g.colorscheme
 		local theme = vim.api.nvim_get_current_line()
+
 		-- Ignore header lines
 		if theme:match("^Available") or theme:match("^─") then
 			return
@@ -170,12 +172,16 @@ local function show_themes_available()
 		-- Close floating window
 		vim.cmd("close")
 
-		-- Notify user to restart Neovim
-		vim.notify(
-			"Theme '" .. theme .. "' persisted.\nPlease restart Neovim to apply the theme.",
-			vim.log.levels.INFO,
-			{ title = "Theme Changed" }
-		)
+		if old_theme:find("^github_") and theme:find("^github_") then
+			old_theme = nil
+		elseif old_theme:find("^github_") then
+			old_theme = "github_theme"
+		end
+
+		vim.cmd.colorscheme("default")
+		vim.pack.del({ old_theme }, { force = true })
+		vim.cmd("source " .. init_file)
+		vim.cmd("restart")
 	end, { buffer = buf, nowait = true })
 end
 
@@ -183,3 +189,8 @@ end
 -- Command: Show theme picker
 -- ===============================
 vim.api.nvim_create_user_command("ThemesAvailable", show_themes_available, {})
+
+-- ===============================
+-- Keymap: Show theme picker
+-- ===============================
+vim.keymap.set("n", "<leader\\t", "<cmd>ThemesAvailable<cr>", { desc = "Change theme" })
