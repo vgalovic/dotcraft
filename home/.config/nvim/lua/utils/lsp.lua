@@ -6,59 +6,86 @@ local M = {}
 --                          Autocommands
 --========================================================================
 
--- Utility functions shared between progress reports for LSP and DAP
 function M.setup_lsp_autocommands()
-	local augroup_lsp_attach = vim.api.nvim_create_augroup("lsp-attach", {})
-	local augroup_lsp_detach = vim.api.nvim_create_augroup("lsp-detach", {})
+	local augroup_lsp_attach = vim.api.nvim_create_augroup("lsp-attach", { clear = true })
+	local augroup_lsp_detach = vim.api.nvim_create_augroup("lsp-detach", { clear = true })
 
+	-------------------------------------------------------------------------
+	-- LSP ATTACH
+	-------------------------------------------------------------------------
 	vim.api.nvim_create_autocmd("LspAttach", {
 		group = augroup_lsp_attach,
 		callback = function(event)
 			M.setup_lsp_keymaps(event.buf)
 
 			local client = vim.lsp.get_client_by_id(event.data.client_id)
-			if client and client.server_capabilities.documentHighlightProvider then
-				local augroup_lsp_highlight = vim.api.nvim_create_augroup("lsp-highlight-" .. event.buf, {})
+			if not client then
+				return
+			end
+
+			-- Setup document highlight if supported
+			if client.server_capabilities.documentHighlightProvider then
+				local group = vim.api.nvim_create_augroup("lsp-highlight-" .. event.buf, { clear = true })
+
+				-- Store the numeric ID so LspDetach can clean it
+				vim.b[event.buf].lsp_highlight_group = group
 
 				vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+					group = group,
 					buffer = event.buf,
-					group = augroup_lsp_highlight,
 					callback = vim.lsp.buf.document_highlight,
 				})
 
 				vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+					group = group,
 					buffer = event.buf,
-					group = augroup_lsp_highlight,
 					callback = vim.lsp.buf.clear_references,
 				})
 			end
 		end,
 	})
 
+	-------------------------------------------------------------------------
+	-- LSP DETACH
+	-------------------------------------------------------------------------
 	vim.api.nvim_create_autocmd("LspDetach", {
 		group = augroup_lsp_detach,
-		once = true, -- Runs only once per buffer
 		callback = function(event)
-			vim.lsp.buf.clear_references()
-			vim.api.nvim_clear_autocmds({ group = "lsp-highlight-" .. event.buf, buffer = event.buf })
+			-- Always clear highlights
+			pcall(vim.lsp.buf.clear_references)
+
+			-- Clean up the highlight autocmd group
+			local group = vim.b[event.buf].lsp_highlight_group
+			if group then
+				vim.api.nvim_clear_autocmds({ group = group })
+				vim.b[event.buf].lsp_highlight_group = nil
+			end
 		end,
 	})
 end
 
--- LSP progress reporting through notifier
+--========================================================================
+--                       LSP Progress Notifications
+--========================================================================
+
 function M.setup_lsp_progress()
-	---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
 	local progress = vim.defaulttable()
+
 	vim.api.nvim_create_autocmd("LspProgress", {
-		---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
 		callback = function(ev)
 			local client = vim.lsp.get_client_by_id(ev.data.client_id)
-			local value = ev.data.params.value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
-			if not client or type(value) ~= "table" then
+			if not client then
 				return
 			end
+
+			local value = ev.data.params.value
+			if type(value) ~= "table" then
+				return
+			end
+
 			local p = progress[client.id]
 
+			-- Update progress entries
 			for i = 1, #p + 1 do
 				if i == #p + 1 or p[i].token == ev.data.params.token then
 					p[i] = {
@@ -74,7 +101,8 @@ function M.setup_lsp_progress()
 				end
 			end
 
-			local msg = {} ---@type string[]
+			-- Filter & combine
+			local msg = {}
 			progress[client.id] = vim.tbl_filter(function(v)
 				return table.insert(msg, v.msg) or not v.done
 			end, p)
@@ -93,18 +121,18 @@ function M.setup_lsp_progress()
 end
 
 --========================================================================
---                       Floating Preview
+--                              Floating Preview
 --========================================================================
 
 function M.setup_floating_preview()
-	local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+	local orig = vim.lsp.util.open_floating_preview
 
 	function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 		opts = opts or {}
 		opts.border = opts.border or "rounded"
 		opts.max_height = opts.max_height or 40
 		opts.max_width = opts.max_width or 100
-		return orig_util_open_floating_preview(contents, syntax, opts, ...)
+		return orig(contents, syntax, opts, ...)
 	end
 end
 
@@ -116,24 +144,35 @@ function M.setup_lsp_keymaps(bufnr)
 	local map = vim.keymap.set
 	local snacks = require("snacks")
 
-	local function lsp_map(keys, func, desc, mode)
-		mode = mode or "n"
-		map(mode, keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+	local function lsp_map(keys, fn, desc, mode)
+		map(mode or "n", keys, fn, { buffer = bufnr, desc = "LSP: " .. desc })
 	end
 
-    -- Use `snacks` for LSP navigation
-    -- stylua: ignore start
-    lsp_map("gd", function() snacks.picker.lsp_definitions() end, "Goto Definition")
-    lsp_map("gy", function() snacks.picker.lsp_type_definitions() end, "Type Definition")
-    lsp_map("gR", function() snacks.picker.lsp_references() end, "Goto References")
-    lsp_map("gI", function() snacks.picker.lsp_implementations() end, "Goto Implementation")
-    lsp_map("gD", vim.lsp.buf.declaration, "Goto Declaration")
-    lsp_map("<leader>cs", function() snacks.picker.lsp_symbols() end, "Document Symbols")
-    lsp_map("<leader>cw", function() snacks.picker.lsp_symbols({ cwd = vim.fn.expand("%:p:h") }) end, "Workspace Symbols")
-    lsp_map("<leader>cc", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
-    lsp_map("K", vim.lsp.buf.hover, "Buffer hover")
-    lsp_map("<backspace>", vim.lsp.buf.rename, "Rename")
-	-- stylua: ignore end
+	-- Navigation (using Snacks)
+	lsp_map("gd", function()
+		snacks.picker.lsp_definitions()
+	end, "Goto Definition")
+	lsp_map("gy", function()
+		snacks.picker.lsp_type_definitions()
+	end, "Type Definition")
+	lsp_map("gR", function()
+		snacks.picker.lsp_references()
+	end, "Goto References")
+	lsp_map("gI", function()
+		snacks.picker.lsp_implementations()
+	end, "Goto Implementation")
+	lsp_map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+
+	lsp_map("<leader>cs", function()
+		snacks.picker.lsp_symbols()
+	end, "Document Symbols")
+	lsp_map("<leader>cw", function()
+		snacks.picker.lsp_symbols({ cwd = vim.fn.expand("%:p:h") })
+	end, "Workspace Symbols")
+
+	lsp_map("<leader>cc", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
+	lsp_map("K", vim.lsp.buf.hover, "Hover")
+	lsp_map("<backspace>", vim.lsp.buf.rename, "Rename")
 end
 
 return M

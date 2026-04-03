@@ -14,12 +14,6 @@ return {
 				headings = presets.headings.marker,
 				tables = presets.tables.rounded,
 			},
-			latex = {
-				inlines = {
-					padding_left = "",
-					padding_right = "",
-				},
-			},
 		})
 	end,
 }

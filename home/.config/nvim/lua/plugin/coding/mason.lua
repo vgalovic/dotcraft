@@ -5,8 +5,10 @@ local servers = {
 	"clangd",
 	"cmake",
 	"lua_ls",
-	"pyright",
-	"ruff",
+	"matlab_ls",
+	"marksman",
+	-- "pyright",
+	-- "ruff",
 	-- "rust_analyzer", -- install with rustup component add rust-analyzer
 	"vhdl_ls",
 	"svlangserver",
@@ -16,7 +18,7 @@ local servers = {
 local formaters = {
 	-- "asmfmt",
 	"beautysh",
-	"latexindent",
+	-- "latexindent",
 	-- "mdformat", -- install it with pipx install mdformat && pipx inject mdformat mdformat-myst
 	-- "rustfmt", -- install with rustup component add rustfmt
 	"stylua",
