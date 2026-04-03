@@ -107,11 +107,7 @@ set statusline=%f\ %y\ %m\ %r\ %=%l/%L\ %c\ %p%%
 let mapleader = " "         " Leader key: space
 let maplocalleader = " "    " Local leader key: space
 
-" Enables ";" to call command
-nnoremap ; :
-
 " When Serbian keyboard is used
-nnoremap č :
 nnoremap Č :
 
 " Set navigation keys
