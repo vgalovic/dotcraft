@@ -11,6 +11,7 @@ return {
 			mappings = false, -- Disable icons for mappings
 		},
 		spec = {
+			{ "<leader>a", group = "Arduino", mode = { "n" } },
 			{ "<leader>d", group = "Find and Delete", mode = { "n", "v" } },
 			{ "<leader>c", group = "Code" },
 			{ "<leader>g", group = "Git", mode = { "n" } },
