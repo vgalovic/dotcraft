@@ -11,9 +11,15 @@ output = "{split: :0}"
 [preview]
 command = "man {0} | bat --language=man -p --color=always"
 
+[keybindings]
+ctrl-e = "actions:open"
+shortcut = "f10"
+
+[actions.open]
+description = "Open the selected manpage"
+command = "man {0}"
+mode = "execute"
+
 [ui.preview_panel]
 size = 75
 header = "{split:-:1..}"
-
-[keybindings]
-shortcut = "f10"

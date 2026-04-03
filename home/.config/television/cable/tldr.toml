@@ -1,0 +1,23 @@
+[metadata]
+name = "tldr"
+description = "Browse and preview TLDR help pages for command-line tools"
+requirements = [ "tldr",]
+
+[source]
+command = "tldr --list"
+
+[preview]
+command = "tldr '{0}' --color"
+
+[keybindings]
+ctrl-e = "actions:open"
+shortcut = "f9"
+
+[actions.open]
+description = "Open the selected TLDR page"
+command = "tldr '{0}'"
+mode = "execute"
+
+[ui.preview_panel]
+size = 75
+header = "{0}"
