@@ -5,7 +5,7 @@
 add_newline = false
 
 # Color pallet for the prompt
-palette = "github_dark_tritanopia"
+palette = "everforest"
 
 # Use custom format
 format = """
@@ -162,3 +162,20 @@ truncation_symbol = ""
   green         = "#8cc85f"
   bright_red    = "#f07496"
   bright_yellow = "#c6c684"
+
+[palettes.everforest]
+
+fg            = "#D3C6AA"
+bg            = "#1E2326"
+
+fern          = "#A7C080"
+lavender      = "#D699B6"
+orange        = "#E69875"
+red           = "#E67E80"
+blue          = "#7FBBB3"
+cyan          = "#83C092"
+purple        = "#D699B6"
+yellow        = "#DBBC7F"
+green         = "#A7C080"
+bright_red    = "#E67E80"
+bright_yellow = "#DBBC7F"

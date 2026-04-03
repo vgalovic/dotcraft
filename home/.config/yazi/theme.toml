@@ -4,9 +4,11 @@
 # dark = "catppuccin-mocha"
 # light = "catppuccin-latte"
 
+# everforest theme
+dark = "everforest-medium"
+
 # Moonfly theme
 # dark = "moonfly"
-# light = "moonfly"
 
 # vscode dark
 # dark = "vscode-dark-modern"

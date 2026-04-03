@@ -5,10 +5,13 @@
 --   1. Persist your choice in this file (vim.g.colorscheme)
 --   2. Ask you to restart Neovim to apply the new theme
 -- Available themes are defined in lua/plugin/colorscheme.
-vim.g.colorscheme = "github_dark_tritanopia"
+vim.g.colorscheme = "everforest"
 
 -- [[ Kitty Terminal Behavior ]]
 vim.g.kitty_solid = true -- Enable solid background in Kitty when using Neovim
+
+-- [[ Default search engine in Search tools plugin]]
+vim.g.default_search_engine = "duckduckgo"
 
 -- [[ Define local tab size variable ]]
 local tab_size = 2
