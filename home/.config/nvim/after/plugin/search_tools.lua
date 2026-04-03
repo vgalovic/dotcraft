@@ -1,7 +1,10 @@
--- Commands that you can be run in commnadline: Search, SearchWith, Wikipedia, StackOverflow, YouTube, SetSearchEngine
--- Functions than you can be set with keybind: search_diagnostic_under_cursor, search_selected_text, open_plugin_repo
+-- ===============================
+-- Web Search Configuration
+-- ===============================
 
+-- List of search engines
 local search_engines = {
+	chatgpt = "https://chat.openai.com/?prompt=%s",
 	duckduckgo = "https://duckduckgo.com/?q=%s",
 	brave = "https://search.brave.com/search?q=%s&source=web&summary",
 	ecosia = "https://www.ecosia.org/search?method=index&q=%s",
@@ -14,30 +17,20 @@ local search_engines = {
 	youtube = "https://www.youtube.com/results?search_query=%s",
 }
 
-local current_search_engine = "brave"
-local browser_class = "zen" -- e.g., use `xprop | grep WM_CLASS` to find your browser class
+local current_search_engine = vim.g.default_search_engine or "google"
 
-local function open_in_browser(url)
-	vim.fn.jobstart({ "xdg-open", url }, { detach = true })
-	vim.defer_fn(function()
-		vim.fn.jobstart({ "wmctrl", "-a", browser_class }, { detach = true })
-	end, 1500)
-end
-
-local function web_search(query, engine)
+-- Function to prepare and open search URL
+local function web_search(query, engine, notif_body, notif_level)
 	if not query or query == "" then
 		vim.notify("Empty query", vim.log.levels.WARN, { title = "Web Search" })
 		return
 	end
+
 	local engine_to_use = engine or current_search_engine
 	local search_url = search_engines[engine_to_use]
 
 	if not search_url then
-		vim.notify(
-			"Unknown search engine: " .. (engine or current_search_engine),
-			vim.log.levels.ERROR,
-			{ title = "Web Search" }
-		)
+		vim.notify("Unknown search engine: " .. engine_to_use, vim.log.levels.ERROR, { title = "Web Search" })
 		return
 	end
 
@@ -45,48 +38,53 @@ local function web_search(query, engine)
 		return c == " " and "%20" or string.format("%%%02X", string.byte(c))
 	end)
 
-	open_in_browser(search_url:format(encoded))
+	if notif_body and notif_body:match("%S") then
+		vim.notify(notif_body, notif_level or vim.log.levels.INFO, { title = "Web Search" })
+	end
+
+	vim.fn.jobstart({ "xdg-open", search_url:format(encoded) }, { detach = true })
 end
 
--- User commands
+-- ===============================
+-- User Commands
+-- ===============================
+
+-- General search using default engine
 vim.api.nvim_create_user_command("Search", function(o)
 	local query = table.concat(o.fargs, " ")
-	vim.notify(
-		"Searching using " .. current_search_engine .. ": " .. query,
-		vim.log.levels.INFO,
-		{ title = "Web Search" }
-	)
-	web_search(query)
+	web_search(query, nil, "Searching using " .. current_search_engine .. ": " .. query)
 end, { nargs = "+", desc = "Search the web" })
+
+-- Specific engines shortcuts
+vim.api.nvim_create_user_command("Chatgpt", function(o)
+	local query = table.concat(o.fargs, " ")
+	web_search(query, "chatgpt", "Searching Chatgpt: " .. query)
+end, { nargs = "+", desc = "Search Chatgpt" })
 
 vim.api.nvim_create_user_command("Wikipedia", function(o)
 	local query = table.concat(o.fargs, " ")
-	vim.notify("Searching Wikipedia: " .. query, vim.log.levels.INFO)
-	web_search(query, "wikipedia")
+	web_search(query, "wikipedia", "Searching Wikipedia: " .. query)
 end, { nargs = "+", desc = "Search Wikipedia" })
 
 vim.api.nvim_create_user_command("StackOverflow", function(o)
 	local query = table.concat(o.fargs, " ")
-	vim.notify("Searching StackOverflow: " .. query, vim.log.levels.INFO)
-	web_search(query, "stackoverflow")
+	web_search(query, "stackoverflow", "Searching StackOverflow: " .. query)
 end, { nargs = "+", desc = "Search StackOverflow" })
 
 vim.api.nvim_create_user_command("YouTube", function(o)
 	local query = table.concat(o.fargs, " ")
-	vim.notify("Searching YouTube: " .. query, vim.log.levels.INFO)
-	web_search(query, "youtube")
+	web_search(query, "youtube", "Searching YouTube: " .. query)
 end, { nargs = "+", desc = "Search YouTube" })
 
+-- Search with a specific engine
 vim.api.nvim_create_user_command("SearchWith", function(opts)
 	local engine = opts.fargs[1]
 	local query = table.concat(vim.list_slice(opts.fargs, 2), " ")
 
 	if not search_engines[engine] then
-		vim.notify("Unknown engine: " .. engine .. ", using default", vim.log.levels.WARN)
-		web_search(query)
+		web_search(query, nil, "Unknown engine: " .. engine .. ", using default", vim.log.levels.WARN)
 	else
-		vim.notify("Searching using " .. engine .. ": " .. query, vim.log.levels.INFO)
-		web_search(query, engine)
+		web_search(query, engine, "Searching using " .. engine .. ": " .. query)
 	end
 end, {
 	nargs = "+",
@@ -107,6 +105,21 @@ end, {
 	end,
 })
 
+-- List all available search engines
+vim.api.nvim_create_user_command("SearchEnginesList", function()
+	local names = {}
+	for name in pairs(search_engines) do
+		table.insert(names, name)
+	end
+	table.sort(names)
+	vim.notify(
+		"Search engines:\n• " .. table.concat(names, "\n• "),
+		vim.log.levels.INFO,
+		{ title = "Search Engines List" }
+	)
+end, {})
+
+-- Set default search engine
 vim.api.nvim_create_user_command("SetSearchEngine", function(o)
 	local engine = o.fargs[1]
 	if search_engines[engine] then
@@ -130,25 +143,67 @@ end, {
 	end,
 })
 
--- Keymaps
+-- ===============================
+-- Keymaps Helper
+-- ===============================
 local function map(mode, lhs, rhs, opts)
 	opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
 	vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+-- ===============================
+-- Keymaps: Diagnostic Search
+-- ===============================
+
+-- Search diagnostic under cursor using default engine
 map({ "n", "v" }, "gq", function()
 	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
 	if #diagnostics == 0 then
-		vim.notify("No diagnostic under cursor", vim.log.levels.INFO)
+		vim.notify("No diagnostic under cursor", vim.log.levels.INFO, { title = "Web Search" })
 		return
 	end
-	local message = diagnostics[1].message
-	local ext = vim.fn.expand("%:e")
-	local context = vim.bo.filetype ~= "" and vim.bo.filetype or ext
-	web_search(message .. " " .. context)
-end, { desc = "Search diagnostic under cursor" })
 
-map("v", "g<leader>", function()
+	local message = diagnostics[1].message
+	local context = vim.bo.filetype ~= "" and vim.bo.filetype or vim.fn.expand("%:e")
+	web_search(message .. " " .. context)
+end, { desc = "Search diagnostic under cursor (default: " .. current_search_engine .. ")" })
+
+-- Search diagnostic under cursor with chosen engine
+map({ "n", "v" }, "gQ", function()
+	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+	if #diagnostics == 0 then
+		vim.notify("No diagnostic under cursor", vim.log.levels.INFO, { title = "Web Search" })
+		return
+	end
+
+	local message = diagnostics[1].message
+	local context = vim.bo.filetype ~= "" and vim.bo.filetype or vim.fn.expand("%:e")
+	local query = message .. " " .. context
+
+	-- Prompt user for engine
+	local engines = {}
+	for name in pairs(search_engines) do
+		table.insert(engines, name)
+	end
+	table.sort(engines)
+
+	vim.ui.select(engines, {
+		prompt = "Choose search engine for diagnostic:",
+	}, function(choice)
+		if choice then
+			web_search(query, choice, "Searching using " .. choice .. ": " .. query, vim.log.levels.INFO)
+		else
+			vim.notify("Search canceled", vim.log.levels.INFO)
+		end
+	end)
+end, { desc = "Search diagnostic under cursor with chosen engine" })
+
+-- ===============================
+-- Keymaps: Visual Selection Search
+-- ===============================
+
+-- Search selected text with default engine
+map("v", "gv", function()
 	vim.cmd('silent normal! "xy')
 	local selected_text = vim.fn.getreg("x")
 	if selected_text == "" then
@@ -157,8 +212,40 @@ map("v", "g<leader>", function()
 	end
 	local query = selected_text:gsub("[\n\t]+", " "):gsub("%s+", " ")
 	web_search(query)
-end, { desc = "Search selected text" })
+end, { desc = "Search selected text (default: " .. current_search_engine .. ")" })
 
+-- Search selected text with chosen engine
+map("v", "gV", function()
+	vim.cmd('silent normal! "xy') -- copy selection to register x
+	local selected_text = vim.fn.getreg("x")
+	if not selected_text or selected_text:match("^%s*$") then
+		vim.notify("No text selected", vim.log.levels.WARN, { title = "Web Search" })
+		return
+	end
+
+	local query = selected_text:gsub("[\n\t]+", " "):gsub("%s+", " ")
+
+	-- Prompt user for engine
+	local engines = {}
+	for name in pairs(search_engines) do
+		table.insert(engines, name)
+	end
+	table.sort(engines)
+
+	vim.ui.select(engines, {
+		prompt = "Choose search engine:",
+	}, function(choice)
+		if choice then
+			web_search(query, choice, "Searching using " .. choice .. ": " .. query)
+		else
+			vim.notify("Search canceled", vim.log.levels.INFO, { title = "Web Search" })
+		end
+	end)
+end, { desc = "Search selected text with chosen engine" })
+
+-- ===============================
+-- GitHub Repo Shortcut for Lua Files
+-- ===============================
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "lua",
 	callback = function()
@@ -167,10 +254,10 @@ vim.api.nvim_create_autocmd("FileType", {
 			local repo = word:match('([^"%s]+/[^"%s]+)')
 			if repo then
 				local url = "https://github.com/" .. repo
-				vim.notify("Opening GitHub: " .. url, vim.log.levels.INFO)
-				open_in_browser(url)
+				vim.notify("Opening GitHub: " .. url, vim.log.levels.INFO, { title = "Neovim plugin" })
+				vim.fn.jobstart({ "xdg-open", url }, { detach = true })
 			else
-				vim.notify("Not a valid GitHub repo", vim.log.levels.WARN)
+				vim.notify("Not a valid GitHub repo", vim.log.levels.WARN, { title = "Neovim plugin" })
 			end
 		end, { desc = "Open plugin repo", buffer = true })
 	end,
