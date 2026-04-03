@@ -1,35 +1,82 @@
 --[[
-  Shows a list of available color themes by scanning
-  all files under ~/.config/nvim/lua/plugin/colorscheme for
-  the marker `-- THEMES_AVAILABLE:`.
+Shows a list of available color themes by scanning
+all files under <nvim_config>/lua/plugin/colorscheme for
+the marker `-- THEMES_AVAILABLE:`. Lets you persist a choice
+by editing lua/config/setup.lua (vim.g.colorscheme)
+and then asks user to restart Neovim to apply the colorscheme.
 
-  It collects theme names from the commented lines below that marker,
-  parses them, sorts them alphabetically, and displays them
-  in a floating window.
+Usage:
+  :ThemesAvailable
 
-  Usage:
-    :ThemesAvailable
-
-  Note:
-  - Theme lines must start with `-- ` after the marker line.
-  - Themes can be comma separated and span multiple lines.
+Controls:
+  <CR>  → Persist to setup.lua
+  q     → Close window
+  <Esc> → Close window
 ]]
 
+-- Main function to show available themes in a floating window
 local function show_themes_available()
-	-- Path to colorscheme folder
-	local themes_dir = vim.fn.expand("$HOME/.config/nvim/lua/plugin/colorscheme")
-	local themes = {}
-	local seen = {}
+	-- Neovim config directory
+	local config_dir = vim.fn.stdpath("config")
+	-- Folder where theme files are located
+	local themes_dir = config_dir .. "/lua/plugin/colorscheme"
+	-- File where the chosen theme is persisted
+	local setup_file = config_dir .. "/lua/config/setup.lua"
 
-	-- Find all files containing the marker line
-	local grep_files = vim.fn.systemlist({
-		"grep",
-		"-l",
-		"THEMES_AVAILABLE:",
-		"-r",
-		themes_dir,
-	})
+	-- Function to update vim.g.colorscheme in setup.lua
+	local function persist_theme_to_setup(theme)
+		-- Check if setup.lua exists
+		if vim.fn.filereadable(setup_file) == 0 then
+			vim.notify("setup.lua not found at: " .. setup_file, vim.log.levels.ERROR, { title = "Theme Persist" })
+			return false
+		end
 
+		-- Read all lines from setup.lua
+		local lines = vim.fn.readfile(setup_file)
+		if not lines then
+			vim.notify("Failed to read setup.lua", vim.log.levels.ERROR, { title = "Theme Persist" })
+			return false
+		end
+
+		-- Flag to check if theme line was replaced
+		local replaced = false
+		local pattern = [[^%s*vim%.g%.colorscheme%s*=%s*['"].*['"]%s*$]]
+		local replacement = ([[vim.g.colorscheme = %q]]):format(theme)
+
+		-- Search for existing vim.g.colorscheme and replace
+		for i, l in ipairs(lines) do
+			if l:match(pattern) then
+				lines[i] = replacement
+				replaced = true
+				break
+			end
+		end
+
+		-- If no existing theme line, append it at the end
+		if not replaced then
+			table.insert(lines, "")
+			table.insert(lines, "-- Added by ThemesAvailable")
+			table.insert(lines, replacement)
+		end
+
+		-- Write updated lines back to setup.lua
+		local ok, err = pcall(vim.fn.writefile, lines, setup_file)
+		if not ok then
+			vim.notify("Failed to write setup.lua: " .. (err or ""), vim.log.levels.ERROR, { title = "Theme Persist" })
+			return false
+		end
+
+		return true
+	end
+
+	-- ===============================
+	-- Step 1: Collect all available themes
+	-- ===============================
+	local themes, seen = {}, {}
+	-- Find all files containing marker "-- THEMES_AVAILABLE:"
+	local grep_files = vim.fn.systemlist({ "grep", "-l", "THEMES_AVAILABLE:", "-r", themes_dir })
+
+	-- No themes found? Warn user
 	if vim.v.shell_error ~= 0 or vim.tbl_isempty(grep_files) then
 		vim.notify("No THEMES_AVAILABLE marker found.", vim.log.levels.WARN)
 		return
@@ -39,40 +86,46 @@ local function show_themes_available()
 	for _, filepath in ipairs(grep_files) do
 		local lines = vim.fn.readfile(filepath)
 		local in_marker = false
-
 		for _, line in ipairs(lines) do
+			-- Detect the marker line
 			if line:match("THEMES_AVAILABLE:") then
 				in_marker = true
 			elseif in_marker then
-				-- Check if line starts with comment marker and capture rest
+				-- Extract lines starting with comment "-- "
 				local theme_line = line:match("^%s*%-%-%s*(.+)")
 				if theme_line and theme_line ~= "" then
-					-- Remove trailing commas and whitespace
+					-- Remove trailing comma if any
 					theme_line = theme_line:gsub(",%s*$", "")
-					-- Split by comma and add themes uniquely
+					-- Split by comma and add unique themes
 					for theme in theme_line:gmatch("[^,%s]+") do
-						if not seen[theme] then
-							seen[theme] = true
+						local key = theme:lower()
+						if not seen[key] then
+							seen[key] = true
 							table.insert(themes, theme)
 						end
 					end
 				else
-					-- Stop collecting when line is empty or no longer a comment
+					-- Stop collecting when the comment block ends
 					in_marker = false
 				end
 			end
 		end
 	end
 
+	-- Warn if no themes were parsed
 	if #themes == 0 then
 		vim.notify("No themes parsed from THEMES_AVAILABLE.", vim.log.levels.WARN)
 		return
 	end
 
-	-- Sort themes alphabetically
+	-- Sort themes alphabetically and add header lines
 	table.sort(themes)
+	table.insert(themes, 1, "Available Themes:")
+	table.insert(themes, 2, string.rep("─", 30))
 
-	-- Create floating buffer and window
+	-- ===============================
+	-- Step 2: Create floating window
+	-- ===============================
 	local buf = vim.api.nvim_create_buf(false, true)
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, themes)
 
@@ -94,7 +147,39 @@ local function show_themes_available()
 	vim.bo[buf].buftype = "nofile"
 	vim.bo[buf].bufhidden = "wipe"
 	vim.bo[buf].modifiable = false
+
+	-- ===============================
+	-- Step 3: Keymaps for floating window
+	-- ===============================
+	-- Close window mappings
+	vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = buf, nowait = true })
+	vim.keymap.set("n", "<Esc>", "<cmd>close<cr>", { buffer = buf, nowait = true })
+
+	-- Persist theme on <CR> (Enter)
+	vim.keymap.set("n", "<CR>", function()
+		local theme = vim.api.nvim_get_current_line()
+		-- Ignore header lines
+		if theme:match("^Available") or theme:match("^─") then
+			return
+		end
+		-- Persist selected theme
+		if not persist_theme_to_setup(theme) then
+			return
+		end
+
+		-- Close floating window
+		vim.cmd("close")
+
+		-- Notify user to restart Neovim
+		vim.notify(
+			"Theme '" .. theme .. "' persisted.\nPlease restart Neovim to apply the theme.",
+			vim.log.levels.INFO,
+			{ title = "Theme Changed" }
+		)
+	end, { buffer = buf, nowait = true })
 end
 
--- Create user command to trigger the function
+-- ===============================
+-- Command: Show theme picker
+-- ===============================
 vim.api.nvim_create_user_command("ThemesAvailable", show_themes_available, {})
