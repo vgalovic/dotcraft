@@ -1,0 +1,76 @@
+# ============================================================
+# Ghostty config
+# ============================================================
+
+############################
+# Font
+############################
+font-family = JetBrainsMono Nerd Font
+font-size = 12
+font-style = Regular
+
+############################
+# Theme
+############################
+
+theme = everforest-dark-medium
+
+############################
+# Background
+############################
+background-opacity = 0.9
+
+############################
+# Window
+############################
+
+# window-x = 0
+# window-y = 0
+
+# window-padding-x = 5
+# window-padding-y = 5
+
+window-width = 191
+window-height = 53
+
+window-decoration = true
+
+############################
+# Cursor
+############################
+cursor-style = bar
+
+############################
+# Mouse
+############################
+mouse-hide-while-typing = true
+
+############################
+# Shell integration
+############################
+shell-integration = detect
+
+############################
+# Other
+############################
+
+# Confirm close (0 = no confirm)
+confirm-close-surface = false
+
+command = "bash -c '~/.config/shell/startup/terminal-startup.sh'"
+
+############################
+# Keybinds
+############################
+
+keybind = ctrl+shift+enter=new_split
+
+# Pane navigation (if splits are used)
+keybind = ctrl+shift+j=goto_split:down
+keybind = ctrl+shift+k=goto_split:up
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+l=goto_split:right
+
+
+keybind = ctrl+shift+[=previous_tab
+keybind = ctrl+shift+]=next_tab
