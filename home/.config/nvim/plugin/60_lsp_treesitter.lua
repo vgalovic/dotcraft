@@ -3,6 +3,7 @@
 local add = vim.pack.add
 local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 local Icons = require("config.icons")
+
 -- ============================================================================
 -- LSP + Formatter Definitions
 -- ============================================================================
@@ -15,7 +16,7 @@ local servers = {
   ["clangd"]                    = "clangd",
 	-- ["cmake"]                     = "cmake-language-server",
   ["lua-language-server"]       = "lua_ls",
-  ["matlab-language-server"]    = "matlab_ls",
+  -- ["matlab-language-server"]    = "matlab_ls",
   ["marksman"]                  = "marksman",
   -- ["pyright"]                   = "pyright",
 	-- ["ruff"]                      = "ruff",
@@ -206,7 +207,7 @@ end)
 now(function()
   --stylua: ignore
 	local mason_update = function() vim.cmd("MasonUpdate") end
-	Config.on_packchanged("mason", { "update" }, mason_update, ":MasonUpdate")
+	Config.on_packchanged("mason.nvim", { "update" }, mason_update, ":MasonUpdate")
 
 	add({ Repo.gh("mason-org/mason.nvim") })
 
@@ -220,7 +221,7 @@ now(function()
 		},
 	})
 
-	Map.map_leader("m", "<cmd>Mason<cr>", "Mason")
+	Map.map_leader("pm", "<cmd>Mason<cr>", "Mason")
 end)
 --
 --++ Mason Tool Installer +++++++++++++++++++++++++++++++++++++++++++++++++++++

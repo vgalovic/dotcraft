@@ -13,12 +13,14 @@
 
 ---@diagnostic disable: undefined-global
 
+local add = vim.pack.add
+
 -- =========================================================
 -- Everforest Theme
 -- =========================================================
 local function everforest()
 	Config.now(function()
-		vim.pack.add({ { src = Repo.gh("neanias/everforest-nvim"), name = "everforest" } })
+		add({ { src = Repo.gh("neanias/everforest-nvim"), name = "everforest" } })
 		require("everforest").setup({
 			background = "hard",
 			transparent_background_level = 0,
@@ -34,7 +36,7 @@ end
 -- =========================================================
 local function moonfly()
 	Config.now(function()
-		vim.pack.add({ { src = Repo.gh("bluz71/vim-moonfly-colors"), name = "moonfly" } })
+		add({ { src = Repo.gh("bluz71/vim-moonfly-colors"), name = "moonfly" } })
 
 		vim.g.moonflyCursorColor = true
 		vim.g.moonflyVirtualTextColor = true
@@ -48,7 +50,7 @@ end
 -- =========================================================
 local function oldworld()
 	Config.now(function()
-		vim.pack.add({ { src = Repo.gh("dgox16/oldworld.nvim"), name = "oldworld" } })
+		add({ { src = Repo.gh("dgox16/oldworld.nvim"), name = "oldworld" } })
 		require("oldworld").setup({
 			terminal_colors = true,
 			variant = "cooler", -- default, oled, cooler
@@ -91,7 +93,7 @@ if theme_case[current] then
 elseif current:find("^github_") then
 	-- Handle all github_* themes generically
 	Config.now(function()
-		vim.pack.add({ { src = Repo.gh("projekt0n/github-nvim-theme"), name = "github_theme" } })
+		add({ { src = Repo.gh("projekt0n/github-nvim-theme"), name = "github_theme" } })
 	end)
 else
 	current = "default"
