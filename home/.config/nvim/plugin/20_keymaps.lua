@@ -137,6 +137,9 @@ Map.map_leader("u", "<cmd>Undotree<cr>", "Undo tree")
 
 Map.map("<Esc><Esc>", "<C-\\><C-n>", "Exit terminal mode", "t")
 
+Map.map_leader("tt", "<Cmd>horizontal term<CR>", "Terminal (horizontal)")
+Map.map_leader("tT", "<Cmd>vertical term<CR>", "Terminal (vertical)")
+
 -- =========================================================
 -- WINDOWS / SPLITS
 -- =========================================================

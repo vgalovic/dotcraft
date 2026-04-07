@@ -129,13 +129,6 @@ Map.map_leader("sr", '<Cmd>lua MiniSessions.select("read")<CR>', "Read")
 Map.map_leader("sw", "<Cmd>lua MiniSessions.write()<CR>", "Write current")
 
 -- =========================================================
--- TERMINALS
--- =========================================================
-
-Map.map_leader("tt", "<Cmd>horizontal term<CR>", "Terminal (horizontal)")
-Map.map_leader("tT", "<Cmd>vertical term<CR>", "Terminal (vertical)")
-
--- =========================================================
 -- VISITS MANAGEMENT
 -- =========================================================
 
