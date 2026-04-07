@@ -9,6 +9,9 @@
 --
 ------------------------------------------------------------------------------------------------
 
+-- Record high-resolution start time (in nanoseconds) to measure Neovim startup duration
+_G.start_time = vim.loop.hrtime()
+
 -- =========================================================
 -- CORE PERFORMANCE
 -- =========================================================
@@ -120,15 +123,12 @@ Config.now_if_args = vim.fn.argc(-1) > 0 and Config.now or Config.later
 
 -- Run on specific events
 Config.on_event = function(ev, f)
-	vim.api.nvim_create_autocmd(ev, {
-		callback = f,
-	})
+	misc.safely("event:" .. ev, f)
 end
 
 -- Run on specific filetypes
 Config.on_filetype = function(ft, f)
-	local ft_name = type(ft) == "table" and table.concat(ft, ",") or ft
-	misc.safely("filetype:" .. ft_name, f)
+	misc.safely("filetype:" .. ft, f)
 end
 
 -- =========================================================

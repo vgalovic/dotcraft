@@ -41,5 +41,8 @@ local icons = {
 		undotree = "",
 		pager = "",
 	},
+	starter = {
+		lightning_bolt = "󱐋",
+	},
 }
 return icons
