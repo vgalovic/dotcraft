@@ -105,6 +105,8 @@ remove_existing_neovim() {
   elif [[ "$nvim_path" == "/usr/local/bin/nvim" ]]; then
     print_msg "Neovim installed from source at /usr/local/bin/nvim. Removing binary..."
     sudo rm -f /usr/local/bin/nvim
+    sudo rm -rf /usr/local/lib/nvim
+    sudo rm -rf /usr/local/share/nvim
   else
     print_msg "Neovim installed at $nvim_path but unknown method. Skipping removal."
   fi
