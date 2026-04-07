@@ -79,6 +79,10 @@ The setup uses Neovim’s new built-in package manager to handle plugins—keeps
 - [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
 - [shellRaining/hlchunk.nvim](https://github.com/shellRaining/hlchunk.nvim)
 
+### terminal intergration
+
+- [akinsho/toggleterm.nvim](https://dotfyle.com/plugins/akinsho/toggleterm.nvim)
+
 ### utility
 
 - [nvim-mini/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
@@ -93,7 +97,6 @@ The setup uses Neovim’s new built-in package manager to handle plugins—keeps
 | cmake                   | rustfmt     |
 | lua_ls                  | stylua      |
 | marksman                |             |
-| matlab_ls               |             |
 | rust_analyzer           |             |
 | vhdl_ls                 |             |
 | svlangserver            |             |
