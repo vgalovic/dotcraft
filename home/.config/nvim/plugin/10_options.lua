@@ -4,6 +4,7 @@ vim.o.mousescroll = "ver:25,hor:6"
 vim.o.switchbuf = "usetab"
 vim.o.undofile = true
 vim.o.shada = "'100,<50,s10,:1000,/100,@100,h"
+vim.opt.termguicolors = true
 
 vim.cmd("filetype plugin indent on")
 if vim.fn.exists("syntax_on") ~= 1 then
@@ -108,11 +109,17 @@ vim.opt.fillchars = fillchars
 -- Set the GUI font and size for Neovide (and other GUI clients)
 vim.o.guifont = "JetBrainsMono Nerd Font:h11"
 
+-- Neovide ==================================================================
+
 -- [[ Neovide Floating Window Effects ]]
 vim.g.neovide_floating_shadow = true -- Enable floating shadows for windows
 vim.g.neovide_floating_z_height = 10 -- Set z-height for floating windows
 vim.g.neovide_light_angle_degrees = 45 -- Light source angle for shadows
 vim.g.neovide_light_radius = 5 -- Light radius for shadow blur
+
+-- [[ Floating Blur Amount ]]
+vim.g.neovide_floating_blur_amount_x = 2.0
+vim.g.neovide_floating_blur_amount_y = 2.0
 
 -- [[ Neovide Theme Behavior ]]
 vim.g.neovide_theme = "auto" -- Automatically switch theme with system

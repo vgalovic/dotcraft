@@ -1,20 +1,17 @@
 fork = false
 frame = "full"
-size = [1024, 924]
 idle = true
 maximized = false
 no-multigrid = false
 srgb = false
 tabs = true
-theme = "auto"
 mouse-cursor-icon = "arrow" # i-beam
 title-hidden = true
-vsync = false
-wsl = false
+vsync = true
 
 [font]
 normal = ["JetBrainsMono Nerd Font"]
-size = 11
+size = 14.0
 
 [box-drawing]
 mode = "selected-native"
