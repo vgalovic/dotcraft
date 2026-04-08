@@ -2,13 +2,13 @@
 
 local icons = {
 	diagnostics = {
-		prefix = "●",
+		debug = " ",
 		error = " ",
-		warn = " ",
 		hint = " ",
 		info = " ",
-		debug = " ",
+		prefix = "●",
 		trace = "󰴽 ",
+		warn = " ",
 	},
 	git = {
 		branch = "",
@@ -26,20 +26,26 @@ local icons = {
 		package_pending = "",
 		package_uninstalled = "",
 	},
+	pack = {
+		loaded = "●",
+		not_loaded = "○",
+		to_cleanup = "×",
+	},
 	file = {
 		brewfile = "",
 		config = "󱁻",
-		kitty = "󰄛",
 		history = "",
+		kitty = "󰄛",
+		fish = "",
 	},
 	filetype = {
 		log = "",
+		nvim_pack = "󰏖",
+		pager = "",
 		sh = "",
 		tmTheme = "",
-		verilog = "",
-		nvim_pack = "󰏖",
 		undotree = "",
-		pager = "",
+		verilog = "",
 	},
 	starter = {
 		lightning_bolt = "󱐋",

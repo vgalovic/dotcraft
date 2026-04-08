@@ -73,10 +73,9 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ============================================================================
 
 later(function()
-	add({
-		{ src = Repo.gh("nvim-lua/plenary.nvim") },
-		{ src = Repo.gh("folke/todo-comments.nvim"), name = "todo-comments" },
-	})
+	add({ Repo.gh("nvim-lua/plenary.nvim") })
+	add({ { src = Repo.gh("folke/todo-comments.nvim"), name = "todo-comments" } })
+
 	require("todo-comments").setup()
 
 	Map.map("[t", function()

@@ -147,10 +147,7 @@ now_if_args(function()
 	end
 	Config.on_packchanged("nvim-treesitter", { "update" }, ts_update, ":TSUpdate")
 
-	add({
-		Repo.gh("nvim-treesitter/nvim-treesitter"),
-		Repo.gh("nvim-treesitter/nvim-treesitter"),
-	})
+	add({ Repo.gh("nvim-treesitter/nvim-treesitter") })
 
 	require("nvim-treesitter").setup({
 		sync_install = false,
@@ -266,13 +263,13 @@ end)
 --++ Friendly snippets ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --
 later(function()
-	add({ "https://github.com/rafamadriz/friendly-snippets" })
+	add({ Repo.gh("rafamadriz/friendly-snippets") })
 end)
 --
 --++ Conform ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --
 later(function()
-	add({ { src = Repo.gh("stevearc/conform.nvim"), name = "conform" } })
+	add({ Repo.gh("stevearc/conform.nvim") })
 
 	require("conform").setup({
 		notify_on_error = false,

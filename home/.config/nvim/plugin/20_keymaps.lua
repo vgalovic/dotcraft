@@ -37,7 +37,7 @@ end
 -- HELPER FUNCTIONS
 -- =========================================================
 
--- Change working directory to current file
+-- Change working directory to current file ------------------------------------------
 local cd = function()
 	local path = vim.fn.expand("%:p:h")
 
@@ -48,31 +48,6 @@ local cd = function()
 
 	vim.cmd("cd " .. path)
 	vim.notify("CWD changed to: " .. path, vim.log.levels.INFO, { title = "CWD Change" })
-end
-
--- Delete installed vim.pack package
-local deletePackage = function()
-	local packages = vim.pack.get()
-
-	local items = vim.tbl_map(function(pkg)
-		return pkg.spec.name
-	end, packages)
-
-	vim.ui.select(items, {
-		prompt = "Delete package:",
-	}, function(choice)
-		if choice then
-			local ok, err = pcall(vim.pack.del, { choice })
-
-			if not ok then
-				vim.notify(
-					"Failed to delete: " .. choice .. "\n" .. tostring(err),
-					vim.log.levels.ERROR,
-					{ title = "Package manager" }
-				)
-			end
-		end
-	end)
 end
 
 -- =========================================================
@@ -176,11 +151,3 @@ Map.map("<C-m>", "<cmd>delmarks!<CR>", "Delete all marks")
 
 Map.map("<C-q>", "<cmd>lua vim.diagnostic.setloclist()<cr>", "Diagnostics → loclist")
 Map.map_opts("Q", "<cmd>lua vim.diagnostic.open_float()<cr>", "Diagnostic float")
-
--- =========================================================
--- PACKAGE MANAGER (vim.pack)
--- =========================================================
-
-Map.map_leader("ps", "<cmd>lua vim.pack.update(nil, { offline = true })<cr>", "Show packages")
-Map.map_leader("pu", "<cmd>lua vim.pack.update()<cr>", "Update packages")
-Map.map_leader("pd", deletePackage, "Delete package")
