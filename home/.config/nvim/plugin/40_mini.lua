@@ -42,6 +42,8 @@ now(function()
 			["config"] = { glyph = Icons.file.config, hl = "MiniIconsGrey" },
 			["kitty.conf"] = { glyph = Icons.file.kitty, hl = "MiniIconsOrange" },
 			["history"] = { glyph = Icons.file.history, hl = "MiniIconsGrey" },
+			["fish"] = { glyph = Icons.file.fish, hl = "MiniIconsAzure" },
+			["messages"] = { glyph = Icons.filetype.pager, hl = "MiniIconsGrey" },
 		},
 		use_file_extension = function(ext, _)
 			return not (ext3_blocklist[ext:sub(-3)] or ext4_blocklist[ext:sub(-4)])
