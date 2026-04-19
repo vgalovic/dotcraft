@@ -217,7 +217,7 @@ local function extract_names_from_content(content)
 end
 
 -- Main function: get all plugin names
-local function get_plugin_names()
+local function get_plugin_names_in_config()
 	if config_cache then
 		return config_cache
 	end
@@ -267,7 +267,7 @@ end
 -- Build lines and highlights for the buffer
 local function build_content()
 	local plugins = vim.pack.get(nil, { info = false })
-	local conf_plugins = get_plugin_names()
+	local conf_plugins = get_plugin_names_in_config()
 	local loaded = {}
 	local not_loaded = {}
 	local to_cleanup = {}
@@ -567,7 +567,7 @@ local function setup_keymaps()
 		local all_plugins = vim.pack.get(nil, { info = false })
 
 		-- Build a lookup table for config plugins
-		local conf_plugins = get_plugin_names()
+		local conf_plugins = get_plugin_names_in_config()
 		local conf_lookup = {}
 		for _, name in ipairs(conf_plugins) do
 			conf_lookup[name] = true
@@ -588,11 +588,8 @@ local function setup_keymaps()
 		end
 
 		-- Ask for confirmation
-		local msg = string.format(
-			"Remove %d non-active plugin(s) not in config?\n\n%s",
-			#to_clean,
-			table.concat(to_clean, "\n")
-		)
+		local msg =
+			string.format("Remove %d plugin(s) that are not in config?\n\n%s", #to_clean, table.concat(to_clean, "\n"))
 		local choice = vim.fn.confirm(msg, "&Yes\n&No", 2, "Question")
 		if choice == 1 then
 			close() -- close your plugin buffer if needed
