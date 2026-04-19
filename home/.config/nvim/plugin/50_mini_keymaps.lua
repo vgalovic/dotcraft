@@ -51,11 +51,6 @@ Map.map_leader("bW", "<Cmd>lua MiniBufremove.wipeout(0, true)<CR>", "Wipeout!")
 Map.map("\\", "<Cmd>lua MiniFiles.open()<CR>", "Directory")
 Map.map("|", explore_at_file, "File directory")
 
-Map.map_leader(
-	"ec",
-	"<Cmd>lua require('mini.files').open(vim.fn.stdpath('config'), true)<CR>",
-	"Neovim config directory"
-)
 Map.map_leader("eq", explore_quickfix, "Quickfix list")
 Map.map_leader("eQ", explore_locations, "Location list")
 

@@ -59,7 +59,7 @@ local function setup_lsp_autocommands()
 			Map.map_lsp_leader(bufnr, "ld", vim.diagnostic.open_float, "Diagnostic popup")
 			Map.map_lsp_leader(bufnr, "li", vim.lsp.buf.implementation, "Implementation")
 			Map.map_lsp_leader(bufnr, "ll", vim.lsp.codelens.run, "Lens")
-			Map.map_lsp_leader(bufnr, "lR", vim.lsp.buf.references, "References")
+			Map.map_lsp_leader(bufnr, "lr", vim.lsp.buf.references, "References")
 			Map.map_lsp_leader(bufnr, "ls", vim.lsp.buf.definition, "Definition")
 			Map.map_lsp_leader(bufnr, "lt", vim.lsp.buf.type_definition, "Type definition")
 
