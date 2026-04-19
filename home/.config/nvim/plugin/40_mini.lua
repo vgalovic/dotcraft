@@ -94,15 +94,7 @@ end)
 
 -- mini.sessions ---------------------------------------------
 on_event("VimEnter", function()
-	require("mini.sessions").setup({
-		hooks = {
-			pre = {
-				write = function()
-					vim.api.nvim_exec_autocmds("User", { pattern = "SessionSavePre" })
-				end,
-			},
-		},
-	})
+	require("mini.sessions").setup()
 end)
 
 -- mini.starter (dashboard) ----------------------------------
@@ -203,12 +195,23 @@ end)
 now_if_args(function()
 	local show_dotfiles = false
 
+	-- toggle dotfiles
+	local toggle_dotfiles = function()
+		show_dotfiles = not show_dotfiles
+		MiniFiles.refresh({
+			content = {
+				filter = show_dotfiles and function()
+					return true
+				end or function(fs_entry)
+					return not vim.startswith(fs_entry.name, ".")
+				end,
+			},
+		})
+	end
+
 	require("mini.files").setup({
 		windows = { preview = true, width_preview = 50 },
-		mappings = {
-			close = "\\",
-			show_help = "?",
-		},
+		mappings = { show_help = "?" },
 		content = {
 			filter = function(fs_entry)
 				if show_dotfiles then
@@ -225,25 +228,15 @@ now_if_args(function()
 		MiniFiles.set_bookmark("w", vim.fn.getcwd, { desc = "Working directory" })
 	end, "Add bookmarks")
 
-	-- toggle dotfiles
-	local toggle_dotfiles = function()
-		show_dotfiles = not show_dotfiles
-		MiniFiles.refresh({
-			content = {
-				filter = show_dotfiles and function()
-					return true
-				end or function(fs_entry)
-					return not vim.startswith(fs_entry.name, ".")
-				end,
-			},
-		})
-	end
-
 	-- keymap per buffer
 	vim.api.nvim_create_autocmd("User", {
 		pattern = "MiniFilesBufferCreate",
 		callback = function(args)
-			vim.keymap.set("n", ".", toggle_dotfiles, { buffer = args.data.buf_id })
+			local map_buf = function(lhs, rhs)
+				vim.keymap.set("n", lhs, rhs, { buffer = args.data.buf_id })
+			end
+			map_buf(".", toggle_dotfiles)
+			map_buf("\\", MiniFiles.close)
 		end,
 	})
 end)
@@ -322,7 +315,7 @@ later(function()
 			{ mode = { "n", "x" }, keys = "s" },
 			{ mode = { "n", "x" }, keys = "z" },
 		},
-		window = { delay = 0 },
+		window = { delay = 0, config = { width = "auto" } },
 	})
 end)
 
