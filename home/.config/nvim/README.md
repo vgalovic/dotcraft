@@ -87,6 +87,10 @@ The setup uses Neovim’s new built-in package manager to handle plugins—keeps
 
 - [nvim-mini/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
 
+### workflow
+
+- [mbbill/undotree](https://github.com/mbbill/undotree)
+
 ## Installed Language Servers, Formatters, and Linters
 
 | Language Server         | Formatter   |
