@@ -2,7 +2,7 @@
 set -g fish_greeting
 
 # Set fzf theme
-fzf_theme oldworld
+fzf_theme github_dark_tritanopia
 
 # Only run interactively
 if status is-interactive

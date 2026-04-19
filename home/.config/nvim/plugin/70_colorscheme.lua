@@ -93,7 +93,7 @@ if theme_case[current] then
 elseif current:find("^github_") then
 	-- Handle all github_* themes generically
 	Config.now(function()
-		add({ { src = Repo.gh("projekt0n/github-nvim-theme"), name = "github_theme" } })
+		add({ { src = Repo.gh("projekt0n/github-nvim-theme"), name = "github-theme" } })
 	end)
 else
 	current = "default"

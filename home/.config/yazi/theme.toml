@@ -1,11 +1,11 @@
 [flavor]
 
 # cattpuccin theme
-# dark = "catppuccin-mocha"
+dark = "catppuccin-mocha"
 # light = "catppuccin-latte"
 
 # everforest theme
-dark = "everforest-medium"
+# dark = "everforest-medium"
 
 # Moonfly theme
 # dark = "moonfly"

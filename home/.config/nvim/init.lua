@@ -30,10 +30,10 @@ vim.loader.enable()
 --   1. Persist your choice in this file (vim.g.colorscheme)
 --   2. Ask you to restart Neovim to apply the new theme
 -- Available themes are defined in plugin/70_clolorscheme.lua.
-vim.g.colorscheme = "everforest"
+vim.g.colorscheme = "github_dark_tritanopia"
 
--- Kitty terminal integration
-vim.g.kitty_solid = true -- Enable solid background in Kitty when using Neovim
+-- Enable solid or transparent background
+vim.g.transparency = true
 
 -- Default search engine (your search plugin uses this)
 vim.g.default_search_engine = "duckduckgo"
@@ -92,7 +92,7 @@ require("vim._core.ui2").enable({
 -- =========================================================
 
 -- Load builtin undo tree and diff tool
-vim.cmd("packadd nvim.undotree")
+-- vim.cmd("packadd nvim.undotree")
 vim.cmd("packadd nvim.difftool")
 
 -- Load mini.nvim
