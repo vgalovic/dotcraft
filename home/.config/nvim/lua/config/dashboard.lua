@@ -1,4 +1,4 @@
----@class utils.dashboard
+---@class config.dashboard
 
 local M = {}
 

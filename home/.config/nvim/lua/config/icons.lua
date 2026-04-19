@@ -1,4 +1,4 @@
----@class utils.icons
+---@class config.icons
 
 local icons = {
 	diagnostics = {
