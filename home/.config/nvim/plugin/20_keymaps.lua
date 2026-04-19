@@ -37,7 +37,7 @@ end
 -- HELPER FUNCTIONS
 -- =========================================================
 
--- Change working directory to current file ------------------------------------------
+-- Change working directory to current file
 local cd = function()
 	local path = vim.fn.expand("%:p:h")
 
@@ -105,7 +105,8 @@ Map.map("]p", '<Cmd>exe "iput "  . v:register<CR>', "Paste Below")
 -- Serbian layout ":" shortcut
 Map.map("Č", ":", "Command mode (Serbian layout)", { "n", "v" })
 
-Map.map_leader("u", "<cmd>Undotree<cr>", "Undo tree")
+-- Map.map_leader("u", "<cmd>Undotree<cr>", "Undo tree")
+
 -- =========================================================
 -- TERMINAL
 -- =========================================================
