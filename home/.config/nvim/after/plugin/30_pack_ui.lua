@@ -1156,4 +1156,7 @@ end, {
 	desc = "Open vim.pack plugin manager UI",
 })
 
-Map.map_leader("pp", open, "vim.pack manager")
+Map.map_leader("pp", function()
+	open()
+	check_updates()
+end, "vim.pack manager")
