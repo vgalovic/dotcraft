@@ -19,7 +19,7 @@ local function show_themes_available()
 	-- Neovim config directory
 	local config_dir = vim.fn.stdpath("config")
 	-- Folder where theme files are located
-	local themes_dir = config_dir .. "/plugin/70_colorscheme.lua"
+	local themes_dir = config_dir .. "/plugin/"
 	-- File where the chosen theme is persisted
 	local init_file = config_dir .. "/init.lua"
 
@@ -73,30 +73,35 @@ local function show_themes_available()
 	-- Step 1: Collect all available themes
 	-- ===============================
 	local themes, seen = {}, {}
-	-- Find all files containing marker "-- THEMES_AVAILABLE:"
-	local grep_files = vim.fn.systemlist({ "grep", "-l", "THEMES_AVAILABLE:", "-r", themes_dir })
 
-	-- No themes found? Warn user
-	if vim.v.shell_error ~= 0 or vim.tbl_isempty(grep_files) then
-		vim.notify("No THEMES_AVAILABLE marker found.", vim.log.levels.WARN)
+	-- Find all Lua files inside plugin directory
+	local files = vim.fs.find(function(name)
+		return name:match("%.lua$")
+	end, {
+		path = themes_dir,
+		type = "file",
+		limit = math.huge,
+	})
+
+	if vim.tbl_isempty(files) then
+		vim.notify("No Lua files found in plugin directory.", vim.log.levels.WARN)
 		return
 	end
 
-	-- Parse each file for theme names
-	for _, filepath in ipairs(grep_files) do
+	-- Scan files for THEMES_AVAILABLE marker and parse
+	for _, filepath in ipairs(files) do
 		local lines = vim.fn.readfile(filepath)
 		local in_marker = false
+
 		for _, line in ipairs(lines) do
-			-- Detect the marker line
 			if line:match("THEMES_AVAILABLE:") then
 				in_marker = true
 			elseif in_marker then
-				-- Extract lines starting with comment "-- "
 				local theme_line = line:match("^%s*%-%-%s*(.+)")
+
 				if theme_line and theme_line ~= "" then
-					-- Remove trailing comma if any
 					theme_line = theme_line:gsub(",%s*$", "")
-					-- Split by comma and add unique themes
+
 					for theme in theme_line:gmatch("[^,%s]+") do
 						local key = theme:lower()
 						if not seen[key] then
@@ -105,20 +110,17 @@ local function show_themes_available()
 						end
 					end
 				else
-					-- Stop collecting when the comment block ends
 					in_marker = false
 				end
 			end
 		end
 	end
 
-	-- Warn if no themes were parsed
 	if #themes == 0 then
 		vim.notify("No themes parsed from THEMES_AVAILABLE.", vim.log.levels.WARN)
 		return
 	end
 
-	-- Sort themes alphabetically and add header lines
 	table.sort(themes)
 	table.insert(themes, 1, "Available Themes:")
 	table.insert(themes, 2, string.rep("─", 30))
