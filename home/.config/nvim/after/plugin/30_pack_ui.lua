@@ -12,9 +12,9 @@
 -- Keymap : <leader>pp
 -- ------------------------------------------------------------
 --
--- Moust of code is taken from reddit user `u/punk8bit`.
+-- Moust of code is taken from reddit user `u/punk8bit` (Andreas Schneider).
 -- Reddit post: https://www.reddit.com/r/neovim/comments/1sdatj5/pack_a_simple_vimpack_ui/
--- Link to original code:
+-- Link to original code by :
 -- https://git.cryptomilk.org/users/asn/dotfiles.git/tree/dot_config/nvim/lua/plugins/pack-ui.lua
 --
 -- ============================================================
@@ -24,25 +24,29 @@
 local api = vim.api -- Neovim API
 local ns = api.nvim_create_namespace("pack_ui") -- highlight namespace
 local uv = vim.loop -- libuv (filesystem)
-local icons = require("config.icons")
+local icons = require("config.icons") -- Maximum number of commits shown before truncation in the expanded view
+
+local MAX_COMMITS_PREVIEW = 10
 
 -- ============================================================
---  HIGHLIGHTS
+--  HIGHLIGHTS GROUPS
 -- ============================================================
 
 local function setup_highlights()
 	local links = {
-		PackUiHeader = "Title",
+		PackUiBreaking = "DiagnosticWarn",
 		PackUiButton = "Function",
+		PackUiDetail = "Comment",
+		PackUiHeader = "Title",
+		PackUiHelp = "SpecialComment",
 		PackUiPluginLoaded = "String",
-		PackUiPluginNotLoaded = "Text",
-		PackUiPluginCleanup = "Comment",
 		PackUiPluginMissing = "ErrorMsg",
-		PackUiVersion = "Number",
+		PackUiPluginNotLoaded = "Normal",
+		PackUiPluginOrphaned = "Comment",
 		PackUiSectionHeader = "Label",
 		PackUiSeparator = "FloatBorder",
-		PackUiDetail = "Comment",
-		PackUiHelp = "SpecialComment",
+		PackUiUpdateAvailable = "DiagnosticInfo",
+		PackUiVersion = "Number",
 	}
 	for group, target in pairs(links) do
 		api.nvim_set_hl(0, group, { link = target, default = true })
@@ -61,6 +65,13 @@ local state = {
 	plugin_lines = {}, -- plugin name => line number (1-based)
 	expanded = {}, -- plugin name => bool
 	show_help = false,
+	updates = {}, -- plugin name => list of new commit lines
+	breaking = {}, -- plugin name => bool (major semver bump or breaking commit)
+	unreleased_breaking = {}, -- plugin name => list of unreleased breaking commit lines
+	show_all_commits = {}, -- plugin name => bool (show full commit list)
+	latest_ref = {}, -- plugin name => latest version/hash string
+	checking = false, -- true while fetching remote updates
+	check_id = 0, -- incremented on each check start and on close()
 }
 
 -- ============================================================
@@ -69,6 +80,11 @@ local state = {
 
 -- Cache of path => installed git tag (false = no tag found)
 local tag_cache = {}
+
+-- Cache of path => resolved remote default branch ref (false = resolution failed)
+-- Persists for the Neovim session; the default branch never changes mid-session.
+local ref_cache = {}
+
 local config_cache = nil -- parsed config plugins
 
 -- ============================================================
@@ -84,20 +100,16 @@ local function get_installed_tag(path)
 	if tag_cache[path] ~= nil then
 		return tag_cache[path] or nil
 	end
-	local result =
-		vim.fn.system("git -C " .. vim.fn.shellescape(path) .. " describe --tags --exact-match HEAD 2>/dev/null")
-	if vim.v.shell_error == 0 then
-		local tag = vim.trim(result)
+	local result = vim.system({ "git", "-C", path, "describe", "--tags", "--exact-match", "HEAD" }, { text = true })
+		:wait()
+	if result.code == 0 then
+		local tag = vim.trim(result.stdout)
 		tag_cache[path] = tag
 		return tag
 	end
 	tag_cache[path] = false
 	return nil
 end
-
--- ============================================================
---  FILESYSTEM SCANNING
--- ============================================================
 
 -- Get version string from plugin spec
 local function get_version_str(p)
@@ -110,6 +122,292 @@ local function get_version_str(p)
 	end
 	return tostring(v)
 end
+
+-- Parse semver from a tag string, returns {major, minor, patch} or nil
+local function parse_semver(tag)
+	if not tag then
+		return nil
+	end
+	local major, minor, patch = tag:match("^v?(%d+)%.(%d+)%.(%d+)")
+	if major then
+		return { tonumber(major), tonumber(minor), tonumber(patch) }
+	end
+	return nil
+end
+
+-- Returns true if version a is strictly greater than version b
+local function semver_gt(a, b)
+	if not a or not b then
+		return false
+	end
+	if a[1] ~= b[1] then
+		return a[1] > b[1]
+	end
+	if a[2] ~= b[2] then
+		return a[2] > b[2]
+	end
+	return a[3] > b[3]
+end
+
+-- Parse commits from git --oneline output into a list of strings
+local function parse_commits(stdout)
+	local commits = {}
+	if stdout and stdout ~= "" then
+		for line in stdout:gmatch("[^\n]+") do
+			table.insert(commits, line)
+		end
+	end
+	return commits
+end
+
+-- Run `git log --oneline <range>` asynchronously; calls callback(commits).
+local function git_log(path, range, callback)
+	vim.system({
+		"git",
+		"-C",
+		path,
+		"log",
+		"--oneline",
+		range,
+	}, { text = true }, function(res)
+		callback(parse_commits(res.code == 0 and res.stdout or ""))
+	end)
+end
+
+-- Returns true if a single commit line has a conventional breaking marker
+-- Matches 'type!:' or 'type(scope)!:'
+local function is_breaking_commit(c)
+	return c:match("%x+ %w+!:") or c:match("%x+ %w+%b()!:")
+end
+
+-- Returns true if any commit line contains a breaking change marker
+local function has_breaking_commit(commits)
+	return vim.iter(commits):any(is_breaking_commit)
+end
+
+-- Collect only the breaking commit lines from a list
+local function filter_breaking(commits)
+	return vim.iter(commits):filter(is_breaking_commit):totable()
+end
+
+-- Forward declaration (check_updates calls render before it is defined)
+local render
+
+-- Resolve the remote default branch ref for a git repo.
+-- Results are cached for the session (the default branch never changes).
+-- Calls callback(ref_string) or callback(nil) on failure.
+local function resolve_remote_ref(path, callback)
+	if ref_cache[path] ~= nil then
+		callback(ref_cache[path] or nil)
+		return
+	end
+	vim.system({ "git", "-C", path, "symbolic-ref", "refs/remotes/origin/HEAD" }, { text = true }, function(result)
+		if result.code == 0 then
+			local ref = vim.trim(result.stdout)
+			ref_cache[path] = ref
+			callback(ref)
+			return
+		end
+		vim.system({
+			"git",
+			"-C",
+			path,
+			"rev-parse",
+			"--verify",
+			"origin/main",
+		}, { text = true }, function(r)
+			if r.code == 0 then
+				ref_cache[path] = "origin/main"
+				callback("origin/main")
+			else
+				vim.system({
+					"git",
+					"-C",
+					path,
+					"rev-parse",
+					"--verify",
+					"origin/master",
+				}, { text = true }, function(r2)
+					if r2.code == 0 then
+						ref_cache[path] = "origin/master"
+						callback("origin/master")
+					else
+						ref_cache[path] = false
+						callback(nil)
+					end
+				end)
+			end
+		end)
+	end)
+end
+
+-- ============================================================
+--  CHECK FOR UPDATES
+-- ============================================================
+
+-- Fetch all plugins and check for new commits on the remote
+local function check_updates()
+	if state.checking then
+		return
+	end
+
+	local plugins = vim.pack.get(nil, { info = false })
+	if #plugins == 0 then
+		return
+	end
+
+	state.check_id = state.check_id + 1
+	local my_check_id = state.check_id
+	state.checking = true
+	state.updates = {}
+	state.breaking = {}
+	state.unreleased_breaking = {}
+	state.latest_ref = {}
+	render()
+
+	local remaining = #plugins
+
+	-- Apply a per-plugin result table to state and decrement the counter.
+	-- All state writes happen here inside vim.schedule on the main thread.
+	-- The check_id guard discards results from a check cancelled by close().
+	local function finish_one(result)
+		vim.schedule(function()
+			if state.check_id ~= my_check_id then
+				return
+			end
+			if result then
+				if result.updates ~= nil then
+					state.updates[result.name] = result.updates
+				end
+				if result.breaking then
+					state.breaking[result.name] = true
+				end
+				if result.unreleased_breaking then
+					state.unreleased_breaking[result.name] = result.unreleased_breaking
+				end
+				if result.latest_ref then
+					state.latest_ref[result.name] = result.latest_ref
+				end
+			end
+			remaining = remaining - 1
+			if remaining == 0 then
+				state.checking = false
+				render()
+			end
+		end)
+	end
+
+	for _, p in ipairs(plugins) do
+		local path = p.path
+		local name = p.spec.name
+		local current_tag = p.spec.version and get_installed_tag(path) or nil
+
+		vim.system({ "git", "-C", path, "fetch", "--quiet", "--tags" }, {}, function(fetch_res)
+			if fetch_res.code ~= 0 then
+				finish_one(nil)
+				return
+			end
+
+			if current_tag then
+				-- Versioned plugin: compare against latest tag, then check
+				-- main for unreleased breaking commits
+				vim.system({
+					"git",
+					"-C",
+					path,
+					"tag",
+					"--list",
+					"--sort=-version:refname",
+				}, { text = true }, function(tag_res)
+					-- Find the actual latest tag by semver comparison
+					local cur_ver = parse_semver(current_tag)
+					local latest_tag = nil
+					local latest_ver = nil
+					if tag_res.code == 0 then
+						for t in tag_res.stdout:gmatch("[^\n]+") do
+							local v = parse_semver(t)
+							if v and (not latest_ver or semver_gt(v, latest_ver)) then
+								latest_tag = t
+								latest_ver = v
+							end
+						end
+					end
+
+					-- Collect per-plugin results; written to state
+					-- atomically in finish_one
+					local result = { name = name }
+
+					-- Check major semver bump
+					if cur_ver and latest_ver and latest_ver[1] > cur_ver[1] then
+						result.breaking = true
+					end
+
+					-- Get released commits (HEAD..latest_tag) if tag changed,
+					-- then check main for unreleased breaking commits
+					local function after_released()
+						resolve_remote_ref(path, function(ref)
+							if not ref then
+								finish_one(result)
+								return
+							end
+							local compare_from = latest_tag or current_tag
+							git_log(path, compare_from .. ".." .. ref, function(unreleased)
+								local breaking_lines = filter_breaking(unreleased)
+								if #breaking_lines > 0 then
+									result.unreleased_breaking = breaking_lines
+								end
+								finish_one(result)
+							end)
+						end)
+					end
+
+					local is_newer = cur_ver and latest_ver and semver_gt(latest_ver, cur_ver)
+					if is_newer and latest_tag then
+						result.latest_ref = latest_tag
+						git_log(path, "HEAD.." .. latest_tag, function(commits)
+							result.updates = commits
+							if has_breaking_commit(commits) then
+								result.breaking = true
+							end
+							after_released()
+						end)
+					else
+						result.updates = {}
+						after_released()
+					end
+				end)
+			else
+				-- Non-versioned plugin: compare against default branch
+				resolve_remote_ref(path, function(ref)
+					if not ref then
+						finish_one(nil)
+						return
+					end
+					git_log(path, "HEAD.." .. ref, function(commits)
+						local result = {
+							name = name,
+							updates = commits,
+						}
+						if has_breaking_commit(commits) then
+							result.breaking = true
+						end
+						if #commits > 0 then
+							local latest_hash = commits[1]:match("^(%x+)")
+							if latest_hash then
+								result.latest_ref = latest_hash
+							end
+						end
+						finish_one(result)
+					end)
+				end)
+			end
+		end)
+	end
+end
+
+-- ============================================================
+--  FILESYSTEM SCANNING
+-- ============================================================
 
 local function scan_files(dir)
 	local files = {}
@@ -178,44 +476,45 @@ local function extract_names_from_content(content)
 	end
 
 	----------------------------------------------------------------
-	-- 1. Extract and REMOVE add({ ... }) blocks
+	-- 1. add({ ... }) blocks (robust: extract ALL strings inside)
 	----------------------------------------------------------------
 	content = content:gsub("[%w_%.]*add%s*%(%s*{(.-)}%s*%)", function(block)
-		local name = block:match('name%s*=%s*"([^"]+)"')
-		if name then
-			add_name(name)
-		else
-			local src = block:match('src%s*=%s*"([^"]+)"')
-			if src then
-				add_name(src)
-			else
-				local first = block:match('"([^"]+)"')
-				if first then
-					add_name(first)
-				end
-			end
+		for match in block:gmatch('"([^"]+)"') do
+			add_name(match)
 		end
-
 		return ""
 	end)
 
 	----------------------------------------------------------------
-	-- 2. Repo.xxx outside tables
+	-- 2. Repo.xxx("author/plugin")
 	----------------------------------------------------------------
 	for plugin in content:gmatch('Repo%.[%w_]+%(%s*"([^"]+)"%s*%)') do
 		add_name(plugin)
 	end
 
 	----------------------------------------------------------------
-	-- 3. add("...") / vim.pack.add("...")
+	-- 3. add("author/plugin")
 	----------------------------------------------------------------
 	for plugin in content:gmatch('[%w_%.]*add%s*%(%s*"([^"]+)"%s*%)') do
 		add_name(plugin)
 	end
 
+	----------------------------------------------------------------
+	-- 4. src = "author/plugin"  (VERY IMPORTANT)
+	----------------------------------------------------------------
+	for plugin in content:gmatch('src%s*=%s*"([^"]+)"') do
+		add_name(plugin)
+	end
+
+	----------------------------------------------------------------
+	-- 5. Fallback: ANY "author/plugin" string anywhere
+	----------------------------------------------------------------
+	for plugin in content:gmatch('"([%w%-%._]+/[%w%-%._]+)"') do
+		add_name(plugin)
+	end
+
 	return names
 end
-
 -- Main function: get all plugin names
 local function get_plugin_names_in_config()
 	if config_cache then
@@ -269,8 +568,8 @@ local function build_content()
 	local plugins = vim.pack.get(nil, { info = false })
 	local conf_plugins = get_plugin_names_in_config()
 	local loaded = {}
-	local not_loaded = {}
-	local to_cleanup = {}
+	local lazy = {} -- in config, but not active
+	local orphaned = {} -- installed, but NOT in config
 
 	-- Build lookup table for config plugins
 	local conf_lookup = {}
@@ -280,18 +579,21 @@ local function build_content()
 
 	for _, p in ipairs(plugins) do
 		local name = p.spec.name
+
 		if p.active then
 			table.insert(loaded, p)
 		elseif conf_lookup[name] then
-			table.insert(not_loaded, p)
+			-- Present in config → lazy-loaded plugin
+			table.insert(lazy, p)
 		else
-			table.insert(to_cleanup, p)
+			-- Not in config → orphaned
+			table.insert(orphaned, p)
 		end
 	end
 
 	sort_by_name(loaded)
-	sort_by_name(not_loaded)
-	sort_by_name(to_cleanup)
+	sort_by_name(lazy)
+	sort_by_name(orphaned)
 
 	local lines = {}
 	local hls = {} -- { line, col_start, col_end, hl_group }
@@ -311,7 +613,8 @@ local function build_content()
 	end
 
 	-- Header
-	local header = string.format(" vim.pack -- %d plugins | %d loaded", #plugins, #loaded)
+	local status = state.checking and "  (checking...)" or ""
+	local header = string.format(" vim.pack -- %d plugins | %d loaded%s", #plugins, #loaded, status)
 	add(header, "PackUiHeader")
 
 	-- Separator (fill the window width minus the leading space)
@@ -320,7 +623,7 @@ local function build_content()
 	add(sep, "PackUiSeparator")
 
 	-- Action bar
-	local bar = " [U]pdate All  [u] Update  [X] Clean  [D]elete  [L] Log  [?] Help"
+	local bar = " [U]pdate All  [u] Update  [C]heck  [X] Clean  [D]elete  [L] Log  [?] Help"
 	add(bar)
 	-- Highlight the bracket keys (gmatch () captures are 1-based;
 	-- the end capture points one past the match, which is exactly
@@ -336,6 +639,7 @@ local function build_content()
 		add(" Keymaps:", "PackUiHelp")
 		add("   U       Update all plugins", "PackUiHelp")
 		add("   u       Update plugin under cursor", "PackUiHelp")
+		add("   C       Check remote for new commits", "PackUiHelp")
 		add("   X       Clean to-cleanup plugins", "PackUiHelp")
 		add("   D       Delete plugin under cursor (non-active only)", "PackUiHelp")
 		add("   L       Open update log file", "PackUiHelp")
@@ -362,7 +666,30 @@ local function build_content()
 		local rev_short = p.rev and p.rev:sub(1, 7) or ""
 
 		local ver_display = tag or (rev_short ~= "" and rev_short or version)
-		local line = string.format("   %s %s%s%s", icon, name, pad, ver_display)
+		local latest = state.latest_ref[name]
+		if latest then
+			-- Normalize v prefix before comparing to avoid spurious arrows
+			-- when only the prefix differs (e.g. '1.2.3' vs 'v1.2.3')
+			local cur_has_v = ver_display:match("^v") ~= nil
+			local new_has_v = latest:match("^v") ~= nil
+			local latest_display = latest
+			if cur_has_v and not new_has_v then
+				latest_display = "v" .. latest
+			elseif not cur_has_v and new_has_v then
+				latest_display = latest:sub(2)
+			end
+			if latest_display ~= ver_display then
+				ver_display = ver_display .. " → " .. latest_display
+			end
+		end
+		local update_count = state.updates[name] and #state.updates[name] or 0
+		local update_str = update_count > 0 and string.format("  ↑%d", update_count) or ""
+		local unreleased = state.unreleased_breaking[name]
+		local unreleased_str = unreleased
+				and #unreleased > 0
+				and string.format("  ⚠ %d breaking unreleased", #unreleased)
+			or ""
+		local line = string.format("   %s %s%s%s%s%s", icon, name, pad, ver_display, update_str, unreleased_str)
 		local lnum_cur = #lines
 		add(line)
 
@@ -375,7 +702,21 @@ local function build_content()
 		add_hl(lnum_cur, name_start, name_start + #name, hl_group)
 		if #ver_display > 0 then
 			local ver_start = name_start + #name + #pad
-			add_hl(lnum_cur, ver_start, ver_start + #ver_display, "PackUiVersion")
+			local ver_hl = state.breaking[name] and "PackUiBreaking" or "PackUiVersion"
+			add_hl(lnum_cur, ver_start, ver_start + #ver_display, ver_hl)
+		end
+		if update_count > 0 then
+			local update_start = name_start + #name + #pad + #ver_display
+			add_hl(
+				lnum_cur,
+				update_start,
+				update_start + #update_str,
+				state.breaking[name] and "PackUiBreaking" or "PackUiUpdateAvailable"
+			)
+		end
+		if #unreleased_str > 0 then
+			local unrel_start = name_start + #name + #pad + #ver_display + #update_str
+			add_hl(lnum_cur, unrel_start, unrel_start + #unreleased_str, "PackUiBreaking")
 		end
 
 		-- Track plugin position (1-based line number for cursor operations)
@@ -393,30 +734,60 @@ local function build_content()
 			end
 			for _, d in ipairs(details) do
 				add(d, "PackUiDetail")
+				line_to_plugin[#lines] = name
+			end
+			local commits = state.updates[name]
+			if commits and #commits > 0 then
+				local max_commits = state.show_all_commits[name] and #commits or MAX_COMMITS_PREVIEW
+				for i, c in ipairs(commits) do
+					if i > max_commits then
+						add(
+							string.format("     ... and %d more (Enter to expand)", #commits - max_commits),
+							"PackUiDetail"
+						)
+						line_to_plugin[#lines] = name
+						break
+					end
+					local is_breaking = is_breaking_commit(c)
+					add("     " .. c, is_breaking and "PackUiBreaking" or nil)
+					line_to_plugin[#lines] = name
+				end
+				add("")
+			end
+			local unrel = state.unreleased_breaking[name]
+			if unrel and #unrel > 0 then
+				add(string.format("     ⚠ %d breaking change(s) unreleased on main:", #unrel), "PackUiBreaking")
+				line_to_plugin[#lines] = name
+				for _, c in ipairs(unrel) do
+					add("       " .. c, "PackUiBreaking")
+					line_to_plugin[#lines] = name
+				end
+				add("")
 			end
 		end
 	end
 
-	-- Loaded section
+	-- Loaded
 	add("")
 	add(string.format(" Loaded (%d)", #loaded), "PackUiSectionHeader")
 	for _, p in ipairs(loaded) do
 		render_plugin(p, icons.pack.loaded, "PackUiPluginLoaded")
 	end
 
-	-- Not Loaded section
-	if #not_loaded > 0 then
+	-- Lazy (better naming than "Not Loaded")
+	if #lazy > 0 then
 		add("")
-		add(string.format(" Not Loaded (%d)", #not_loaded), "PackUiSectionHeader")
-		for _, p in ipairs(not_loaded) do
+		add(string.format(" Not Loaded (%d)", #lazy), "PackUiSectionHeader")
+		for _, p in ipairs(lazy) do
 			render_plugin(p, icons.pack.not_loaded, "PackUiPluginNotLoaded")
 		end
 	end
 
-	if #to_cleanup > 0 then
+	-- Orphaned (instead of "To Cleanup")
+	if #orphaned > 0 then
 		add("")
-		add(string.format(" To Cleanup (%d)", #to_cleanup), "PackUiSectionHeader")
-		for _, p in ipairs(to_cleanup) do
+		add(string.format(" To Cleanup (%d)", #orphaned), "PackUiSectionHeader")
+		for _, p in ipairs(orphaned) do
 			render_plugin(p, icons.pack.to_cleanup, "PackUiPluginCleanup")
 		end
 	end
@@ -432,7 +803,7 @@ end
 -- ============================================================
 
 -- Render content into the buffer
-local function render()
+render = function()
 	if not state.bufnr or not api.nvim_buf_is_valid(state.bufnr) then
 		return
 	end
@@ -465,6 +836,41 @@ local function plugin_at_cursor()
 	end
 	local row = api.nvim_win_get_cursor(state.winid)[1]
 	return state.line_to_plugin[row]
+end
+
+-- Reset all transient UI state (called by both close() and WinClosed)
+local function reset_state()
+	state.winid = nil
+	state.bufnr = nil
+	state.expanded = {}
+	state.show_help = false
+	state.updates = {}
+	state.breaking = {}
+	state.unreleased_breaking = {}
+	state.show_all_commits = {}
+	state.latest_ref = {}
+	state.checking = false
+	-- Invalidate any in-flight check_updates callbacks
+	state.check_id = state.check_id + 1
+end
+
+-- ============================================================
+--  WINDOW MANAGEMENT
+-- ============================================================
+
+-- Close the floating window
+local function close()
+	-- Remove autocmd first to prevent it from corrupting state on re-open
+	if state.win_autocmd_id then
+		pcall(api.nvim_del_autocmd, state.win_autocmd_id)
+		state.win_autocmd_id = nil
+	end
+	if state.winid and api.nvim_win_is_valid(state.winid) then
+		api.nvim_win_close(state.winid, true)
+	end
+	-- Buffer has bufhidden=wipe, so it is wiped when the window closes.
+	-- No need to explicitly delete it.
+	reset_state()
 end
 
 -- Jump to next/prev plugin line
@@ -506,28 +912,6 @@ local function jump_plugin(direction)
 	end
 end
 
--- ============================================================
---  WINDOW MANAGEMENT
--- ============================================================
-
--- Close the floating window
-local function close()
-	-- Remove autocmd first to prevent it from corrupting state on re-open
-	if state.win_autocmd_id then
-		pcall(api.nvim_del_autocmd, state.win_autocmd_id)
-		state.win_autocmd_id = nil
-	end
-	if state.winid and api.nvim_win_is_valid(state.winid) then
-		api.nvim_win_close(state.winid, true)
-	end
-	-- Buffer has bufhidden=wipe, so it is wiped when the window closes.
-	-- No need to explicitly delete it.
-	state.winid = nil
-	state.bufnr = nil
-	state.expanded = {}
-	state.show_help = false
-end
-
 -- Forward declaration so keymap closures can reference open() before it is
 -- defined (Lua closures capture locals by reference, but the local must be
 -- declared in an enclosing scope at the point where the closure is created).
@@ -561,7 +945,7 @@ local function setup_keymaps()
 		end
 	end, opts)
 
-	-- Clean non-active plugins
+	-- Clean to-cleanup plugins
 	vim.keymap.set("n", "X", function()
 		-- Get all plugins
 		local all_plugins = vim.pack.get(nil, { info = false })
@@ -643,11 +1027,20 @@ local function setup_keymaps()
 		end
 	end, opts)
 
-	-- Toggle details
+	-- Toggle details (three-state cycle when commits are truncated)
 	vim.keymap.set("n", "<CR>", function()
 		local name = plugin_at_cursor()
 		if name then
-			state.expanded[name] = not state.expanded[name]
+			local commits = state.updates[name]
+			local has_truncated = commits and #commits > MAX_COMMITS_PREVIEW
+			if not state.expanded[name] then
+				state.expanded[name] = true
+			elseif has_truncated and not state.show_all_commits[name] then
+				state.show_all_commits[name] = true
+			else
+				state.expanded[name] = false
+				state.show_all_commits[name] = nil
+			end
 			render()
 			-- Restore cursor to the plugin line
 			if state.plugin_lines[name] then
@@ -663,6 +1056,9 @@ local function setup_keymaps()
 	vim.keymap.set("n", "[[", function()
 		jump_plugin(-1)
 	end, opts)
+
+	-- Check for updates
+	vim.keymap.set("n", "C", check_updates, opts)
 
 	-- Help toggle
 	vim.keymap.set("n", "?", function()
@@ -734,21 +1130,30 @@ open = function()
 			if vim._tointeger(ev.match) ~= captured_winid then
 				return
 			end
-			state.winid = nil
-			state.bufnr = nil
 			state.win_autocmd_id = nil
-			state.expanded = {}
-			state.show_help = false
+			reset_state()
 		end,
 	})
 end
-
 -- ============================================================
 --  COMMANDS / KEYMAP ENTRYPOINT
 -- ============================================================
 
 -- Register :Pack command
-vim.api.nvim_create_user_command("Pack", function()
+vim.api.nvim_create_user_command("Pack", function(opts)
 	open()
-end, { desc = "Open vim.pack plugin manager UI" })
+	if opts.args == "check" then
+		check_updates()
+	elseif opts.args == "update" then
+		close()
+		vim.pack.update()
+	end
+end, {
+	nargs = "?",
+	complete = function()
+		return { "check", "update" }
+	end,
+	desc = "Open vim.pack plugin manager UI",
+})
+
 Map.map_leader("pp", open, "vim.pack manager")
