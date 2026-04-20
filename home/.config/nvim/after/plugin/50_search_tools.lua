@@ -41,6 +41,13 @@ local function encode(query)
 	end)
 end
 
+local function open_url(url)
+	local ok, err = pcall(vim.ui.open, url)
+	if not ok then
+		vim.notify("Failed to open URL: " .. err, vim.log.levels.ERROR)
+	end
+end
+
 local function open_search(query, engine, notify_msg, level)
 	if not query or query == "" then
 		vim.notify("Empty query", vim.log.levels.WARN, { title = "Web Search" })
@@ -59,7 +66,7 @@ local function open_search(query, engine, notify_msg, level)
 		vim.notify(notify_msg, level or vim.log.levels.INFO, { title = "Web Search" })
 	end
 
-	vim.fn.jobstart({ "xdg-open", url:format(encode(query)) }, { detach = true })
+	open_url(url:format(encode(query)))
 end
 
 -- ===============================
@@ -226,7 +233,7 @@ vim.api.nvim_create_autocmd("FileType", {
 			if repo then
 				local url = "https://github.com/" .. repo
 				vim.notify("Opening " .. url)
-				vim.fn.jobstart({ "xdg-open", url }, { detach = true })
+				open_url(url)
 			else
 				vim.notify("Not a valid GitHub repo", vim.log.levels.WARN)
 			end
