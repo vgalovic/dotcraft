@@ -27,22 +27,24 @@ now(function()
 
 	icons.setup({
 		filetype = {
+			["ghostty"] = { glyph = Icons.filetype.ghostty, hl = "MiniIconsAzure" },
 			["kitty"] = { glyph = Icons.file.kitty, hl = "MiniIconsOrange" },
 			["log"] = { glyph = Icons.filetype.log, hl = "MiniIconsGrey" },
-			["sh"] = { glyph = Icons.filetype.sh, hl = "MiniIconsAzure" },
-			["verilog"] = { glyph = Icons.filetype.verilog, hl = "MiniIconsGreen" },
 			["mininotify-history"] = { glyph = Icons.file.history, hl = "MiniIconsGrey" },
 			["nvim-pack"] = { glyph = Icons.filetype.nvim_pack, hl = "MiniIconsGrey" },
 			["nvim-undotree"] = { glyph = Icons.filetype.undotree, hl = "MiniIconsGrey" },
 			["pager"] = { glyph = Icons.filetype.pager, hl = "MiniIconsGrey" },
+			["sh"] = { glyph = Icons.filetype.sh, hl = "MiniIconsAzure" },
 			["toggleterm"] = { glyph = Icons.filetype.sh, hl = "MiniIconsGrey" },
+			["verilog"] = { glyph = Icons.filetype.verilog, hl = "MiniIconsGreen" },
 		},
 		file = {
 			["Brewfile"] = { glyph = Icons.file.brewfile, hl = "MiniIconsYellow" },
 			["config"] = { glyph = Icons.file.config, hl = "MiniIconsGrey" },
-			["kitty.conf"] = { glyph = Icons.file.kitty, hl = "MiniIconsOrange" },
-			["history"] = { glyph = Icons.file.history, hl = "MiniIconsGrey" },
+			["config.ghostty"] = { glyph = Icons.filetype.ghostty, hl = "MiniIconsAzure" },
 			["fish"] = { glyph = Icons.file.fish, hl = "MiniIconsAzure" },
+			["history"] = { glyph = Icons.file.history, hl = "MiniIconsGrey" },
+			["kitty.conf"] = { glyph = Icons.file.kitty, hl = "MiniIconsOrange" },
 			["messages"] = { glyph = Icons.filetype.pager, hl = "MiniIconsGrey" },
 		},
 		use_file_extension = function(ext, _)
@@ -52,13 +54,14 @@ now(function()
 
 	-- Pattern overrides
 	local pattern_icons = {
-		{ "kitty%.conf$", { Icons.file.kitty, "MiniIconsOrange" } },
 		{ "%.conf$", { Icons.file.config, "MiniIconsAzure" } },
-		{ "%.tmTheme$", { Icons.filetype.tmTheme, "MiniIconsAzure" } },
 		{ "%.log$", { Icons.filetype.log, "MiniIconsGrey" } },
 		{ "%.sh$", { Icons.filetype.sh, "MiniIconsGrey" } },
+		{ "%.tmTheme$", { Icons.filetype.tmTheme, "MiniIconsAzure" } },
 		{ "%.v$", { Icons.filetype.verilog, "MiniIconsGreen" } },
+		{ "config%.ghostty$", { Icons.filetype.ghostty, "MiniIconsAzure" } },
 		{ "confirm#%d+$", { Icons.filetype.nvim_pack, "MiniIconsGrey" } },
+		{ "kitty%.conf$", { Icons.file.kitty, "MiniIconsOrange" } },
 	}
 
 	local get_icons = icons.get

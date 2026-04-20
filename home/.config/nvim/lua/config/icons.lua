@@ -39,6 +39,7 @@ local icons = {
 		fish = "",
 	},
 	filetype = {
+		ghostty = "",
 		log = "",
 		nvim_pack = "󰏖",
 		pager = "",
