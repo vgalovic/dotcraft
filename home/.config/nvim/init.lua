@@ -26,9 +26,7 @@ vim.loader.enable()
 -- Colorscheme (persisted by your theme picker)
 -- Change the name of the theme by editing vim.g.colorscheme below.
 -- To see and choose available themes, run :ThemesAvailable.
--- Selecting a theme will:
---   1. Persist your choice in this file (vim.g.colorscheme)
---   2. Ask you to restart Neovim to apply the new theme
+-- Selecting a theme will persist your choice in this file (vim.g.colorscheme)
 -- Available themes are defined in plugin/70_clolorscheme.lua.
 vim.g.colorscheme = "github_dark_tritanopia"
 
@@ -55,19 +53,6 @@ _G.Repo = {
 -- =========================================================
 
 _G.Config = {}
-
--- =========================================================
--- BASIC AUTOCOMMANDS
--- =========================================================
-
--- Highlight yanked text
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-})
 
 -- =========================================================
 -- ENABLE UI2
@@ -101,18 +86,15 @@ vim.pack.add({ Repo.gh("nvim-mini/mini.nvim") })
 -- =========================================================
 -- MINI.MISC (execution helpers)
 -- =========================================================
+-- stylua: ignore start
 
 local misc = require("mini.misc")
 
 -- Run immediately
-Config.now = function(f)
-	misc.safely("now", f)
-end
+Config.now = function(f) misc.safely("now", f) end
 
 -- Run later
-Config.later = function(f)
-	misc.safely("later", f)
-end
+Config.later = function(f) misc.safely("later", f) end
 
 -- Run now only if files were passed as args (fast startup trick)
 Config.now_if_args = vim.fn.argc(-1) > 0 and Config.now or Config.later
@@ -122,15 +104,12 @@ Config.now_if_args = vim.fn.argc(-1) > 0 and Config.now or Config.later
 -- =========================================================
 
 -- Run on specific events
-Config.on_event = function(ev, f)
-	misc.safely("event:" .. ev, f)
-end
+Config.on_event = function(ev, f) misc.safely("event:" .. ev, f) end
 
 -- Run on specific filetypes
-Config.on_filetype = function(ft, f)
-	misc.safely("filetype:" .. ft, f)
-end
+Config.on_filetype = function(ft, f) misc.safely("filetype:" .. ft, f) end
 
+-- stylua: ignore end
 -- =========================================================
 -- AUTOCMD FRAMEWORK
 -- =========================================================
@@ -160,9 +139,8 @@ Config.on_packchanged = function(plugin_name, kinds, callback, desc)
 		end
 
 		-- Ensure plugin is loaded
-		if not ev.data.active then
-			vim.cmd.packadd(plugin_name)
-		end
+    -- stylua: ignore
+		if not ev.data.active then vim.cmd.packadd(plugin_name) end
 
 		callback()
 	end
