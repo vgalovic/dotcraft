@@ -13,6 +13,11 @@
 --
 -- Kitty commands are skipped if not running inside xterm-kitty.
 --
+
+if vim.g.neovide then
+	return
+end
+
 -- NOTE: `background_opacity` should match value in Kitty configuration.
 local background_opacity = 0.9
 local solid = 1.0
@@ -61,11 +66,7 @@ function ToggleTransparency()
 	transparent = not transparent
 	apply_transparency()
 
-	vim.notify(
-		"Background is " .. (transparent and "transparent" or "solid"),
-		vim.log.levels.INFO,
-		{ title = "Transparency" }
-	)
+	print(transparent and "transparent" or "solid")
 end
 
 Map.map_leader("\\t", ToggleTransparency, "Toggle 'transparency'")
