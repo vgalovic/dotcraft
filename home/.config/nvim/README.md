@@ -34,10 +34,6 @@ The setup uses Neovim’s new built-in package manager to handle plugins—keeps
 - [neanias/everforest-nvim](https://dotfyle.com/plugins/neanias/everforest-nvim)
 - [projekt0n/github-nvim-theme](https://dotfyle.com/plugins/projekt0n/github-nvim-theme)
 
-### comment
-
-- [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
-
 ### editing-enhancements
 
 - [AndrewRadev/switch.vim](https://github.com/AndrewRadev/switch.vim)
@@ -64,10 +60,6 @@ The setup uses Neovim’s new built-in package manager to handle plugins—keeps
 
 - [OXY2DEV/markview.nvim](https://dotfyle.com/plugins/OXY2DEV/markview.nvim)
 
-### nvim-dev
-
-- [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
-
 ### snippet
 
 - [rafamadriz/friendly-snippets](https://dotfyle.com/plugins/rafamadriz/friendly-snippets)
@@ -93,18 +85,18 @@ The setup uses Neovim’s new built-in package manager to handle plugins—keeps
 
 ## Installed Language Servers, Formatters, and Linters
 
-| Language Server         | Formatter   |
-| ----------------------- | ----------- |
-| arduino-language-server | beautysh    |
-| bashls                  | latexindent |
-| clangd                  | mdformat    |
-| cmake                   | rustfmt     |
-| lua_ls                  | stylua      |
-| marksman                |             |
-| rust_analyzer           |             |
-| vhdl_ls                 |             |
-| svlangserver            |             |
-| verible                 |             |
+| Language Server         | Formatter |
+| ----------------------- | --------- |
+| arduino-language-server | beautysh  |
+| bashls                  | mdformat  |
+| clangd                  | rustfmt   |
+| cmake                   | stylua    |
+| lua_ls                  |           |
+| marksman                |           |
+| rust_analyzer           |           |
+| vhdl_ls                 |           |
+| svlangserver            |           |
+| verible                 |           |
 
 > [!NOTE] `rust_analyzer`, `rustfmt`, and `mdformat` are **not installed via Mason**. They must be installed independently.
 > In `nvim/plugins/60_lsp_treesitter.lua`, there are commands provided to install these packages manually.
