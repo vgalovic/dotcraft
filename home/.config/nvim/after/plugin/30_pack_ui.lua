@@ -521,15 +521,9 @@ local function get_plugin_names_in_config()
 		return config_cache
 	end
 
-	local plugin_dir = vim.fn.stdpath("config") .. "/plugin"
-	local after_plugin_dir = vim.fn.stdpath("config") .. "/after/plugin"
-	local init_file = vim.fn.stdpath("config") .. "/init.lua"
+	local plugin_dir = vim.fn.stdpath("config")
 
 	local files = scan_files(plugin_dir)
-	for _, f in ipairs(scan_files(after_plugin_dir)) do
-		table.insert(files, f)
-	end
-	table.insert(files, init_file)
 
 	local result = {}
 
