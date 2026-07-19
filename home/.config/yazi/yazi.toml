@@ -1,6 +1,6 @@
-"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+# "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
-[mgr]
+[manager]
 linemode     = "size"
 show_hidden  = false
 sort_by      = "natural"
@@ -16,32 +16,32 @@ max_height = 1000
 # OPENERS
 # ========================
 [opener]
+# 1. Define the apps/commands
+edit = [
+  { run = 'nvim "$@"', desc = "nvim", block = true }
+]
+play = [
+  { run = 'mpv --force-window "$@"', desc = "mpv" }
+]
+open = [
+  { run = 'xdg-open "$@"', desc = "Open" }
+]
 
-[[opener.edit]]
-run = 'nvim "$@"'
-desc = "nvim"
-block = true
+# 2. Define the rules (Yazi looks for these specifically under [opener])
 
-[[opener.play]]
-run = 'mpv --force-window "$@"'
-desc = "mpv"
-
-[[opener.open]]
-run = 'xdg-open "$@"'
-desc = "Open"
-
-# --- Rules for which opener to use ---
 [open]
+
 prepend_rules = [
-  { name = "*/", use = ["open", "edit"] },
+  { url = "*/", use = ["open", "edit"] },
   { mime = "text/*", use = ["edit", "reveal"] },
   { mime = "image/*", use = ["open", "reveal"] },
   { mime = "video/*", use = ["play", "reveal"] },
   { mime = "audio/*", use = ["play", "reveal"] },
   { mime = "inode/x-empty", use = ["edit", "reveal"] },
 ]
+
 append_rules = [
-  { name = "*", use = ["open", "reveal"] },
+  { url = "*", use = ["open", "reveal"] },
 ]
 
 # ========================
@@ -49,26 +49,25 @@ append_rules = [
 # ========================
 [plugin]
 
-# --- Previewers ---
 prepend_previewers = [
   { mime = "audio/*", run = "exifaudio" },
-  { name = "*/", run = "eza-preview" },
-  { name = "*.md", run = "rich-preview" },
-  { name = "*.csv", run = "rich-preview" },
-  { name = "*.rst", run = "rich-preview" },
-  { name = "*.ipynb", run = "rich-preview" },
-  { name = "*.json", run = "rich-preview" },
+  { url = "*/", run = "eza-preview" },
+  { url = "*.csv", run = "rich-preview"},
+  { url = "*.md", run = "rich-preview" },
+  { url = "*.rst", run = "rich-preview"},
+  { url = "*.ipynb", run = "rich-preview"},
+  { url = "*.json", run = "rich-preview"},
 ]
-
-append_previewers = []
 
 # --- Fetchers ---
 [[plugin.prepend_fetchers]]
-id   = "git"
-name = "*"
+# id   = "git"
+url = "*"
 run  = "git"
+group = "git"
 
 [[plugin.prepend_fetchers]]
-id   = "git"
-name = "*/"
+# id   = "git"
+url = "*/"
 run  = "git"
+group = "git"
