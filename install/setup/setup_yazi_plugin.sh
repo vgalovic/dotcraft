@@ -68,7 +68,7 @@ install_yazi_plugins() {
     "yazi-rs/flavors:catppuccin-mocha" # [[ catppuccin-mocha.yazi ]]
     "yazi-rs/flavors:catppuccin-latte" # [[ catppuccin-latte.yazi ]]
     "yazi-rs/plugins:chmod" # [[ chmod.yazi ]]
-    "Chromium-3-Oxide/everforest-medium", # [[ everforest-medium. yazi ]]
+    "Chromium-3-Oxide/everforest-medium" # [[ everforest-medium. yazi ]]
     "Sonico98/exifaudio" # [[ exifaudio.yazi ]]
     "ahkohd/eza-preview" # [[ eza-preview.yazi ]]
     "yazi-rs/plugins:full-border" # [[ full-border.yazi ]]
